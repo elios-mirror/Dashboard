@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
 
 class DevUsersSeeder extends Seeder
 {
@@ -11,12 +12,10 @@ class DevUsersSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-           [
+        User::create([
                'email' => 'root@root.com',
                'name' => 'Root',
                'password' => bcrypt('root')
-           ]
         ]);
 
         DB::table('oauth_clients')->insert([
@@ -31,5 +30,11 @@ class DevUsersSeeder extends Seeder
             ]
         ]);
 
+        DB::table('mirrors')->insert([
+            [
+              'name' => 'Mirroir de teste',
+              'ip' => "127.0.0.1"
+            ],
+        ]);
     }
 }
