@@ -101,4 +101,13 @@ class MirrorController extends Controller
             return (['status' => 'success', 'message' => 'Mirror linked successfully', 'user_id' => $user->id, 'mirror_id' => $mirror->id]);
         }
     }
+
+    public function unlink(Mirror $mirror,  Request $request)
+    {
+        if ($request->wantsJson()) {
+            $user = $request->user();
+            $user->mirrors()->detach($mirror->id);
+            return (['status' => 'success', 'message' => 'Mirror unlinked successfully', 'user_id' => $user->id, 'mirror_id' => $mirror->id]);
+        }
+    }
 }
