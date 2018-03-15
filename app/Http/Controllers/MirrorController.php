@@ -95,8 +95,10 @@ class MirrorController extends Controller
 
     public function link(Mirror $mirror,  Request $request)
     {
-        $user = $request->user();
-        $user->mirrors()->syncWithoutDetaching($mirror->id);
-        return ($user->mirrors()->get());
+        if ($request->wantsJson()) {
+            $user = $request->user();
+            $user->mirrors()->syncWithoutDetaching($mirror->id);
+            return (['status' => 'success', 'message' => 'Mirror linked successfully', 'user_id' => $user->id, 'mirror_id' => $mirror->id]);
+        }
     }
 }
