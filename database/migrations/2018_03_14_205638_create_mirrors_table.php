@@ -22,6 +22,17 @@ class CreateMirrorsTable extends Migration
             $table->ipAddress('ip')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('user_mirrors', function (Blueprint $table) {
+            DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
+            $table->uuid('mirror_id');
+            $table->uuid('user_id');
+            $table->foreign('mirror_id')->references('id')->on('mirrors');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
+        });
+
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -32,5 +43,6 @@ class CreateMirrorsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('mirrors');
+        Schema::dropIfExists('user_mirrors');
     }
 }

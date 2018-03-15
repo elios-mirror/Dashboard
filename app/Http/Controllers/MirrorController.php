@@ -92,4 +92,11 @@ class MirrorController extends Controller
     {
         //
     }
+
+    public function link(Mirror $mirror,  Request $request)
+    {
+        $user = $request->user();
+        $user->mirrors()->syncWithoutDetaching($mirror->id);
+        return ($user->mirrors()->get());
+    }
 }

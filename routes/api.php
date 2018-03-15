@@ -13,9 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:api'])->group(function () {
+
+    Route::get('/user', function (Request $request) {
+        $result = $request->user();
+        $result['mirrors'] = $request->user()->mirrors()->get();
+        return $result;
+    });
+
+    Route::resource('mirrors', 'MirrorController');
+
+    Route::post('/mirrors/{mirror}/link', 'MirrorController@link');
+
 });
 
-
-Route::middleware('auth:api')->resource('mirrors', 'MirrorController');

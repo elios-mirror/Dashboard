@@ -29,4 +29,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function mirrors()
+    {
+        return $this->belongsToMany('App\Mirror', 'user_mirrors', 'user_id', 'mirror_id');
+    }
 }
