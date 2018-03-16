@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class MirrorController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('store');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +37,7 @@ class MirrorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -51,7 +57,7 @@ class MirrorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Mirror  $mirror
+     * @param  \App\Mirror $mirror
      * @return \Illuminate\Http\Response
      */
     public function show(Mirror $mirror)
@@ -62,7 +68,7 @@ class MirrorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Mirror  $mirror
+     * @param  \App\Mirror $mirror
      * @return \Illuminate\Http\Response
      */
     public function edit(Mirror $mirror)
@@ -73,8 +79,8 @@ class MirrorController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Mirror  $mirror
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Mirror $mirror
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Mirror $mirror)
@@ -85,7 +91,7 @@ class MirrorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Mirror  $mirror
+     * @param  \App\Mirror $mirror
      * @return \Illuminate\Http\Response
      */
     public function destroy(Mirror $mirror)
@@ -93,7 +99,7 @@ class MirrorController extends Controller
         //
     }
 
-    public function link(Mirror $mirror,  Request $request)
+    public function link(Mirror $mirror, Request $request)
     {
         if ($request->wantsJson()) {
             $user = $request->user();
@@ -102,7 +108,7 @@ class MirrorController extends Controller
         }
     }
 
-    public function unlink(Mirror $mirror,  Request $request)
+    public function unlink(Mirror $mirror, Request $request)
     {
         if ($request->wantsJson()) {
             $user = $request->user();

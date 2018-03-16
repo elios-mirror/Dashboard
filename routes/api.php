@@ -21,9 +21,10 @@ Route::middleware(['auth:api'])->group(function () {
         return $result;
     });
 
-    Route::resource('mirrors', 'MirrorController');
-
     Route::post('/mirrors/{mirror}/link', 'MirrorController@link');
     Route::post('/mirrors/{mirror}/unlink', 'MirrorController@unlink');
 
 });
+
+Route::resource('mirrors', 'MirrorController');
+
