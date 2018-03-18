@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Mirror;
 use Illuminate\Http\Request;
+use Notification;
+use App\Notifications\MirrorLinked;
 
 class MirrorController extends Controller
 {
@@ -104,6 +106,7 @@ class MirrorController extends Controller
         if ($request->wantsJson()) {
             $user = $request->user();
             $user->mirrors()->syncWithoutDetaching($mirror->id);
+            Notification::send($mirror, new MirrorLinked($mirror->id, $user->id, "test"));
             return (['status' => 'success', 'message' => 'Mirror linked successfully', 'user_id' => $user->id, 'mirror_id' => $mirror->id]);
         }
     }
