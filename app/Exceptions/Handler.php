@@ -51,6 +51,9 @@ class Handler extends ExceptionHandler
         if($exception instanceof \Illuminate\Auth\AuthenticationException ){
             return response(['status' => 'error', 'message' => 'Unauthorized'], 401);
         }
+        if($exception instanceof \Illuminate\Database\QueryException ){
+            return response(['status' => 'error', 'message' => 'Invalid input syntax for type uuid'], 422);
+        }
         return parent::render($request, $exception);
     }
 }
