@@ -4,7 +4,7 @@ module.exports = function (io) {
         console.log("New connection !");
 
         socket.on("linked", function (data) {
-           io.emit("linked_" + data.mirror_id, data);
+           io.emit("linked_" + data.mirror.id, data);
         });
 
         socket.on('disconnect', function () {

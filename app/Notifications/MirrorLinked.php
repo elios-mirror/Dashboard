@@ -17,10 +17,10 @@ class MirrorLinked extends Notification
      *
      * @return void
      */
-    public function __construct($mirrorId, $userId, $accessToken)
+    public function __construct($mirror, $user, $accessToken)
     {
-        $this->mirrorId = $mirrorId;
-        $this->userId = $userId;
+        $this->mirror = $mirror;
+        $this->user = $user;
         $this->accessToken = $accessToken;
     }
 
@@ -59,9 +59,9 @@ class MirrorLinked extends Notification
     {
         return [
             'to'              => "linked",
-            'mirror_id'       => $this->mirrorId,
+            'mirror'       => $this->mirror,
             'access_token'    => $this->accessToken,
-            'user_id'         => $this->userId
+            'user'         => $this->user
         ];
     }
 }
