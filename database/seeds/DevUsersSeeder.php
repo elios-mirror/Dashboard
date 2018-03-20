@@ -44,25 +44,22 @@ class DevUsersSeeder extends Seeder
             ],
         ]);
 
-        $module = Module::create([
-            'name' => 'Module de test',
-            'repo' => 'fewieden/MMM-ip',
-            'commit' => 'test',
-            'publisher_id' => $user->id
-        ]);
+        $modules = ["fewieden/MMM-ip", "ianperrin/MMM-NetworkScanner", "mykle1/MMM-PC-Stats", "CFenner/MMM-Ping", "MichMich/MMM-WatchDog"];
 
-        Module::create([
-            'name' => 'Module de test',
-            'repo' => 'boazarad/MMM-CountDown',
-            'commit' => 'test',
-            'publisher_id' => $user->id
-        ]);
+        foreach ($modules as $module) {
+            $module = Module::create([
+                'name' => 'Module ' .  $module,
+                'repo' => $module,
+                'commit' => 'test',
+                'publisher_id' => $user->id
+            ]);
+            DB::table('user_modules')->insert(
+                [
+                    'module_id' => $module->id,
+                    'user_id' => $user->id
+                ]);
+        }
 
-        DB::table('user_modules')->insert([
-            [
-                'module_id' => $module->id,
-                'user_id' => $user->id
-            ],
-        ]);
+
     }
 }
