@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Mirror;
+use App\Module;
 
 class DevUsersSeeder extends Seeder
 {
@@ -39,6 +40,27 @@ class DevUsersSeeder extends Seeder
         DB::table('user_mirrors')->insert([
             [
                 'mirror_id' => $mirror->id,
+                'user_id' => $user->id
+            ],
+        ]);
+
+        $module = Module::create([
+            'name' => 'Module de test',
+            'repo' => 'fewieden/MMM-ip',
+            'commit' => 'test',
+            'publisher_id' => $user->id
+        ]);
+
+        Module::create([
+            'name' => 'Module de test',
+            'repo' => 'boazarad/MMM-CountDown',
+            'commit' => 'test',
+            'publisher_id' => $user->id
+        ]);
+
+        DB::table('user_modules')->insert([
+            [
+                'module_id' => $module->id,
                 'user_id' => $user->id
             ],
         ]);

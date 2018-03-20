@@ -20,9 +20,9 @@ class MirrorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $mirrors = Mirror::all();
+        $mirrors = $request->user()->mirrors()->get();
         return ($mirrors);
     }
 

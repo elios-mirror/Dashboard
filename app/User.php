@@ -34,4 +34,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Mirror', 'user_mirrors', 'user_id', 'mirror_id');
     }
+
+    public function modules()
+    {
+        return $this->belongsToMany('App\Module', 'user_modules', 'user_id', 'module_id');
+    }
 }
