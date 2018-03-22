@@ -106,7 +106,7 @@ class MirrorController extends Controller
         if ($request->wantsJson()) {
             $user = $request->user();
             $user->mirrors()->syncWithoutDetaching($mirror->id);
-            Notification::send($mirror, new MirrorLinked($mirror, $user, "test"));
+            Notification::send($mirror, new MirrorLinked($mirror, $user, str_replace("Bearer ", "", $request->header("Authorization"))));
             return (['status' => 'success', 'message' => 'Mirror linked successfully', 'user' => $user, 'mirror_id' => $mirror->id]);
         }
     }
