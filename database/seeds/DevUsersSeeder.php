@@ -14,10 +14,16 @@ class DevUsersSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
+        $user1 = User::create([
                'email' => 'root@root.com',
                'name' => 'Root',
                'password' => bcrypt('root')
+        ]);
+
+        $user2 = User::create([
+            'email' => 'matthias.prost@epitech.eu',
+            'name' => 'Matthias Prost',
+            'password' => bcrypt('root')
         ]);
 
         DB::table('oauth_clients')->insert([
@@ -40,23 +46,40 @@ class DevUsersSeeder extends Seeder
         DB::table('user_mirrors')->insert([
             [
                 'mirror_id' => $mirror->id,
-                'user_id' => $user->id
+                'user_id' => $user1->id
             ],
         ]);
 
-        $modules = ["fewieden/MMM-ip", "ianperrin/MMM-NetworkScanner", "mykle1/MMM-PC-Stats", "CFenner/MMM-Ping", "MichMich/MMM-WatchDog", "currentweather"];
+        $modules = [
+            ["fewieden/MMM-ip", "ianperrin/MMM-NetworkScanner", "mykle1/MMM-PC-Stats", "CFenner/MMM-Ping", "MichMich/MMM-WatchDog", "currentweather", "calendar"],
+            ["calendar", "newsfeed"],
+        ];
 
-        foreach ($modules as $module) {
+        foreach ($modules[0] as $module) {
             $module = Module::create([
                 'name' => 'Module ' .  $module,
                 'repo' => $module,
                 'commit' => 'test',
-                'publisher_id' => $user->id
+                'publisher_id' => $user1->id
             ]);
             DB::table('user_modules')->insert(
                 [
                     'module_id' => $module->id,
-                    'user_id' => $user->id
+                    'user_id' => $user1->id
+                ]);
+        }
+
+        foreach ($modules[1] as $module) {
+            $module = Module::create([
+                'name' => 'Module ' .  $module,
+                'repo' => $module,
+                'commit' => 'test',
+                'publisher_id' => $user2->id
+            ]);
+            DB::table('user_modules')->insert(
+                [
+                    'module_id' => $module->id,
+                    'user_id' => $user2->id
                 ]);
         }
 
