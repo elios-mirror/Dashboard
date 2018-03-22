@@ -51,7 +51,7 @@ class DevUsersSeeder extends Seeder
         ]);
 
         $modules = [
-            ["fewieden/MMM-ip", "ianperrin/MMM-NetworkScanner", "mykle1/MMM-PC-Stats", "CFenner/MMM-Ping", "MichMich/MMM-WatchDog", "currentweather", "calendar"],
+            ["fewieden/MMM-ip", "ianperrin/MMM-NetworkScanner", "mykle1/MMM-PC-Stats", "CFenner/MMM-Ping", "MichMich/MMM-WatchDog", "currentweather", "calendar", "camera", "voicecontrol"],
             ["calendar", "newsfeed", "compliments"],
         ];
 
