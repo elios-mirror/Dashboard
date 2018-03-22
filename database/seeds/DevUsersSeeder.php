@@ -52,7 +52,7 @@ class DevUsersSeeder extends Seeder
 
         $modules = [
             ["fewieden/MMM-ip", "ianperrin/MMM-NetworkScanner", "mykle1/MMM-PC-Stats", "CFenner/MMM-Ping", "MichMich/MMM-WatchDog", "currentweather", "calendar"],
-            ["calendar", "newsfeed"],
+            ["calendar", "newsfeed", "compliments"],
         ];
 
         foreach ($modules[0] as $module) {
