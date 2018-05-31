@@ -53,7 +53,8 @@ task('build:js', function() {
 });
 
 task('run:sockets', function() {
-    run('screen -dm bash -c "cd /var/www/html/release; npm install; killall nodejs;nodejs /var/www/html/release/sockets/development.js"');
+    run('cd /var/www/html/release; ./getOldScreenId.sh');
+    run('screen -dm bash -c "cd /var/www/html/release/sockets; npm install; cd /var/www/html/release; kill $(cat old_id); killall nodejs; cd /var/www/html/release/sockets; npm run dev"');
 });
 
 // [Optional] if deploy fails automatically unlock
