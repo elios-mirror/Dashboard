@@ -14,6 +14,7 @@
         "wisembly/elephant.io": "^3.3"
     },
     "require-dev": {
+        "deployer/recipes": "^6.1",
         "filp/whoops": "~2.0",
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~1.0",
@@ -39,6 +40,9 @@
         "laravel": {
             "dont-discover": [
             ]
+        },
+        "deployer": {
+            "include_path": "recipe/"
         }
     },
     "scripts": {
