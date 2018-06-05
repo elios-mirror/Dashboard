@@ -56,10 +56,15 @@ task('run:sockets', function() {
     run('screen -dm bash -c "cd /var/www/html/release/sockets; npm install; killall node; npm run dev"');
 });
 
+task('passport:install', function() {
+    run('cd {{deploy_path}}/release; php artisan passport:install');
+});
+
 // [Optional] if deploy fails automatically unlock
 //.
 after('deploy:failed', 'deploy:unlock');
 after('artisan:optimize', 'upload:env');
+after('upload:env', 'passport:install');
 //after('deploy:prepare', 'build:js');
 // Migrate database before symlink new release.
 before('deploy:symlink', 'artisan:migrate');
