@@ -31,3 +31,9 @@ Route::middleware(['auth:api'])->group(function () {
 
 Route::resource('mirrors', 'MirrorController');
 
+
+Route::post('/password/email', 'Auth\ForgotPasswordController@getResetToken');
+Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
+Route::post('/register', 'Auth\RegisterController@register');
+
+
