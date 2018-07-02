@@ -41,7 +41,7 @@ set('writable_dirs', [
 
 host('dev')
     ->user('root')
-    ->hostname('51.15.239.102') // TODO: remettre à dev.elios-mirror.com quand la zone dns sera propagé !
+    ->hostname('dev.elios-mirror.com')
     ->set('branch', 'dev');
 
 task('upload:env', function () {
