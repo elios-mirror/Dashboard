@@ -1,14 +1,20 @@
 before_script:
-  - apt-get update -qq && apt-get install -y -qq sqlite3 libsqlite3-dev nodejs
-  - ruby -v
-  - which ruby
-  - gem install bundler --no-ri --no-rdoc
-  - bundle install --jobs $(nproc)  "${FLAGS[@]}"
+# Install dependencies
+- bash ci/docker_install.sh > /dev/null
 
-rspec:
+# We test PHP5.6
+test:5.6:
+  image: php:5.6
   script:
-    - bundle exec rspec
+  - phpunit --configuration phpunit_myapp.xml
 
-rubocop:
+# We test PHP7.0 (good luck with that)
+test:7.0:
+  image: php:7.0
   script:
-    - bundle exec rubocop
+  - phpunit --configuration phpunit_myapp.xml
+
+trigger_build:
+  stage: deploy
+  script:
+  - "curl -X POST -F token=TOKEN -F ref=REF_NAME http://gitlab.elios-mirror.com/api/v4/projects/5/trigger/pipeline"
