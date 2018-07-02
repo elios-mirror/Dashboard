@@ -57,7 +57,7 @@ task('run:sockets', function() {
 });
 
 task('passport:install', function() {
-    run('cd {{deploy_path}}/release; php artisan passport:install');
+    run('cd {{deploy_path}}/release; php artisan passport:install --force ');
 });
 
 // [Optional] if deploy fails automatically unlock
