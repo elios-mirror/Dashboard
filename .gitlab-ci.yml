@@ -3,8 +3,8 @@ before_script:
 - bash ci/docker_install.sh > /dev/null
 
 # We test PHP7.0 (good luck with that)
-test:7.0:
-  image: php:7.0
+php:7.2:
+  image: php:7.2
   script:
   - phpunit --configuration phpunit_myapp.xml
 
