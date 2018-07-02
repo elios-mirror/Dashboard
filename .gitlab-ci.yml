@@ -1,14 +1,3 @@
 before_script:
 # Install dependencies
 - bash ci/docker_install.sh > /dev/null
-
-# We test PHP7.0 (good luck with that)
-php:7.2:
-  image: php:7.2
-  script:
-  - phpunit --configuration phpunit_myapp.xml
-
-trigger_build:
-  stage: deploy
-  script:
-  - "curl -X POST -F token=TOKEN -F ref=REF_NAME http://gitlab.elios-mirror.com/api/v4/projects/5/trigger/pipeline"
