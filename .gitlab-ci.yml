@@ -1,0 +1,9 @@
+before_script:
+# Install dependencies
+- bash ci/docker_install.sh > /dev/null
+
+# We test PHP7.0 (good luck with that)
+test:7.0:
+  image: php:7.0
+  script:
+  - echo "salut"
