@@ -16,7 +16,7 @@ class SocketChannel
     public function send($notifiable, Notification $notification)
     {
         $message = $notification->toSocket($notifiable);
-        $client = new Client(new Version2X("http://dev.elios-mirror.com:4224"));
+        $client = new Client(new Version2X(config("app.url") . ":4224"));
         $client->initialize();
         $client->emit($message['to'], $message);
         $client->close();
