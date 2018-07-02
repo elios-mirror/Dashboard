@@ -9,8 +9,8 @@ services:
 - mysql:latest
 
 variables:
-  MYSQL_DATABASE: project_name
-  MYSQL_ROOT_PASSWORD: secret
+  MYSQL_DATABASE: homestead
+  MYSQL_ROOT_PASSWORD: homestead
 
   # This folder is cached between builds
   # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
