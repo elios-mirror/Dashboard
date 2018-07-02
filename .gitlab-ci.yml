@@ -1,20 +1,15 @@
 before_script:
-  - bash .gitlab-ci.sh
- 
-variables:
-  MYSQL_DATABASE: project_name
-  MYSQL_ROOT_PASSWORD: secret
- 
-phpunit:php7.0:mysql5.6:
+# Install dependencies
+- bash ci/docker_install.sh > /dev/null
+
+# We test PHP5.6
+test:5.6:
+  image: php:5.6
+  script:
+  - phpunit --configuration phpunit_myapp.xml
+
+# We test PHP7.0 (good luck with that)
+test:7.0:
   image: php:7.0
-  services:
-    - mysql:5.6
   script:
-    - php vendor/bin/phpunit --colors
- 
-phpunit:php7.1:mysql5.6:
-  image: php:7.1
-  services:
-    - mysql:5.6
-  script:
-    - php vendor/bin/phpunit --colors
+  - phpunit --configuration phpunit_myapp.xml
