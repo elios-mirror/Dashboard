@@ -1,20 +1,22 @@
-before_script:
-  - bash .gitlab-ci.sh
- 
-variables:
-  MYSQL_DATABASE: project_name
-  MYSQL_ROOT_PASSWORD: secret
- 
-phpunit:php7.0:mysql5.6:
-  image: php:7.0
-  services:
-    - mysql:5.6
+stages:
+  - build
+  - production
+
+job_build:
+  stage: build
+  tags:
+    - ansible
   script:
-    - php vendor/bin/phpunit --colors
- 
-phpunit:php7.1:mysql5.6:
-  image: php:7.1
-  services:
-    - mysql:5.6
+    - ansible-playbook -i ./ansible/hosts/production.yml --extra-vars "version=$CI_BUILD_TAG" ./ansible/build.yml
+  only:
+    - tags
+
+job_production:
+  stage: production
+  tags:
+    - ansible
   script:
-    - php vendor/bin/phpunit --colors
+    - ansible-playbook -i ./ansible/hosts/production.yml --extra-vars "version=$CI_BUILD_TAG" ./ansible/deploy.yml
+  only:
+    - tags
+  when: on_success
