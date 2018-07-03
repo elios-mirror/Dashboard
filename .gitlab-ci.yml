@@ -42,7 +42,7 @@ test:
     when: always
 
 deploy_staging:
-  image: edbizarro/gitlab-ci-pipeline-php:7.1
+  image: chilio/laravel-dusk-ci:stable
   stage: deploy
   script:
   - ./deployer.phar deploy
