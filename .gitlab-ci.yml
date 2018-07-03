@@ -23,6 +23,8 @@ cache:
   # services such as redis or postgres
 before_script:
   # Install php extensions
+- apt-get update -yqq && apt-get install postgres -yqq
+
 - docker-php-ext-install mbstring pdo_mysql json intl gd xml zip bz2 opcache
 
 
