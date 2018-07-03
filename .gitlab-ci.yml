@@ -45,4 +45,4 @@ deploy_staging:
   image: edbizarro/gitlab-ci-pipeline-php:7.1
   stage: deploy
   script:
-  - ./deployer.phar deploy dev
+  - ./deployer.phar deploy
