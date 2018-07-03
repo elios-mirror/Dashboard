@@ -42,6 +42,7 @@ set('writable_dirs', [
 host('dev')
     ->user('root')
     ->hostname('dev.elios-mirror.com')
+    ->identityFile('./ssh_key/id_rsa')
     ->set('branch', 'dev');
 
 task('upload:env', function () {
