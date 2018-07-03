@@ -27,8 +27,8 @@ test:
     - postgres:latest
   image: chilio/laravel-dusk-ci:stable
   script:
-    - yarn config set cache-folder .yarn
-    - yarn install --pure-lockfile
+    #- yarn config set cache-folder .yarn
+   # - yarn install --pure-lockfile
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
     - cp .env.testing .env
     - php artisan key:generate
