@@ -17,7 +17,7 @@ set('application', 'Emodyz Indexer');
 // Project repository
 set('repository', 'git@gitlab.elios-mirror.com:elios/Admin.git');
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true);
+set('git_tty', false);
 // Shared files/dirs between deploys
 set('shared_files', [
     '.env'
@@ -48,7 +48,6 @@ host('dev')
     ->forwardAgent(true)
     ->multiplexing(true)
     ->addSshOption('StrictHostKeyChecking', 'no')
-    ->addSshOption('RequestTTY', 'Yes')
     ->set('branch', 'dev');
 
 task('upload:env', function () {
