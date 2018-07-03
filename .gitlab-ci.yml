@@ -23,6 +23,8 @@ cache:
 before_script:
   # Install php extensions
 #- docker-php-ext-install mbstring pdo_mysql curl json intl gd xml zip bz2 opcache
+- apt-get update -yqq
+- apt-get install git -yqq
 
 - ./composer.phar install
   # Copy over testing configuration.
