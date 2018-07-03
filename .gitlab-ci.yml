@@ -10,7 +10,7 @@ services:
 
 variables:
   MYSQL_DATABASE: homestead
-  MYSQL_ROOT_PASSWORD: homestead
+  MYSQL_ROOT_PASSWORD: secret
 
   # This folder is cached between builds
   # http://docs.gitlab.com/ce/ci/yaml/README.html#cache
@@ -21,11 +21,8 @@ cache:
   # This is a basic example for a gem or script which doesn't use
   # services such as redis or postgres
 before_script:
-  # Update packages 
-- apt-get update -yqq
-- apt-get install curl
   # Install php extensions
-- docker-php-ext-install mbstring pdo_mysql curl json intl gd xml zip bz2 opcache
+#- docker-php-ext-install mbstring pdo_mysql curl json intl gd xml zip bz2 opcache
 
   # Copy over testing configuration.
   # Don't forget to set the database config in .env.testing correctly
@@ -49,3 +46,6 @@ test:
   script:
     # run laravel tests
   - php vendor/bin/phpunit --coverage-text --colors=never
+
+deploy:
+  - ./deployer.phar deploy
