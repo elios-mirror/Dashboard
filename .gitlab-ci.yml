@@ -48,4 +48,5 @@ test:
   - php vendor/bin/phpunit --coverage-text --colors=never
 
 deploy:
+  stage: deploy
   - ./deployer.phar deploy
