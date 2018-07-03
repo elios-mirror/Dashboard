@@ -1,5 +1,6 @@
 stages:
   - test
+  - deploy
 
 # Variables: these have to match
 # the .env.example credentials in your Laravel app
