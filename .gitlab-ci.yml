@@ -49,4 +49,5 @@ test:
 
 deploy:
   stage: deploy
-  - ./deployer.phar deploy
+  script:
+    - ./deployer.phar deploy
