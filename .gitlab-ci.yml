@@ -40,7 +40,3 @@ test:
       - ./storage/logs # for debugging
     expire_in: 1 days
     when: always
-deploy:
-  stage: deploy
-  script:
-    - ./deployer.phar deploy
