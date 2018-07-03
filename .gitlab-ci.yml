@@ -25,7 +25,7 @@ test:
   stage: test
   services:
     - postgres:latest
-  image: chilio/laravel-dusk-ci:lasted
+  image: chilio/laravel-dusk-ci:stable
   script:
     - yarn config set cache-folder .yarn
     - yarn install --pure-lockfile
