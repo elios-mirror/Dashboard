@@ -82,6 +82,8 @@
                     {{ config('app.name') }}
                 </div>
 
+                <h2>TEST</h2>
+
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
