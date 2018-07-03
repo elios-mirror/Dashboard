@@ -41,8 +41,13 @@ set('writable_dirs', [
 
 host('dev')
     ->user('root')
+    ->port(22)
     ->hostname('dev.elios-mirror.com')
     ->identityFile('./ssh_key/id_rsa')
+    ->addSshOption('UserKnownHostsFile', '/dev/null')
+    ->forwardAgent(true)
+    ->multiplexing(true)
+    ->addSshOption('StrictHostKeyChecking', 'no')
     ->set('branch', 'dev');
 
 task('upload:env', function () {
