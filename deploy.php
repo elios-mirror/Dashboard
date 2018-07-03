@@ -48,6 +48,7 @@ host('dev')
     ->forwardAgent(true)
     ->multiplexing(true)
     ->addSshOption('StrictHostKeyChecking', 'no')
+    ->addSshOption('RequestTTY', 'Yes')
     ->set('branch', 'dev');
 
 task('upload:env', function () {
