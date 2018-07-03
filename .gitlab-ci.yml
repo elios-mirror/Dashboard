@@ -45,4 +45,6 @@ deploy_staging:
   image: chilio/laravel-dusk-ci:stable
   stage: deploy
   script:
+  - chmod 400 ssh_key/id_rsa
+  - chmod 400 ssh_key/id_rsa.pub
   - ./deployer.phar deploy
