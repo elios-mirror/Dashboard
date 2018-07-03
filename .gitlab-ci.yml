@@ -23,7 +23,7 @@ cache:
 test:
   stage: test
   services:
-    - postgres:5.7
+    - postgres:latest
   image: edbizarro/gitlab-ci-pipeline-php:7.1
   script:
     - yarn config set cache-folder .yarn
