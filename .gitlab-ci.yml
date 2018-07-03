@@ -27,7 +27,6 @@ before_script:
 
 - docker-php-ext-install mbstring pdo_mysql json intl gd xml zip bz2 opcache
 
-
 - ./composer.phar install
   # Copy over testing configuration.
   # Don't forget to set the database config in .env.testing correctly
@@ -47,10 +46,15 @@ before_script:
   # Run database seed
 - php artisan db:seed
 
-test:
+laravelUnit:
   script:
     # run laravel tests
   - php vendor/bin/phpunit --coverage-text --colors=never
+
+jsTemplateUnit:
+  script:
+  - echo "done."
+
 
 deploy:
   stage: deploy
