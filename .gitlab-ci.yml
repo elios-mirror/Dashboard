@@ -2,19 +2,13 @@ stages:
   - test
   - deploy
 
-# Variables: these have to match
-# the .env.example credentials in your Laravel app
-# use the default homestead/secret combination, since
-# that database gets created in the edbizarro/gitlab-ci-pipeline-php:7.1
-# docker image.
 variables:
   POSTGRES_DB: homestead
   POSTGRES_USER: root
   POSTGRES_PASSWORD: secret
 
-# Speed up builds
 cache:
-  key: $CI_COMMIT_REF_NAME # changed to $CI_COMMIT_REF_NAME in Gitlab 9.x
+  key: $CI_COMMIT_REF_NAME
   paths:
     - vendor
     - node_modules
@@ -27,8 +21,6 @@ test:
     - postgres:latest
   image: chilio/laravel-dusk-ci:stable
   script:
-    #- yarn config set cache-folder .yarn
-   # - yarn install --pure-lockfile
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
     - cp .env.testing .env
     - php artisan key:generate
@@ -37,7 +29,7 @@ test:
     - ./vendor/phpunit/phpunit/phpunit -v --coverage-text --colors=never --stderr
   artifacts:
     paths:
-      - ./storage/logs # for debugging
+      - ./storage/logs
     expire_in: 1 days
     when: always
 
