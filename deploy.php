@@ -52,6 +52,7 @@ host('dev')
 
 task('upload:env', function () {
     upload('.env.production',  '{{deploy_path}}/shared/.env');
+    run('cd {{deploy_path}}/release; php artisan config:clear; php artisan config:cache');
 })->desc('Environment setup');
 
 task('build:js', function() {
