@@ -18,3 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/registered', function () {
+    return view('registered');
+});
+
+Route::get('/email/resend', 'Auth\RegisterController@resend');
+Route::get('/email/confirm/{token}', 'Auth\RegisterController@confirm');

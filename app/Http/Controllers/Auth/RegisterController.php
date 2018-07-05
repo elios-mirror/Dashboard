@@ -40,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest')->except(['resend',  'confirm']);
     }
 
     /**
@@ -74,6 +74,10 @@ class RegisterController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function register(Request $request)
     {
         $errors = $this->validator($request->all())->errors();
@@ -88,15 +92,43 @@ class RegisterController extends Controller
 
         $this->guard()->login($user);
 
-        return view('verification');
+        session()->flash('status', 'Registered successfully, an verification email has been send, please confirm it !');
+
+        return redirect('home');
     }
 
-    public function verify($token)
+    /**
+     * @param $token
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function confirm($token)
     {
         $user = User::where('email_token', $token)->first();
-        $user->verified = 1;
-        if ($user->save()) {
-            return view('emailconfirm', ['user' => $user]);
+        if (!$user) {
+            session()->flash('status', 'Email confirmation expired');
         }
+
+        $user->confirmed = true;
+        $user->email_token = null;
+
+        $user->save();
+        $this->guard()->login($user);
+        session()->flash('status', 'Email confirmed with success !');
+
+        return redirect('home');
+
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function resend()
+    {
+        $user = auth()->user();
+
+        dispatch(new SendVerificationEmail($user));
+        session()->flash('status', 'An new email was send.');
+
+        return redirect('home');
     }
 }
