@@ -106,6 +106,7 @@ class RegisterController extends Controller
         $user = User::where('email_token', $token)->first();
         if (!$user) {
             session()->flash('status', 'Email confirmation expired');
+            return abort(200, 'Email confirmation expired');
         }
 
         $user->confirmed = true;

@@ -67,11 +67,16 @@ task('passport:install', function() {
     run('cd {{deploy_path}}/release; php artisan passport:install --force ');
 });
 
+task('db:migrate', function() {
+    run('cd {{deploy_path}}/release; php artisan migrate:fresh --seed --force');
+});
+
 // [Optional] if deploy fails automatically unlock
 //.
 after('deploy:failed', 'deploy:unlock');
 after('artisan:optimize', 'upload:env');
 after('upload:env', 'passport:install');
+after('passport:install', 'db:migrate');
 //after('deploy:prepare', 'build:js');
 // Migrate database before symlink new release.
 before('deploy:symlink', 'artisan:migrate');
