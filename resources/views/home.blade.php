@@ -8,7 +8,6 @@
                     <div class="card-header">Dashboard</div>
 
                     <div class="card-body">
-                       LOL {{ auth()->user() }} LL
                         @if(auth()->user()->confirmed === false)
                             <div class="alert alert-warning">
                                 Email not confirmed <a href="{{ url('/email/resend') }}" class="btn btn-info">Resend Email</a>
