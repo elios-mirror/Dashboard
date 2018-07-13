@@ -27,6 +27,18 @@
 
                 </div>
             </div>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Mirrors</div>
+
+                    <div class="card-body">
+                        @foreach(auth()->user()->mirrors as $mirror)
+                            {{ $mirror->name }}
+                        @endforeach
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
