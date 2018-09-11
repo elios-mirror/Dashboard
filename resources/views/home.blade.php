@@ -33,7 +33,7 @@
 
                     <div class="card-body">
                         @foreach(auth()->user()->mirrors as $mirror)
-                            {{ $mirror->name }}
+                            - {{ $mirror->name }} <br>
                         @endforeach
 
                     </div>
