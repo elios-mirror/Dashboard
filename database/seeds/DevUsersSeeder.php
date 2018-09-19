@@ -39,7 +39,7 @@ class DevUsersSeeder extends Seeder
         ]);
 
         $mirror = Mirror::create([
-            'name' => 'Mirroir de teste',
+            'name' => 'Mirroir de test',
             'ip' => "127.0.0.1"
         ]);
 

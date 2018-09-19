@@ -14,8 +14,9 @@ class CreateMirrorsTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
+
         Schema::create('mirrors', function (Blueprint $table) {
-            DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
             $table->uuid('id')->default(DB::raw('uuid_generate_v4()'));
             $table->primary('id');
             $table->string('name')->nullable();
@@ -24,7 +25,6 @@ class CreateMirrorsTable extends Migration
         });
 
         Schema::create('user_mirrors', function (Blueprint $table) {
-            DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
             $table->uuid('mirror_id');
             $table->uuid('user_id');
             $table->foreign('mirror_id')->references('id')->on('mirrors');
@@ -32,7 +32,8 @@ class CreateMirrorsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::enableForeignKeyConstraints();
+        Schema::disableForeignKeyConstraints();
+
     }
 
     /**
@@ -42,7 +43,7 @@ class CreateMirrorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mirrors');
         Schema::dropIfExists('user_mirrors');
+        Schema::dropIfExists('mirrors');
     }
 }

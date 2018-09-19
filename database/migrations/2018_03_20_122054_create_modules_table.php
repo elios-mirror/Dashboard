@@ -45,6 +45,8 @@ class CreateModulesTable extends Migration
             $table->timestamps();
         });
 
+        Schema::disableForeignKeyConstraints();
+
     }
 
     /**
@@ -54,8 +56,8 @@ class CreateModulesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('user_modules');
         Schema::dropIfExists('module_versions');
         Schema::dropIfExists('modules');
-        Schema::dropIfExists('user_modules');
     }
 }

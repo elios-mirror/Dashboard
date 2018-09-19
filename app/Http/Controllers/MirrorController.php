@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mirror;
+use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Notification;
 use App\Notifications\MirrorLinked;
 
@@ -101,22 +103,50 @@ class MirrorController extends Controller
         //
     }
 
-    public function link(Mirror $mirror, Request $request)
+    public function link($mirrorID, Request $request)
     {
+        $validator = Validator::make(['mirrorID' => $mirrorID], [
+            'mirrorID' => 'uuid',
+        ]);
+
+        if ($validator->fails()) {
+            return Response(['message' => 'Mirror UUID invalid'], 422);
+        }
+
+        $mirror = Mirror::find($mirrorID);
+
+        if (!$mirror) {
+            return Response(['message' => 'Mirror not found'], 404);
+        }
+
         if ($request->wantsJson()) {
             $user = $request->user();
             $user->mirrors()->syncWithoutDetaching($mirror->id);
             Notification::send($mirror, new MirrorLinked($mirror, $user, str_replace("Bearer ", "", $request->header("Authorization"))));
-            return (['status' => 'success', 'message' => 'Mirror linked successfully', 'user' => $user, 'mirror_id' => $mirror->id]);
+            return Response(['message' => 'Mirror linked successfully', 'user' => $user, 'mirror_id' => $mirror->id]);
         }
     }
 
-    public function unlink(Mirror $mirror, Request $request)
+    public function unlink($mirrorID, Request $request)
     {
+        $validator = Validator::make(['mirrorID' => $mirrorID], [
+            'mirrorID' => 'uuid',
+        ]);
+
+        if ($validator->fails()) {
+            return Response(['message' => 'Mirror UUID invalid'], 422);
+        }
+
+        $mirror = Mirror::find($mirrorID);
+
+        if (!$mirror) {
+            return Response(['message' => 'Mirror not found'], 404);
+        }
+
         if ($request->wantsJson()) {
             $user = $request->user();
             $user->mirrors()->detach($mirror->id);
-            return (['status' => 'success', 'message' => 'Mirror unlinked successfully', 'user_id' => $user->id, 'mirror_id' => $mirror->id]);
+            return Response(['message' => 'Mirror unlinked successfully', 'user_id' => $user->id, 'mirror_id' => $mirror->id]);
         }
     }
 }

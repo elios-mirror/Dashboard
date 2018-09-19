@@ -27,7 +27,7 @@
 
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8" style="padding-top: 20px">
                 <div class="card">
                     <div class="card-header">Mirrors</div>
 
