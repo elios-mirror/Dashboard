@@ -49,10 +49,11 @@ class MirrorController extends Controller
         if ($request->wantsJson()) {
             $mirror = Mirror::create([
                 'name' => $request->get('name'),
+                'model' => $request->has('model') ? $request->get('model') : 'LKD28376382',
                 'ip' => $request->getClientIp()
             ]);
 
-            return (['status' => 'success', 'message' => 'Mirror created with success', 'id' => $mirror->id]);
+            return response()->json(['status' => 'success', 'message' => 'Mirror created with success', 'id' => $mirror->id, 'model' => $mirror->model]);
         }
 
 

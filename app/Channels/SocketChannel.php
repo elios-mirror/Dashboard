@@ -4,6 +4,7 @@ namespace App\Channels;
 use ElephantIO\Client;
 use ElephantIO\Engine\SocketIO\Version2X;
 use Illuminate\Notifications\Notification;
+
 class SocketChannel
 {
     /**

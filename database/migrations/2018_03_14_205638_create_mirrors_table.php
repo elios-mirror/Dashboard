@@ -21,6 +21,8 @@ class CreateMirrorsTable extends Migration
             $table->primary('id');
             $table->string('name')->nullable();
             $table->ipAddress('ip')->nullable();
+            $table->string('model');
+            $table->foreign('model')->references('id')->on('mirror_models');
             $table->timestamps();
         });
 
