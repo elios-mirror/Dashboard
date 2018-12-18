@@ -12,10 +12,10 @@ class ModuleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $modules = $request->user()->modules()->get();
-        return ($modules);
+        $modules = Module::all();
+        return response()->json($modules);
     }
 
     /**
