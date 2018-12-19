@@ -39,4 +39,4 @@ deploy_staging:
   script:
   - chmod 400 ssh_key/id_rsa
   - chmod 400 ssh_key/id_rsa.pub
-  - ./deployer.phar deploy
+  - ./deployer.phar deploy dev

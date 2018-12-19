@@ -50,6 +50,12 @@ host('dev')
     ->addSshOption('StrictHostKeyChecking', 'no')
     ->set('branch', 'dev');
 
+host('dev-mac')
+    ->user('root')
+    ->port(22)
+    ->hostname('dev.elios-mirror.com')
+    ->set('branch', 'dev');
+
 task('upload:env', function () {
     upload('.env.production',  '{{deploy_path}}/shared/.env');
     run('cd {{deploy_path}}/release; php artisan config:clear; php artisan config:cache');
