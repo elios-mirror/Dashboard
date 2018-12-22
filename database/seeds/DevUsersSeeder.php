@@ -96,28 +96,10 @@ class DevUsersSeeder extends Seeder
         ]);
 
 
-        DB::table('user_modules')->insert(
-            [
-                'module_id' => $version->id,
-                'user_id' => $user1->id
-            ]);
+        $mirror->modules()->attach($version->id);
+        $mirror->modules()->attach($version2->id);
+        $mirror->modules()->attach($version3->id);
+        $mirror->modules()->attach($version4->id);
 
-        DB::table('user_modules')->insert(
-            [
-                'module_id' => $version2->id,
-                'user_id' => $user1->id
-            ]);
-
-        DB::table('user_modules')->insert(
-            [
-                'module_id' => $version3->id,
-                'user_id' => $user1->id
-            ]);
-
-        DB::table('user_modules')->insert(
-            [
-                'module_id' => $version4->id,
-                'user_id' => $user1->id
-            ]);
     }
 }

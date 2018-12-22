@@ -37,11 +37,11 @@ class CreateModulesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('user_modules', function (Blueprint $table) {
+        Schema::create('mirror_modules', function (Blueprint $table) {
             $table->uuid('module_id');
-            $table->uuid('user_id');
+            $table->uuid('mirror_id');
             $table->foreign('module_id')->references('id')->on('module_versions');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('mirror_id')->references('id')->on('mirrors');
             $table->timestamps();
         });
 
@@ -56,7 +56,7 @@ class CreateModulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_modules');
+        Schema::dropIfExists('mirror_modules');
         Schema::dropIfExists('module_versions');
         Schema::dropIfExists('modules');
     }

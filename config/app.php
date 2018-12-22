@@ -160,9 +160,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class,
-        // Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-
+        Barryvdh\Cors\ServiceProvider::class
     ],
 
     /*

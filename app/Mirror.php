@@ -21,6 +21,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Mirror whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Mirror whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $model
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Module[] $modules
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Mirror whereModel($value)
  */
 class Mirror extends Model
 {
@@ -40,5 +43,11 @@ class Mirror extends Model
     public function getModel()
     {
         return $this->hasOne('App\MirrorModel', 'model');
+    }
+
+
+    public function modules()
+    {
+        return $this->belongsToMany('App\Module', 'mirror_modules', 'mirror_id', 'module_id');
     }
 }

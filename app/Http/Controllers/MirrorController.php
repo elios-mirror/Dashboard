@@ -67,7 +67,7 @@ class MirrorController extends Controller
      */
     public function show(Mirror $mirror)
     {
-        //
+        return response()->json($mirror);
     }
 
     /**
