@@ -50,12 +50,8 @@ class DevUsersSeeder extends Seeder
 
         echo $model->id;
 
-        DB::table('user_mirrors')->insert([
-            [
-                'mirror_id' => $mirror->id,
-                'user_id' => $user1->id
-            ],
-        ]);
+
+        $user1->mirrors()->attach($mirror->id);
 
         $module = \App\Module::create([
             'title' => 'Module - Template',

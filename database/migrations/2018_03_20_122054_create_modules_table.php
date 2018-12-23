@@ -17,7 +17,7 @@ class CreateModulesTable extends Migration
         Schema::enableForeignKeyConstraints();
 
         Schema::create('modules', function (Blueprint $table) {
-            $table->uuid('id')->default(DB::raw('uuid_generate_v4()'));
+            $table->uuid('id');
             $table->primary('id');
             $table->string('title');
             $table->string('name');
@@ -28,7 +28,7 @@ class CreateModulesTable extends Migration
         });
 
         Schema::create('module_versions', function (Blueprint $table) {
-            $table->uuid('id')->default(DB::raw('uuid_generate_v4()'));
+            $table->uuid('id');
             $table->primary('id');
             $table->string('commit');
             $table->string('version');

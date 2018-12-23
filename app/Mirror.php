@@ -40,7 +40,7 @@ class Mirror extends Model
         'name', 'model'
     ];
 
-    public function getModel()
+    public function model()
     {
         return $this->hasOne('App\MirrorModel', 'model');
     }
@@ -48,6 +48,6 @@ class Mirror extends Model
 
     public function modules()
     {
-        return $this->belongsToMany('App\Module', 'mirror_modules', 'mirror_id', 'module_id');
+        return $this->belongsToMany('App\ModuleVersion', 'mirror_modules', 'mirror_id', 'module_id');
     }
 }

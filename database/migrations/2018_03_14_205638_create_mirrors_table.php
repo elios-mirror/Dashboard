@@ -17,7 +17,7 @@ class CreateMirrorsTable extends Migration
         Schema::enableForeignKeyConstraints();
 
         Schema::create('mirrors', function (Blueprint $table) {
-            $table->uuid('id')->default(DB::raw('uuid_generate_v4()'));
+            $table->uuid('id');
             $table->primary('id');
             $table->string('name')->nullable();
             $table->ipAddress('ip')->nullable();

@@ -89,7 +89,7 @@ class ModuleController extends Controller
         if ($request->wantsJson()) {
             $user = $request->user();
             $user->modules()->syncWithoutDetaching($module->id);
-            return (['status' => 'success', 'message' => 'Module linked successfully', 'user' => $user, 'module_id' => $module->id]);
+            return (['message' => 'Module linked successfully', 'user' => $user, 'module_id' => $module->id]);
         }
     }
 
@@ -98,7 +98,7 @@ class ModuleController extends Controller
         if ($request->wantsJson()) {
             $user = $request->user();
             $user->modules()->detach($module->id);
-            return (['status' => 'success', 'message' => 'Module unlinked successfully', 'user' => $user, 'module_id' => $module->id]);
+            return (['message' => 'Module unlinked successfully', 'user' => $user, 'module_id' => $module->id]);
         }
     }
 }

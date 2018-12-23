@@ -31,8 +31,9 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param  \Exception $exception
      * @return void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -48,8 +49,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if($exception instanceof \Illuminate\Auth\AuthenticationException ){
-            return response(['status' => 'error', 'message' => 'Unauthorized'], 401);
+        if($exception instanceof \Illuminate\Auth\AuthenticationException && $request->wantsJson()){
+            return response()->json(['status' => 'error', 'message' => 'Unauthorized'], 401);
         }
         return parent::render($request, $exception);
     }

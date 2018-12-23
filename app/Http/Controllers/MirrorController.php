@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mirror;
-use http\Env\Response;
+use App\Module;
+use App\ModuleVersion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Notification;
@@ -53,7 +54,7 @@ class MirrorController extends Controller
                 'ip' => $request->getClientIp()
             ]);
 
-            return response()->json(['status' => 'success', 'message' => 'Mirror created with success', 'id' => $mirror->id, 'model' => $mirror->model]);
+            return response()->json(['message' => 'Mirror created with success', 'id' => $mirror->id, 'model' => $mirror->model]);
         }
 
 
@@ -62,11 +63,15 @@ class MirrorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Mirror $mirror
+     * @param Mirror $mirror
      * @return \Illuminate\Http\Response
      */
     public function show(Mirror $mirror)
     {
+        $mirror = $mirror->with(['modules' => function ($query) {
+            $query->with('module');
+        }])->first();
+
         return response()->json($mirror);
     }
 
@@ -111,20 +116,20 @@ class MirrorController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return Response(['message' => 'Mirror UUID invalid'], 422);
+            return response()->json(['message' => 'Mirror UUID invalid'], 422);
         }
 
         $mirror = Mirror::find($mirrorID);
 
         if (!$mirror) {
-            return Response(['message' => 'Mirror not found'], 404);
+            return response()->json(['message' => 'Mirror not found'], 404);
         }
 
         if ($request->wantsJson()) {
             $user = $request->user();
             $user->mirrors()->syncWithoutDetaching($mirror->id);
             Notification::send($mirror, new MirrorLinked($mirror, $user, str_replace("Bearer ", "", $request->header("Authorization"))));
-            return Response(['message' => 'Mirror linked successfully', 'user' => $user, 'mirror_id' => $mirror->id]);
+            return response()->json(['message' => 'Mirror linked successfully', 'user' => $user, 'mirror_id' => $mirror->id]);
         }
     }
 
@@ -135,19 +140,19 @@ class MirrorController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return Response(['message' => 'Mirror UUID invalid'], 422);
+            return response()->json(['message' => 'Mirror UUID invalid'], 422);
         }
 
         $mirror = Mirror::find($mirrorID);
 
         if (!$mirror) {
-            return Response(['message' => 'Mirror not found'], 404);
+            return response()->json(['message' => 'Mirror not found'], 404);
         }
 
         if ($request->wantsJson()) {
             $user = $request->user();
             $user->mirrors()->detach($mirror->id);
-            return Response(['message' => 'Mirror unlinked successfully', 'user_id' => $user->id, 'mirror_id' => $mirror->id]);
+            return response()->json(['message' => 'Mirror unlinked successfully', 'user_id' => $user->id, 'mirror_id' => $mirror->id]);
         }
     }
 }

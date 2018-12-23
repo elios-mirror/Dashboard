@@ -10,7 +10,8 @@
                     <div class="card-body">
                         @if(auth()->user()->confirmed === false)
                             <div class="alert alert-warning">
-                                Email not confirmed <a href="{{ url('/email/resend') }}" class="btn btn-info">Resend Email</a>
+                                Email not confirmed <a href="{{ url('/email/resend') }}" class="btn btn-info">Resend
+                                    Email</a>
                             </div>
                         @endif
 
@@ -33,7 +34,7 @@
 
                     <div class="card-body">
                         @foreach(auth()->user()->mirrors as $mirror)
-                            - {{ $mirror->name }} <br>
+                            - {{ $mirror->name }} / model : {{  $mirror->model }} <br>
                         @endforeach
 
                     </div>

@@ -28,6 +28,8 @@ use Ramsey\Uuid\Uuid;
  */
 class ModuleVersion extends Model
 {
+    use Uuids;
+
     protected $primaryKey = "id";
 
     protected $casts = [
@@ -36,14 +38,6 @@ class ModuleVersion extends Model
 
     public function module()
     {
-        return $this->hasOne('App\Module', 'module_id');
-    }
-
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->id = Uuid::uuid4()->toString();
-        });
+        return $this->hasOne('App\Module', 'id', 'module_id');
     }
 }

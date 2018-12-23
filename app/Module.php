@@ -30,6 +30,9 @@ use Ramsey\Uuid\Uuid;
  */
 class Module extends Model
 {
+    use Uuids;
+
+
     protected $primaryKey = "id";
 
     protected $casts = [
@@ -51,13 +54,5 @@ class Module extends Model
     public function lastVersion()
     {
         return $this->hasMany('App\ModuleVersion', 'module_id')->latest();
-    }
-
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($model) {
-            $model->id = Uuid::uuid4()->toString();
-        });
     }
 }

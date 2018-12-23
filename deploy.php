@@ -105,7 +105,7 @@ set('discord_webhook', function () {
 // Deploy messages
 set('discord_notify_text', ':information_source: **{{user}}** is deploying branch `{{branch}}` to _{{target}}_');
 set('discord_success_text', ':white_check_mark: Branch `{{branch}}` deployed to _{{target}}_ successfully');
-set('discord_failure_text', ':no_entry_sign: Branch `{{branch}}` has failed to deploy to _{{target}}_');
+set('discord_failure_text', ':no_entry_sign: Branch `{{branch}}` has failed to deploy to _{{target}}_ <@!115212914704515073>');
 
 set('discord_type', 'discord_notify_text');
 
