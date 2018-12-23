@@ -37,8 +37,9 @@ class Mirror extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'name', 'model'
     ];
+
 
     /**
      * The attributes that should be hidden for arrays.
