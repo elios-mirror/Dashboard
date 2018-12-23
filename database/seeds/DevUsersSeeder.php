@@ -48,9 +48,6 @@ class DevUsersSeeder extends Seeder
             'model' => $model->id
         ]);
 
-        echo $model->id;
-
-
         $user1->mirrors()->attach($mirror->id);
 
         $module = \App\Module::create([

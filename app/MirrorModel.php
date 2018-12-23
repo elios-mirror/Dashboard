@@ -28,8 +28,6 @@ class MirrorModel extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'id'
-    ];
+    protected $fillable = [];
 
 }
