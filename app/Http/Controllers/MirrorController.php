@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Mirror;
-use App\Module;
-use App\ModuleVersion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Notification;
@@ -25,7 +23,9 @@ class MirrorController extends Controller
      */
     public function index(Request $request)
     {
-        $mirrors = $request->user()->mirrors()->get();
+        $mirrors = $request->user()->mirrors()->with(['modules' => function ($query) {
+            $query->with('module');
+        }])->get();
         return ($mirrors);
     }
 
@@ -56,8 +56,6 @@ class MirrorController extends Controller
 
             return response()->json(['message' => 'Mirror created with success', 'id' => $mirror->id, 'model' => $mirror->model]);
         }
-
-
     }
 
     /**
@@ -95,7 +93,16 @@ class MirrorController extends Controller
      */
     public function update(Request $request, Mirror $mirror)
     {
-        //
+        $form = $request->all();
+
+        $mirror->update($form);
+        $mirror->save();
+
+        if ($request->wantsJson()) {
+            return response()->json($mirror);
+        } else {
+            return back();
+        }
     }
 
     /**
