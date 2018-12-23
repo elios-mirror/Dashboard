@@ -22,6 +22,7 @@ class CreateModulesTable extends Migration
             $table->string('title');
             $table->string('name');
             $table->string('repository');
+            $table->text('description');
             $table->uuid('publisher_id');
             $table->foreign('publisher_id')->references('id')->on('users');
             $table->timestamps();
@@ -32,6 +33,7 @@ class CreateModulesTable extends Migration
             $table->primary('id');
             $table->string('commit');
             $table->string('version');
+            $table->text('changelog');
             $table->uuid('module_id');
             $table->foreign('module_id')->references('id')->on('modules');
             $table->timestamps();

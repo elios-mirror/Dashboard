@@ -14,17 +14,12 @@ class DevUsersSeeder extends Seeder
      */
     public function run()
     {
-        $user1 = User::create([
+        $user = User::create([
             'email' => 'root@root.com',
             'name' => 'Root',
             'password' => bcrypt('root')
         ]);
 
-        $user2 = User::create([
-            'email' => 'matthias.prost@epitech.eu',
-            'name' => 'Matthias Prost',
-            'password' => bcrypt('root')
-        ]);
 
         DB::table('oauth_clients')->insert([
             [
@@ -48,51 +43,57 @@ class DevUsersSeeder extends Seeder
             'model' => $model->id
         ]);
 
-        $user1->mirrors()->attach($mirror->id);
+        $user->mirrors()->attach($mirror->id);
 
         $module = \App\Module::create([
             'title' => 'Module - Template',
             'name' => 'module-template',
             'repository' => 'MrDarkSkil/module-template',
-            'publisher_id' => $user1->id
+            'publisher_id' => $user->id,
+            'description' => 'No description'
         ]);
 
         $module2 = \App\Module::create([
             'title' => 'Module - Arma3',
             'name' => 'module-arma3',
             'repository' => 'MrDarkSkil/module-arma3',
-            'publisher_id' => $user1->id
+            'publisher_id' => $user->id,
+            'description' => 'No description'
         ]);
 
-        $version = \App\ModuleVersion::create([
+        $versionModule1_1 = \App\ModuleVersion::create([
             'module_id' => $module->id,
             'commit' => 'e81f4b29541c2b0405d4a041f38d6916842aeca5',
-            'version' => '1.0.0'
+            'version' => '1.0.0',
+            'changelog' => 'Improve security'
         ]);
 
-        $version2 = \App\ModuleVersion::create([
+        $versionModule1_2 = \App\ModuleVersion::create([
             'module_id' => $module->id,
             'commit' => 'ce1ae9ecef1ad032016f8c8c366823df9fef4030',
-            'version' => '2.0.0'
+            'version' => '2.0.0',
+            'changelog' => 'Fix some bugs'
         ]);
 
-        $version3 = \App\ModuleVersion::create([
+        $versionModule1_3 = \App\ModuleVersion::create([
             'module_id' => $module->id,
             'commit' => '1a6cf28706c9ee00498acd706ba289de41cd0a12',
-            'version' => '3.0.0'
+            'version' => '3.0.0',
+            'changelog' => 'Fix some bugs && improve stability'
         ]);
 
-        $version4 = \App\ModuleVersion::create([
+        $versionModule2_1 = \App\ModuleVersion::create([
             'module_id' => $module2->id,
             'commit' => 'e42c6655ecc2bfce0cb88cb7fdef7ceabbcd9f75',
-            'version' => '1.0.0'
+            'version' => '1.0.0',
+            'changelog' => 'Fix some bugs && improve stability'
         ]);
 
 
-        $mirror->modules()->attach($version->id);
-        $mirror->modules()->attach($version2->id);
-        $mirror->modules()->attach($version3->id);
-        $mirror->modules()->attach($version4->id);
+        $mirror->modules()->attach($versionModule1_1->id);
+        $mirror->modules()->attach($versionModule1_2->id);
+        $mirror->modules()->attach($versionModule1_3->id);
+        $mirror->modules()->attach($versionModule2_1->id);
 
     }
 }

@@ -23,9 +23,7 @@ class MirrorController extends Controller
      */
     public function index(Request $request)
     {
-        $mirrors = $request->user()->mirrors()->with(['modules' => function ($query) {
-            $query->with('module');
-        }])->get();
+        $mirrors = $request->user()->mirrors()->withCount('modules')->get();
         return ($mirrors);
     }
 
@@ -66,9 +64,7 @@ class MirrorController extends Controller
      */
     public function show(Mirror $mirror)
     {
-        $mirror = $mirror->with(['modules' => function ($query) {
-            $query->with('module');
-        }])->first();
+        $mirror = $mirror->with('modules.module')->first();
 
         return response()->json($mirror);
     }
