@@ -62,7 +62,7 @@ class MirrorLinked extends Notification
             'mirror'          => $this->mirror,
             'access_token'    => $this->accessToken,
             'user'            => $this->user,
-            'modules'         => $this->user->modules()->get()
+            'modules'         => $this->mirror->modules
         ];
     }
 }
