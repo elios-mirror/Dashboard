@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware(['auth:api'])->group(function () {
 
     Route::get('/user', function (Request $request) {
-        $result = $request->user()->with('mirrors')->get();
+        $result = $request->user()->with('mirrors')->first();
         return $result;
     });
 
