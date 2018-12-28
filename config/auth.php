@@ -45,6 +45,11 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+
+        'mirror' => [
+            'driver' => 'passport',
+            'provider' => 'mirrors',
+        ],
     ],
 
     /*
@@ -69,7 +74,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
-
+        'mirrors' => [
+            'driver' => 'eloquent',
+            'model' => App\Mirror::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

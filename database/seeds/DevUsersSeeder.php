@@ -23,7 +23,6 @@ class DevUsersSeeder extends Seeder
 
         DB::table('oauth_clients')->insert([
             [
-                'id' => 1,
                 'name' => "Dev Grant Client",
                 'redirect' => 'http://localhost',
                 'personal_access_client' => 0,

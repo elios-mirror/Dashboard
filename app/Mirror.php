@@ -3,6 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use SMartins\PassportMultiauth\HasMultiAuthApiTokens;
 
 /**
  * App\Mirror
@@ -25,9 +28,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Module[] $modules
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Mirror whereModel($value)
  */
-class Mirror extends Model
+class Mirror extends Authenticatable
 {
-    use Uuids;
+    use Uuids, Notifiable, HasMultiAuthApiTokens;
 
     public $incrementing = false;
 

@@ -56,7 +56,9 @@ class MirrorController extends Controller
                 'ip' => $request->getClientIp()
             ]);
 
-            return response()->json(['message' => 'Mirror created with success', 'id' => $mirror->id, 'model' => $mirror->model]);
+            $token = $mirror->createToken('My Token')->accessToken;
+
+            return response()->json(['message' => 'Mirror created with success', 'id' => $mirror->id, 'model' => $mirror->model, 'access_token' => $token]);
         }
     }
 

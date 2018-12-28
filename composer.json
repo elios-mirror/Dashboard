@@ -11,6 +11,7 @@
         "laravel/framework": "5.6.*",
         "laravel/passport": "^5.0",
         "laravel/tinker": "~1.0",
+        "smartins/passport-multiauth": "^4.0",
         "webpatser/laravel-uuid": "^3.0",
         "wisembly/elephant.io": "^3.3"
     },
