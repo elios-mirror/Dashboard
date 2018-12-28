@@ -59,12 +59,12 @@ class MirrorController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Mirror $mirror
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Mirror $mirror)
+    public function show($id)
     {
-        $mirror = $mirror->with('modules.module')->first();
+        $mirror = Mirror::with('modules.module')->where('id', $id)->first();
 
         return response()->json($mirror);
     }
