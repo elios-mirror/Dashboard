@@ -6,6 +6,7 @@ use App\Mirror;
 use App\Module;
 use App\ModuleVersion;
 use App\Notifications\MirrorInstalledModule;
+use App\Notifications\MirrorUninstalledModule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Notification;
@@ -194,6 +195,7 @@ class MirrorController extends Controller
         } else {
             $mirror->modules()->detach($module->id);
         }
+        Notification::send($mirror, new MirrorUninstalledModule($mirror, $request->user(), $module));
         return response()->json($mirror);
     }
 }

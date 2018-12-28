@@ -61,6 +61,7 @@ class MirrorInstalledModule extends Notification
     {
         return [
             'to'              => "module",
+            'action'          => "install",
             'mirror'          => $this->mirror,
             'user'            => $this->user,
             'module'         => $this->module

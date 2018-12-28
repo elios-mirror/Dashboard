@@ -15,11 +15,15 @@ class MirrorUninstalledModule extends Notification
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @param $mirror
+     * @param $user
+     * @param $accessToken
      */
-    public function __construct()
+    public function __construct($mirror, $user, $module)
     {
-        //
+        $this->mirror = $mirror;
+        $this->user = $user;
+        $this->module = $module;
     }
 
     /**
@@ -56,7 +60,11 @@ class MirrorUninstalledModule extends Notification
     public function toArray($notifiable)
     {
         return [
-
+            'to'              => "module",
+            'action'          => "uninstall",
+            'mirror'          => $this->mirror,
+            'user'            => $this->user,
+            'module'         => $this->module
         ];
     }
 }
