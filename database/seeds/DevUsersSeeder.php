@@ -59,12 +59,20 @@ class DevUsersSeeder extends Seeder
         $versionModule2_1 = \App\ModuleVersion::create([
             'module_id' => $module2->id,
             'commit' => 'bb451931dbbade96662cf84c59dd0225c7e57db9',
+            'version' => '2.0.0',
+            'changelog' => 'Pink Lol'
+        ]);
+
+        $versionModule2_2 = \App\ModuleVersion::create([
+            'module_id' => $module2->id,
+            'commit' => '10bea638af5b567f905178bf8a71604390510378',
             'version' => '1.0.0',
-            'changelog' => 'Fix some bugs && improve stability'
+            'changelog' => 'Yellow i think'
         ]);
 
 
         $mirror->modules()->attach($versionModule2_1->id);
+        $mirror->modules()->attach($versionModule2_2->id);
 
     }
 }

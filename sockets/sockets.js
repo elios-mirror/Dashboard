@@ -7,6 +7,10 @@ module.exports = function (io) {
            io.emit("linked_" + data.mirror.id, data);
         });
 
+        socket.on("module", function (data) {
+            io.emit("module_" + data.mirror.id, data);
+        });
+
         socket.on('disconnect', function () {
             console.log("Disconnected !");
         });

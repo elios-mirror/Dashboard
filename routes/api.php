@@ -23,6 +23,9 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/mirrors/{mirror}/link', 'MirrorController@link');
     Route::post('/mirrors/{mirror}/unlink', 'MirrorController@unlink');
 
+    Route::post('/mirrors/{mirror}/{module}', 'MirrorController@installModule');
+    Route::delete('/mirrors/{mirror}/{module}', 'MirrorController@uninstallModule');
+
     Route::resource('modules', 'ModuleController');
 
 });

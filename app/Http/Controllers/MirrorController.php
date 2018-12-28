@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mirror;
+use App\Module;
+use App\ModuleVersion;
+use App\Notifications\MirrorInstalledModule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Notification;
@@ -157,5 +160,40 @@ class MirrorController extends Controller
             $user->mirrors()->detach($mirror->id);
             return response()->json(['message' => 'Mirror unlinked successfully', 'user_id' => $user->id, 'mirror_id' => $mirror->id]);
         }
+    }
+
+    public function installModule($mirrorId, $moduleId, Request $request)
+    {
+        $mirror = Mirror::with('modules.module')->findOrFail($mirrorId);
+        $module = ModuleVersion::find($moduleId);
+        if (!$module) {
+            $module = Module::find($moduleId);
+            if (!$module) {
+                return response(402);
+            }
+            $module = $module->lastVersion();
+        }
+
+        $mirror->modules()->syncWithoutDetaching($module->id);
+        Notification::send($mirror, new MirrorInstalledModule($mirror, $request->user(), $module));
+        return response()->json($mirror);
+    }
+
+    public function uninstallModule($mirrorId, $moduleId, Request $request)
+    {
+        $mirror = Mirror::with('modules.module')->findOrFail($mirrorId);
+        $module = ModuleVersion::find($moduleId);
+        if (!$module) {
+            $module = Module::find($moduleId);
+            if (!$module) {
+                return response(402);
+            }
+            foreach ($module->versions as $version) {
+                $mirror->modules()->detach($version->id);
+            }
+        } else {
+            $mirror->modules()->detach($module->id);
+        }
+        return response()->json($mirror);
     }
 }

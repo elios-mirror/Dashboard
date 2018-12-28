@@ -2,28 +2,24 @@
 
 namespace App\Notifications;
 
+use App\Channels\SocketChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Channels\SocketChannel;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class MirrorLinked extends Notification
+class MirrorUninstalledModule extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      *
-     * @param $mirror
-     * @param $user
-     * @param $accessToken
+     * @return void
      */
-    public function __construct($mirror, $user, $accessToken)
+    public function __construct()
     {
-        $this->mirror = $mirror;
-        $this->user = $user;
-        $this->accessToken = $accessToken;
+        //
     }
 
     /**
@@ -57,14 +53,10 @@ class MirrorLinked extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toSocket($notifiable)
+    public function toArray($notifiable)
     {
         return [
-            'to'              => "linked",
-            'mirror'          => $this->mirror,
-            'access_token'    => $this->accessToken,
-            'user'            => $this->user,
-            'modules'         => $this->mirror->modules
+
         ];
     }
 }

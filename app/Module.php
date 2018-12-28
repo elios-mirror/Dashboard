@@ -52,6 +52,11 @@ class Module extends Model
 
     public function lastVersion()
     {
+        return $this->hasMany('App\ModuleVersion', 'module_id')->latest()->first();
+    }
+
+    public function versions()
+    {
         return $this->hasMany('App\ModuleVersion', 'module_id')->latest();
     }
 }
