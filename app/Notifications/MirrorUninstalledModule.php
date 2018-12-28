@@ -57,7 +57,7 @@ class MirrorUninstalledModule extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toSocket($notifiable)
     {
         return [
             'to'              => "module",
