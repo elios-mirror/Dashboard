@@ -54,9 +54,9 @@ class DevUsersSeeder extends Seeder
         ]);
 
         $module2 = \App\Module::create([
-            'title' => 'Module - Arma3',
-            'name' => 'module-arma3',
-            'repository' => 'MrDarkSkil/module-arma3',
+            'title' => 'Module - Test',
+            'name' => 'module-test',
+            'repository' => 'MrDarkSkil/module-test',
             'publisher_id' => $user->id,
             'description' => 'No description'
         ]);
@@ -84,7 +84,7 @@ class DevUsersSeeder extends Seeder
 
         $versionModule2_1 = \App\ModuleVersion::create([
             'module_id' => $module2->id,
-            'commit' => 'e42c6655ecc2bfce0cb88cb7fdef7ceabbcd9f75',
+            'commit' => '148114ff595e8f83c3771901dda5d84dd8368907',
             'version' => '1.0.0',
             'changelog' => 'Fix some bugs && improve stability'
         ]);
