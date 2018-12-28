@@ -45,13 +45,6 @@ class DevUsersSeeder extends Seeder
 
         $user->mirrors()->attach($mirror->id);
 
-        $module = \App\Module::create([
-            'title' => 'Module - Template',
-            'name' => 'module-template',
-            'repository' => 'MrDarkSkil/module-template',
-            'publisher_id' => $user->id,
-            'description' => 'No description'
-        ]);
 
         $module2 = \App\Module::create([
             'title' => 'Module - Test',
@@ -61,26 +54,7 @@ class DevUsersSeeder extends Seeder
             'description' => 'No description'
         ]);
 
-        $versionModule1_1 = \App\ModuleVersion::create([
-            'module_id' => $module->id,
-            'commit' => 'e81f4b29541c2b0405d4a041f38d6916842aeca5',
-            'version' => '1.0.0',
-            'changelog' => 'Improve security'
-        ]);
 
-        $versionModule1_2 = \App\ModuleVersion::create([
-            'module_id' => $module->id,
-            'commit' => 'ce1ae9ecef1ad032016f8c8c366823df9fef4030',
-            'version' => '2.0.0',
-            'changelog' => 'Fix some bugs'
-        ]);
-
-        $versionModule1_3 = \App\ModuleVersion::create([
-            'module_id' => $module->id,
-            'commit' => '1a6cf28706c9ee00498acd706ba289de41cd0a12',
-            'version' => '3.0.0',
-            'changelog' => 'Fix some bugs && improve stability'
-        ]);
 
         $versionModule2_1 = \App\ModuleVersion::create([
             'module_id' => $module2->id,
@@ -90,9 +64,6 @@ class DevUsersSeeder extends Seeder
         ]);
 
 
-        $mirror->modules()->attach($versionModule1_1->id);
-        $mirror->modules()->attach($versionModule1_2->id);
-        $mirror->modules()->attach($versionModule1_3->id);
         $mirror->modules()->attach($versionModule2_1->id);
 
     }
