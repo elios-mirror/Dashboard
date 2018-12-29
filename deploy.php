@@ -74,7 +74,7 @@ task('passport:install', function() {
 });
 
 task('db:migrate', function() {
-    run('cd {{deploy_path}}/release; php artisan migrate:fresh --seed --force');
+    run('cd {{deploy_path}}/release; php artisan migrate:fresh; php artisan passport:client --personal; php artisan db:seed');
 });
 
 // [Optional] if deploy fails automatically unlock

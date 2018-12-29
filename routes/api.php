@@ -13,6 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
+
+
+Route::group(['middleware' => ['api', 'multiauth:mirror']], function () {
+    Route::get('/mirror', function (Request $request) {
+        return $request->user();
+    });
+});
+
+
+
 Route::middleware(['auth:api'])->group(function () {
 
     Route::get('/user', function (Request $request) {
