@@ -38,6 +38,8 @@ use SMartins\PassportMultiauth\HasMultiAuthApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $email_verified_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereEmailVerifiedAt($value)
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

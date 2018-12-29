@@ -27,6 +27,9 @@ use Ramsey\Uuid\Uuid;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Module whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\ModuleVersion[] $lastVersion
+ * @property string $description
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\ModuleVersion[] $versions
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Module whereDescription($value)
  */
 class Module extends Model
 {

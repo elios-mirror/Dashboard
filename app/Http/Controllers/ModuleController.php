@@ -47,7 +47,8 @@ class ModuleController extends Controller
      */
     public function show($id)
     {
-        $module = Module::with('versions')->where('id', $id)->first();
+        $module = Module::findOrFail($id);
+        $module->versions;
         return response()->json($module);
     }
 

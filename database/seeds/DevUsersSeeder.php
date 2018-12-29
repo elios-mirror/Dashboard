@@ -19,6 +19,11 @@ class DevUsersSeeder extends Seeder
             'name' => 'Root',
             'password' => bcrypt('root')
         ]);
+        $user2 = User::create([
+            'email' => 'root@root.com2',
+            'name' => 'Root',
+            'password' => bcrypt('root')
+        ]);
 
 
         DB::table('oauth_clients')->insert([
@@ -29,6 +34,23 @@ class DevUsersSeeder extends Seeder
                 'password_client' => 1,
                 'revoked' => 0,
                 'secret' => 'Rp52CEoYWjiIA0kRTTGspdbjee3tQxSaNCVn7J87'
+            ]
+        ]);
+
+        DB::table('oauth_clients')->insert([
+            [
+                'name' => "Dev Grant Client",
+                'redirect' => 'http://localhost',
+                'personal_access_client' => 1,
+                'password_client' => 0,
+                'revoked' => 0,
+                'secret' => 'BKnWQrXAueBnxX0vHzcxjrmY5BoXl99Iy5Z11ene'
+            ]
+        ]);
+
+        DB::table('oauth_personal_access_clients')->insert([
+            [
+                'client_id' => 2,
             ]
         ]);
 
@@ -54,7 +76,6 @@ class DevUsersSeeder extends Seeder
         ]);
 
 
-
         $versionModule2_1 = \App\ModuleVersion::create([
             'module_id' => $module2->id,
             'commit' => 'bb451931dbbade96662cf84c59dd0225c7e57db9',
@@ -70,8 +91,10 @@ class DevUsersSeeder extends Seeder
         ]);
 
 
-        $mirror->modules()->attach($versionModule2_1->id);
-        $mirror->modules()->attach($versionModule2_2->id);
+        $mirror->modules()->attach($versionModule2_1->id, ['user_id' => $user->id]);
+        $mirror->modules()->attach($versionModule2_2->id, ['user_id' => $user2->id]);
+
+        echo $mirror->modules($user2->id)->get();
 
     }
 }

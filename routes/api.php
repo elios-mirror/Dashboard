@@ -16,8 +16,23 @@ use Illuminate\Http\Request;
 
 
 Route::group(['middleware' => ['api', 'multiauth:mirror']], function () {
-    Route::get('/mirror', function (Request $request) {
-        return $request->user();
+    Route::group(['prefix' => 'mirror'], function () {
+        Route::get('/', function (Request $request) {
+            return $request->user()->with('users')->whereId($request->user()->id)->first();
+        });
+        Route::get('/users', function (Request $request) {
+            $mirror = $request->user();
+            $users = $mirror->users;
+            return $users;
+        });
+        Route::get('/users/{userId}/modules', function (Request $request, $userId) {
+            $mirror = $request->user();
+            $user = $mirror->users()->whereId($userId)->first();
+            if (!$user) {
+                return response()->json(['error' => 'No user found for this mirror'], 404);
+            }
+            return $mirror->modules($user->id)->get();
+        });
     });
 });
 

@@ -68,9 +68,12 @@ class MirrorController extends Controller
      * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $mirror = Mirror::with('modules.module')->where('id', $id)->first();
+        $mirror = Mirror::findOrFail($id);
+        $user = $request->user();
+
+        $mirror['modules'] = $mirror->modules($user->id)->get();
 
         return response()->json($mirror);
     }
@@ -167,24 +170,24 @@ class MirrorController extends Controller
 
     public function installModule($mirrorId, $moduleId, Request $request)
     {
-        $mirror = Mirror::with('modules.module')->findOrFail($mirrorId);
+        $user = $request->user();
+        $mirror = Mirror::findOrFail($mirrorId);
         $module = ModuleVersion::find($moduleId);
         if (!$module) {
-            $module = Module::find($moduleId);
-            if (!$module) {
-                return response(402);
-            }
+            $module = Module::findOrFail($moduleId);
             $module = $module->lastVersion();
         }
 
-        $mirror->modules()->syncWithoutDetaching($module->id);
+        $mirror->modules()->attach($module->id, ['user_id' => $user->id]);
+        $mirror['modules'] = $mirror->modules($user->id)->get();
         Notification::send($mirror, new MirrorInstalledModule($mirror, $request->user(), $module));
         return response()->json($mirror);
     }
 
     public function uninstallModule($mirrorId, $moduleId, Request $request)
     {
-        $mirror = Mirror::with('modules.module')->findOrFail($mirrorId);
+        $user = $request->user();
+        $mirror = Mirror::findOrFail($mirrorId);
         $module = ModuleVersion::find($moduleId);
         if (!$module) {
             $module = Module::find($moduleId);
@@ -192,11 +195,12 @@ class MirrorController extends Controller
                 return response(402);
             }
             foreach ($module->versions as $version) {
-                $mirror->modules()->detach($version->id);
+                $mirror->modules($user->id)->detach($version->id);
             }
         } else {
-            $mirror->modules()->detach($module->id);
+            $mirror->modules($user->id)->detach($module->id);
         }
+        $mirror['modules'] = $mirror->modules($user->id)->get();
         Notification::send($mirror, new MirrorUninstalledModule($mirror, $request->user(), $module));
         return response()->json($mirror);
     }
