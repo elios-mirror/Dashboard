@@ -22,11 +22,10 @@ Route::group(['middleware' => ['api', 'multiauth:mirror']], function () {
 });
 
 
-
 Route::middleware(['auth:api'])->group(function () {
 
     Route::get('/user', function (Request $request) {
-        $result = $request->user()->with('mirrors')->first();
+        $result = $request->user()->with('mirrors')->whereId($request->user()->id)->first();
         return $result;
     });
 
@@ -42,9 +41,6 @@ Route::middleware(['auth:api'])->group(function () {
 
 Route::resource('mirrors', 'MirrorController');
 
-
-Route::post('/password/email', 'Auth\ForgotPasswordController@getResetToken');
-Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
 Route::post('/register', 'Auth\RegisterController@register');
 
 
