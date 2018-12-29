@@ -31,7 +31,8 @@ Route::group(['middleware' => ['api', 'multiauth:mirror']], function () {
             if (!$user) {
                 return response()->json(['error' => 'No user found for this mirror'], 404);
             }
-            return $mirror->modules($user->id)->get();
+            $mirror = $mirror->modules($user->id)->with('module')->get();
+            return $mirror;
         });
     });
 });

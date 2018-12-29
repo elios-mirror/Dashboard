@@ -85,22 +85,4 @@ class ModuleController extends Controller
     {
         //
     }
-
-    public function link(Module $module, Request $request)
-    {
-        if ($request->wantsJson()) {
-            $user = $request->user();
-            $user->modules()->syncWithoutDetaching($module->id);
-            return (['message' => 'Module linked successfully', 'user' => $user, 'module_id' => $module->id]);
-        }
-    }
-
-    public function unlink(Module $module, Request $request)
-    {
-        if ($request->wantsJson()) {
-            $user = $request->user();
-            $user->modules()->detach($module->id);
-            return (['message' => 'Module unlinked successfully', 'user' => $user, 'module_id' => $module->id]);
-        }
-    }
 }
