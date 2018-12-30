@@ -180,6 +180,7 @@ class MirrorController extends Controller
 
         $mirror->modules()->attach($module->id, ['user_id' => $user->id]);
         $mirror['modules'] = $mirror->modules($user->id)->get();
+        $module = $mirror->modules($user->id)->where('id', $module->id)->first();
         Notification::send($mirror, new MirrorInstalledModule($mirror, $request->user(), $module));
         return response()->json($mirror);
     }
@@ -200,6 +201,7 @@ class MirrorController extends Controller
         } else {
             $mirror->modules($user->id)->detach($module->id);
         }
+        $module->module;
         $mirror['modules'] = $mirror->modules($user->id)->get();
         Notification::send($mirror, new MirrorUninstalledModule($mirror, $request->user(), $module));
         return response()->json($mirror);
