@@ -181,6 +181,7 @@ class MirrorController extends Controller
         $mirror->modules()->attach($module->id, ['user_id' => $user->id]);
         $mirror['modules'] = $mirror->modules($user->id)->get();
         $module = $mirror->modules($user->id)->where('id', $module->id)->first();
+        $module->module;
         Notification::send($mirror, new MirrorInstalledModule($mirror, $request->user(), $module));
         return response()->json($mirror);
     }
