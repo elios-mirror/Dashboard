@@ -62,9 +62,11 @@ class Mirror extends Authenticatable
     }
 
 
-    public function modules($userId = null)
+    public function modules($userId = null, $installId = null)
     {
-        if ($userId)
+        if ($userId && $installId)
+            return $this->belongsToMany('App\ModuleVersion', 'mirror_modules', 'mirror_id', 'module_id')->withPivot(['user_id', 'install_id'])->where('user_id', $userId)->where('install_id', $installId);
+        else if ($userId)
             return $this->belongsToMany('App\ModuleVersion', 'mirror_modules', 'mirror_id', 'module_id')->withPivot(['user_id', 'install_id'])->where('user_id', $userId);
         return $this->belongsToMany('App\ModuleVersion', 'mirror_modules', 'mirror_id', 'module_id')->withPivot(['user_id', 'install_id']);
     }

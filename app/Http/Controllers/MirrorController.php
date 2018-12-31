@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Notification;
 use App\Notifications\MirrorLinked;
+use Ramsey\Uuid\Uuid;
 
 class MirrorController extends Controller
 {
@@ -177,10 +178,11 @@ class MirrorController extends Controller
             $module = Module::findOrFail($moduleId);
             $module = $module->lastVersion();
         }
+        $installId = Uuid::uuid4();
 
-        $mirror->modules()->attach($module->id, ['user_id' => $user->id]);
+        $mirror->modules()->attach($module->id, ['user_id' => $user->id, 'install_id' => $installId]);
         $mirror['modules'] = $mirror->modules($user->id)->get();
-        $module = $mirror->modules($user->id)->where('id', $module->id)->first();
+        $module = $mirror->modules($user->id, $installId)->where('id', $module->id)->latest()->first();
         $module->module;
         Notification::send($mirror, new MirrorInstalledModule($mirror, $request->user(), $module));
         return response()->json($mirror);
