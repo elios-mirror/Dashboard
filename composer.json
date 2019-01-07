@@ -45,9 +45,6 @@
             "dont-discover": [
                 "laravel/dusk"
             ]
-        },
-        "deployer": {
-            "include_path": "recipe/"
         }
     },
     "scripts": {
