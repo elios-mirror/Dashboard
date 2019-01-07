@@ -64,11 +64,11 @@ class DevUsersSeeder extends Seeder
             'model' => $model->id
         ]);
 
-        $link = $user->mirrors()->attach($mirror->id);
+        $user->mirrors()->attach($mirror->id);
 
 
 
-        $module2 = \App\Module::create([
+        $module1 = \App\Module::create([
             'title' => 'Module - Test',
             'name' => 'module-test',
             'repository' => 'MrDarkSkil/module-test',
@@ -78,24 +78,22 @@ class DevUsersSeeder extends Seeder
 
 
         $versionModule2_1 = \App\ModuleVersion::create([
-            'module_id' => $module2->id,
-            'commit' => 'b6eba5bb072fa1266d76cb17c65d5e3f15b0524b',
+            'module_id' => $module1->id,
+            'commit' => 'b122b6c861e828bf1093d0bc6823c4f4a4a6aa86',
             'version' => '1.0.0',
             'changelog' => 'First version'
         ]);
 
-        $link = $user->mirrors()->first()->link->modules()->attach($versionModule2_1->id);
+        $versionModule2_2 = \App\ModuleVersion::create([
+            'module_id' => $module1->id,
+            'commit' => '284ddb55c15fa7a8f4d8e4000c7c5595596245e7',
+            'version' => '2.0.0',
+            'changelog' => 'Change color'
+        ]);
 
+        $user->mirrors()->first()->link->modules()->attach($versionModule2_1->id);
+        $user->mirrors()->first()->link->modules()->attach($versionModule2_2->id);
 
-
-
-
-        echo $user->mirrors()->first()->link->modules;
-
-
-        // $mirror->modules()->attach($versionModule2_1->id, ['user_id' => $user->id]);
-
-        // echo $mirror->modules()->get();
 
     }
 }
