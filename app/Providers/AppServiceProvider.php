@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Passport::ignoreMigrations();
 
-        if ($this->app->environment() !== 'production') {
+        if ($this->app->environment() === 'development') {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
     }
