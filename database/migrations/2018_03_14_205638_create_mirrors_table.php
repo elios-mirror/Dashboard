@@ -27,6 +27,8 @@ class CreateMirrorsTable extends Migration
         });
 
         Schema::create('user_mirrors', function (Blueprint $table) {
+            $table->uuid('id');
+            $table->primary('id');
             $table->uuid('mirror_id');
             $table->uuid('user_id');
             $table->foreign('mirror_id')->references('id')->on('mirrors');

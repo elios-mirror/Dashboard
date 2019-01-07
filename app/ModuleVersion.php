@@ -40,6 +40,6 @@ class ModuleVersion extends Model
 
     public function module()
     {
-        return $this->hasOne('App\Module', 'id', 'module_id');
+        return $this->hasOne(Module::class, 'id', 'module_id');
     }
 }

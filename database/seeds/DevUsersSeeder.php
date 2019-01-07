@@ -64,7 +64,8 @@ class DevUsersSeeder extends Seeder
             'model' => $model->id
         ]);
 
-        $user->mirrors()->attach($mirror->id);
+        $link = $user->mirrors()->attach($mirror->id);
+
 
 
         $module2 = \App\Module::create([
@@ -78,23 +79,23 @@ class DevUsersSeeder extends Seeder
 
         $versionModule2_1 = \App\ModuleVersion::create([
             'module_id' => $module2->id,
-            'commit' => 'bb451931dbbade96662cf84c59dd0225c7e57db9',
-            'version' => '2.0.0',
-            'changelog' => 'Pink Lol'
-        ]);
-
-        $versionModule2_2 = \App\ModuleVersion::create([
-            'module_id' => $module2->id,
-            'commit' => '10bea638af5b567f905178bf8a71604390510378',
+            'commit' => 'b6eba5bb072fa1266d76cb17c65d5e3f15b0524b',
             'version' => '1.0.0',
-            'changelog' => 'Yellow i think'
+            'changelog' => 'First version'
         ]);
 
+        $link = $user->mirrors()->first()->link->modules()->attach($versionModule2_1->id);
 
-        $mirror->modules()->attach($versionModule2_1->id, ['user_id' => $user->id]);
-        $mirror->modules()->attach($versionModule2_2->id, ['user_id' => $user2->id]);
 
-        echo $mirror->modules($user2->id)->get();
+
+
+
+        echo $user->mirrors()->first()->link->modules;
+
+
+        // $mirror->modules()->attach($versionModule2_1->id, ['user_id' => $user->id]);
+
+        // echo $mirror->modules()->get();
 
     }
 }

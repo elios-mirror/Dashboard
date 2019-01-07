@@ -40,13 +40,12 @@ class CreateModulesTable extends Migration
         });
 
         Schema::create('mirror_modules', function (Blueprint $table) {
-            $table->uuid('install_id')->default(DB::raw('uuid_generate_v4()'));
-            $table->uuid('user_id');
+            $table->uuid('id');
+            $table->primary('id');
             $table->uuid('module_id');
-            $table->uuid('mirror_id');
+            $table->uuid('link_id');
             $table->foreign('module_id')->references('id')->on('module_versions');
-            $table->foreign('mirror_id')->references('id')->on('mirrors');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('link_id')->references('id')->on('user_mirrors');
             $table->timestamps();
         });
 

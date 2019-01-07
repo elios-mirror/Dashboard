@@ -24,11 +24,12 @@ class MirrorController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        $mirrors = $request->user()->mirrors()->withCount('modules')->get();
+        $mirrors = $request->user()->mirrors()->get();
         return ($mirrors);
     }
 
@@ -66,15 +67,19 @@ class MirrorController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param Request $request
      * @param $id
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $id)
     {
-        $mirror = Mirror::findOrFail($id);
-        $user = $request->user();
+        $mirror = $request->user()->mirrors()->find($id);
 
-        $mirror['modules'] = $mirror->modules($user->id)->get();
+        if (!$mirror) {
+            return response()->json(['message' => 'Mirror not found for this user'], 404);
+        }
+
+        $mirror['modules'] = $mirror->link->modules()->with('module')->get();
 
         return response()->json($mirror);
     }
@@ -129,7 +134,7 @@ class MirrorController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['message' => 'Mirror UUID invalid'], 422);
+            return response()->json($validator->errors(), 422);
         }
 
         $mirror = Mirror::find($mirrorID);
@@ -140,7 +145,8 @@ class MirrorController extends Controller
 
         if ($request->wantsJson()) {
             $user = $request->user();
-            $user->mirrors()->syncWithoutDetaching($mirror->id);
+            $linkId = Uuid::uuid4();
+            $user->mirrors()->syncWithoutDetaching($mirror->id, ['link_id' => $linkId]);
             Notification::send($mirror, new MirrorLinked($mirror, $user, str_replace("Bearer ", "", $request->header("Authorization"))));
             return response()->json(['message' => 'Mirror linked successfully', 'user' => $user, 'mirror_id' => $mirror->id]);
         }
@@ -171,8 +177,12 @@ class MirrorController extends Controller
 
     public function installModule($mirrorId, $moduleId, Request $request)
     {
-        $user = $request->user();
-        $mirror = Mirror::findOrFail($mirrorId);
+        $mirror = $request->user()->mirrors()->find($mirrorId);
+
+        if (!$mirror) {
+            return response()->json(['message' => 'Mirror not found for this user'], 404);
+        }
+
         $module = ModuleVersion::find($moduleId);
         if (!$module) {
             $module = Module::findOrFail($moduleId);
@@ -180,9 +190,9 @@ class MirrorController extends Controller
         }
         $installId = Uuid::uuid4();
 
-        $mirror->modules()->attach($module->id, ['user_id' => $user->id, 'install_id' => $installId]);
-        $mirror['modules'] = $mirror->modules($user->id)->get();
-        $module = $mirror->modules($user->id, $installId)->where('id', $module->id)->latest()->first();
+        $mirror->link->modules()->attach($module->id, ['id' => $installId]);
+        $mirror['modules'] = $mirror->link->modules()->with('module')->get();
+        $module = $mirror->link->modules()->where('mirror_modules.id', $installId)->first();
         $module->module;
         Notification::send($mirror, new MirrorInstalledModule($mirror, $request->user(), $module));
         return response()->json($mirror);
@@ -190,8 +200,12 @@ class MirrorController extends Controller
 
     public function uninstallModule($mirrorId, $moduleId, Request $request)
     {
-        $user = $request->user();
-        $mirror = Mirror::findOrFail($mirrorId);
+        $mirror = $request->user()->mirrors()->find($mirrorId);
+
+        if (!$mirror) {
+            return response()->json(['message' => 'Mirror not found for this user'], 404);
+        }
+
         $module = ModuleVersion::find($moduleId);
         if (!$module) {
             $module = Module::find($moduleId);
@@ -199,13 +213,13 @@ class MirrorController extends Controller
                 return response(402);
             }
             foreach ($module->versions as $version) {
-                $mirror->modules($user->id)->detach($version->id);
+                $mirror->link->modules()->detach($version->id);
             }
         } else {
-            $mirror->modules($user->id)->detach($module->id);
+            $mirror->link->modules()->detach($module->id);
         }
+        $mirror['modules'] = $mirror->link->modules()->with('module')->get();
         $module->module;
-        $mirror['modules'] = $mirror->modules($user->id)->get();
         Notification::send($mirror, new MirrorUninstalledModule($mirror, $request->user(), $module));
         return response()->json($mirror);
     }

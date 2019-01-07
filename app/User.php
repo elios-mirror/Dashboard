@@ -47,6 +47,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public $incrementing = false;
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -67,6 +68,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function mirrors()
     {
-        return $this->belongsToMany('App\Mirror', 'user_mirrors', 'user_id', 'mirror_id');
+        return $this->belongsToMany(Mirror::class, 'user_mirrors', 'user_id', 'mirror_id')
+            ->using(UserMirror::class)
+            ->as('link')
+            ->withPivot(['id']);
     }
 }
