@@ -64,7 +64,7 @@ class Mirror extends Authenticatable
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'user_mirrors', 'mirrro_id', 'user_id')
+        return $this->belongsToMany(User::class, 'user_mirrors', 'mirror_id', 'user_id')
             ->using(UserMirror::class)
             ->as('link')
             ->withPivot(['id']);
