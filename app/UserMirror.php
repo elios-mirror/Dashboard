@@ -53,7 +53,7 @@ class UserMirror extends Pivot
             'module_id')
             ->using(MirrorModule::class)
             ->as('link')
-            ->withPivot(['id']);
+            ->withPivot(['id', 'settings']);
     }
 
     public function user()

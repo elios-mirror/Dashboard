@@ -38,6 +38,10 @@ class ModuleVersion extends Model
         'id' => 'string'
     ];
 
+    protected $fillable = [
+        'settings'
+    ];
+
     public function module()
     {
         return $this->hasOne(Module::class, 'id', 'module_id');

@@ -34,6 +34,18 @@ Route::group(['middleware' => ['api', 'multiauth:mirror']], function () {
             $mirror = $user->link->modules()->with('module')->get();
             return $mirror;
         });
+        Route::put('/users/{userId}/modules/{installId}', function (Request $request, $userId, $installId) {
+            $mirror = $request->user();
+            $user = $mirror->users()->find($userId);
+            if (!$user) {
+                return response()->json(['error' => 'No user found for this mirror'], 404);
+            }
+            $module = $user->link->modules()->where('mirror_modules.id', $installId)->first();
+            $module->link->update($request->all());
+            $module->save();
+            $module->module;
+            return $module;
+        });
     });
 });
 
