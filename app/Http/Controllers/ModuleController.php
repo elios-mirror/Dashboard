@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Module;
+use App\ModuleVersion;
 
 class ModuleController extends Controller
 {
@@ -36,6 +37,24 @@ class ModuleController extends Controller
      */
     public function store(Request $request)
     {
+      $request_module = $request->all();
+
+      $modules = new Module;
+      $modules->title = $request->input('mTitle');
+      $modules->name = $request->input('mName');
+      $modules->repository = $request->input('repository');
+      $modules->description = $request->input('description');
+      $modules->publisher_id = \Auth::user()->id;
+      $modules->save();
+
+      $module_versions = new ModuleVersion;
+      $module_versions->commit = "d0b4f899a5ca55e7151d902077e6e4a7a2c4eb65";
+      $module_versions->version = $request->input('mVersion');
+      $module_versions->changelog = "First version";
+      $module_versions->module_id = $modules->id;
+      $module_versions->save();
+
+      return redirect('/home');
         //
     }
 

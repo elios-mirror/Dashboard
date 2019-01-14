@@ -73,4 +73,12 @@ class User extends Authenticatable implements MustVerifyEmail
             ->as('link')
             ->withPivot(['id']);
     }
+
+    public function modules()
+    {
+        return $this->belongsToMany(Module::class, 'module_versions', 'id', 'module_id')
+            ->using(ModuleVersion::class)
+            ->as('link')
+            ->withPivot(['id']);
+    }
 }

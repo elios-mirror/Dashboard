@@ -18,9 +18,14 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/myModule', 'MyModuleController@index')->name('myModule');
+Route::get('/importModule', 'ImportModuleController@index')->name('importModule');
 Route::get('/registered', function () {
     return view('registered');
 });
 
 Route::get('/email/resend', 'Auth\RegisterController@resend');
 Route::get('/email/confirm/{token}', 'Auth\RegisterController@confirm');
+
+Route::post('/importModule', 'ModuleController@store');
