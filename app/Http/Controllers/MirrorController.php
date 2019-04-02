@@ -152,6 +152,11 @@ class MirrorController extends Controller
         }
     }
 
+    /**
+     * @param $mirrorID
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function unlink($mirrorID, Request $request)
     {
         $validator = Validator::make(['mirrorID' => $mirrorID], [
@@ -162,15 +167,19 @@ class MirrorController extends Controller
             return response()->json(['message' => 'Mirror UUID invalid'], 422);
         }
 
-        $mirror = Mirror::find($mirrorID);
+        $user = $request->user();
+        $mirror = $user->mirrors()->find($mirrorID);
 
         if (!$mirror) {
             return response()->json(['message' => 'Mirror not found'], 404);
         }
 
+        $modules = $mirror->link->modules()->get();
+        foreach ($modules as $module) {
+            $mirror->link->modules()->detach($module->id);
+        }
+        $user->mirrors()->detach($mirror->id);
         if ($request->wantsJson()) {
-            $user = $request->user();
-            $user->mirrors()->detach($mirror->id);
             return response()->json(['message' => 'Mirror unlinked successfully', 'user_id' => $user->id, 'mirror_id' => $mirror->id]);
         }
     }
