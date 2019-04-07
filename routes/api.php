@@ -13,62 +13,73 @@ use Illuminate\Http\Request;
 |
 */
 
-
-
 Route::group(['middleware' => ['api', 'multiauth:mirror']], function () {
-    Route::group(['prefix' => 'mirror'], function () {
-        Route::get('/', function (Request $request) {
-            return $request->user()->with('users')->whereId($request->user()->id)->first();
-        });
-        Route::get('/users', function (Request $request) {
-            $mirror = $request->user();
-            $users = $mirror->users;
-            return $users;
-        });
-        Route::get('/users/{userId}/modules', function (Request $request, $userId) {
-            $mirror = $request->user();
-            $user = $mirror->users()->find($userId);
-            if (!$user) {
-                return response()->json(['error' => 'No user found for this mirror'], 404);
-            }
-            $mirror = $user->link->modules()->with('module')->get();
-            return $mirror;
-        });
-        Route::put('/users/{userId}/modules/{installId}', function (Request $request, $userId, $installId) {
-            $mirror = $request->user();
-            $user = $mirror->users()->find($userId);
-            if (!$user) {
-                return response()->json(['error' => 'No user found for this mirror'], 404);
-            }
-            $module = $user->link->modules()->where('mirror_modules.id', $installId)->first();
-            $module->link->update($request->all());
-            $module->save();
-            $module->module;
-            return $module;
-        });
+  Route::group(['prefix' => 'mirror'], function () {
+    Route::get('/', function (Request $request) {
+      return $request->user()->with('users')->whereId($request->user()->id)->first();
     });
+    Route::get('/users', function (Request $request) {
+      $mirror = $request->user();
+      $users = $mirror->users;
+      return $users;
+    });
+    Route::get('/users/{user_id}/modules', function (Request $request, $user_id) {
+      $mirror = $request->user();
+      $user = $mirror->users()->find($user_id);
+      if (!$user) {
+        return response()->json(['error' => 'No user found for this mirror'], 404);
+      }
+      $mirror = $user->link->modules()->with('module')->get();
+      return $mirror;
+    });
+    Route::put('/users/{user_id}/modules/{install_id}', function (Request $request, $user_id, $install_id) {
+      $mirror = $request->user();
+      $user = $mirror->users()->find($user_id);
+      if (!$user) {
+        return response()->json(['error' => 'No user found for this mirror'], 404);
+      }
+      $module = $user->link->modules()->where('mirror_modules.id', $install_id)->first();
+      $module->link->update($request->all());
+      $module->save();
+      $module->module;
+      return $module;
+    });
+  });
 });
 
 
 Route::middleware(['auth:api'])->group(function () {
 
-    Route::get('/user', function (Request $request) {
-        $result = $request->user()->with('mirrors')->whereId($request->user()->id)->first();
-        return $result;
-    });
+  Route::get('/user', function (Request $request) {
+    $result = $request->user()->with('mirrors')->whereId($request->user()->id)->first();
+    return $result;
+  });
 
-    Route::post('/mirrors/{mirror}/link', 'MirrorController@link');
-    Route::post('/mirrors/{mirror}/unlink', 'MirrorController@unlink');
+  Route::post('/mirrors/{mirror_id}/link', 'MirrorController@link');
+  Route::post('/mirrors/{mirror_id}/unlink', 'MirrorController@unlink');
 
-    Route::post('/mirrors/{mirror}/{module}', 'MirrorController@installModule');
-    Route::delete('/mirrors/{mirror}/{module}', 'MirrorController@uninstallModule');
+  Route::post('/mirrors/{mirror_id}/{module}', 'MirrorController@installModule');
+  Route::delete('/mirrors/{mirror_id}/{module}', 'MirrorController@uninstallModule');
 
-    Route::resource('modules', 'ModuleController');
-
+  Route::resource('modules', 'ModuleController');
 });
+
 
 Route::resource('mirrors', 'MirrorController');
 
 Route::post('/register', 'Auth\RegisterController@register');
 
 
+Route::group(['prefix' => 'store'], function() {
+  Route::get('/', 'StoreController@index');
+  Route::get('/search', 'StoreController@search');
+});
+
+Route::get('/', function () {
+  $routeList = Route::getRoutes()->get();
+  $routes = array();
+  foreach ($routeList as $route) {
+    $routes[str_replace("/", ".", $route->uri())] = $route->uri();
+  }
+  return $routes;
+});
