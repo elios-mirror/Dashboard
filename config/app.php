@@ -162,6 +162,8 @@ return [
         Laravel\Passport\PassportServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         SMartins\PassportMultiauth\Providers\MultiauthServiceProvider::class,
+
+        GrahamCampbell\GitHub\GitHubServiceProvider::class,
     ],
 
     /*
@@ -211,6 +213,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Uuid' => Webpatser\Uuid\Uuid::class,
+        'GitHub' => GrahamCampbell\GitHub\Facades\GitHub::class,
 
     ],
 

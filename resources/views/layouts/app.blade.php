@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/uploadImage.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
@@ -47,8 +49,12 @@
                                       {{ __('Home') }}
                                   </a>
 
-                                  <a class="dropdown-item" href="{{ route('importModule') }}" >
+                                  <a class="dropdown-item" href="{{ route('import-module') }}" >
                                       {{ __('Import Module') }}
+                                  </a>
+
+                                  <a class="dropdown-item" href="{{ route('modules-index') }}" >
+                                      {{ __('My Module') }}
                                   </a>
 
                                   <a class="dropdown-item" href="{{ route('logout') }}"
@@ -74,6 +80,10 @@
     </div>
 
     <!-- Scripts -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/uploadImage.js') }}"></script>
+
 </body>
 </html>

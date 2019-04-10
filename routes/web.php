@@ -19,13 +19,18 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/myModule', 'MyModuleController@index')->name('myModule');
-Route::get('/importModule', 'ImportModuleController@index')->name('importModule');
+Route::get('/import-module', 'ImportModuleController@index')->name('import-module');
+Route::get('/import-module', 'ImportModuleController@repository')->name('import-module');
+Route::post('/import-module', 'ModuleController@store');
+
+Route::get('/modules-index', 'ModuleController@index')->name('modules-index');
+Route::get('/modules-edit/{id}', 'ModuleController@edit');
+Route::patch('/modules-edit/{id}', 'ModuleController@update');
+Route::delete('/modules-index/{id}', 'ModuleController@destroy');
+
 Route::get('/registered', function () {
     return view('registered');
 });
 
 Route::get('/email/resend', 'Auth\RegisterController@resend');
 Route::get('/email/confirm/{token}', 'Auth\RegisterController@confirm');
-
-Route::post('/importModule', 'ModuleController@store');
