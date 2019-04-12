@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Module Importer</div>
+                <div class="card-header">Application Importer</div>
 
                 <div class="card-body">
                   <form method="POST" action="{{ action('ModuleController@store') }}" enctype="multipart/form-data">
@@ -16,27 +16,27 @@
 
                     <div class="row">
                       <div class="col-md-4">
-                        <label for="moduleVersion">{{ __('Module Version') }}</label>
+                        <label for="moduleVersion">{{ __('Application Version') }}</label>
                         <input type="text" class="form-control" name="mVersion" aria-describedby="versionHelp" placeholder="Version 1.0.0">
                       </div>
 
                       <div class="col-md-4">
-                        <label for="moduleVersion">{{ __('Module Title') }}</label>
+                        <label for="moduleVersion">{{ __('Application Title') }}</label>
                         <input type="text" class="form-control" name="mTitle" aria-describedby="versionHelp" placeholder="Test Module...">
                       </div>
 
                       <div class="col-md-4">
-                        <label for="moduleVersion">{{ __('Module Name') }}</label>
+                        <label for="moduleVersion">{{ __('Application Name') }}</label>
                         <input type="text" class="form-control" name="mName" aria-describedby="versionHelp" placeholder="Weather...">
                       </div>
 
                       <div class="col-md-4" style="padding-top: 20px">
-                        <label for="moduleCategory">{{ __('Module Category') }}</label>
+                        <label for="moduleCategory">{{ __('Application Category') }}</label>
                         <select class=form-control name="moduleCategory" id="moduleCategory">
-                          <option value="Weather">Weather</option>
-                          <option value="Social Media">Social Media</option>
                           <option value="Entertainment">Entertainment</option>
-                          <option value="Traffic">Traffic</option>
+                          <option value="Utility">Utility</option>
+                          <option value="Games">Games</option>
+                          <option value="Productivity">Productivity</option>
                         </select>
                       </div>
 

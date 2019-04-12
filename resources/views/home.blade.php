@@ -52,7 +52,7 @@
 
             <div class="col-md-8" style="padding-top: 20px">
                 <div class="card">
-                    <div class="card-header">Module Status</div>
+                    <div class="card-header">Application Status</div>
 
                     <div class="card-body">
                       @foreach($modules as $m)

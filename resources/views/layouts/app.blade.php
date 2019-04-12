@@ -50,11 +50,11 @@
                                   </a>
 
                                   <a class="dropdown-item" href="{{ route('import-module') }}" >
-                                      {{ __('Import Module') }}
+                                      {{ __('Import Application') }}
                                   </a>
 
                                   <a class="dropdown-item" href="{{ route('modules-index') }}" >
-                                      {{ __('My Module') }}
+                                      {{ __('Update Application') }}
                                   </a>
 
                                   <a class="dropdown-item" href="{{ route('logout') }}"
