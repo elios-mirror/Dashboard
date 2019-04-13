@@ -23,7 +23,6 @@ class CreateModulesTable extends Migration
             $table->string('name');
             $table->string('category');
             $table->string('logo');
-            $table->string('screenshots');
             $table->string('repository');
             $table->text('description');
             $table->uuid('publisher_id');

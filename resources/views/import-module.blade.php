@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<link href="{{ asset('css/uploadImage.css') }}" rel="stylesheet">
 <script src="js/uploadImage.js"></script>
 
 <div class="container">
@@ -11,26 +10,33 @@
                 <div class="card-header">Application Importer</div>
 
                 <div class="card-body">
-                  <form method="POST" action="{{ action('ModuleController@store') }}" enctype="multipart/form-data">
+
+                    @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ action('ModuleController@store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
                       <div class="col-md-4">
-                        <label for="moduleVersion">{{ __('Application Version') }}</label>
-                        <input type="text" class="form-control" name="mVersion" aria-describedby="versionHelp" placeholder="Version 1.0.0">
-                      </div>
-
-                      <div class="col-md-4">
                         <label for="moduleVersion">{{ __('Application Title') }}</label>
-                        <input type="text" class="form-control" name="mTitle" aria-describedby="versionHelp" placeholder="Test Module...">
+                        <input type="text" class="form-control" name="applicationTitle" aria-describedby="versionHelp" placeholder="Test Module...">
                       </div>
 
                       <div class="col-md-4">
                         <label for="moduleVersion">{{ __('Application Name') }}</label>
-                        <input type="text" class="form-control" name="mName" aria-describedby="versionHelp" placeholder="Weather...">
+                        <input type="text" class="form-control" name="applicationName" aria-describedby="versionHelp" placeholder="Weather...">
                       </div>
 
-                      <div class="col-md-4" style="padding-top: 20px">
+                      <div class="col-md-4">
                         <label for="moduleCategory">{{ __('Application Category') }}</label>
                         <select class=form-control name="moduleCategory" id="moduleCategory">
                           <option value="Entertainment">Entertainment</option>
@@ -47,21 +53,18 @@
 
                       <div class="col-md-4">
                         <label for="moduleCommit" style="padding-top: 20px">{{ __('Github Commit') }}</label>
-                        <input type="text" class="form-control" name="mCommit"></textarea>
+                        <input type="text" class="form-control" name="gitCommit"></textarea>
                       </div>
 
-                      <div class="col-md-6">
-                        <label for="moduleImage" style="padding-top: 20px">{{ __('Upload Logo') }}</label>
-                          <div class="input-group">
-                              <span class="input-group-btn">
-                                  <span class="btn btn-default btn-file">
-                                      Browse… <input type="file" name="imgInp" id="imgInp">
-                                  </span>
-                              </span>
-                              <input type="text" class="form-control" readonly>
-                          </div>
-                          <img id='img-upload'/>
-                      </div>
+                        <div class="col-md-4" style="padding-top: 20px">
+                            <label for="moduleVersion">{{ __('Application Version') }}</label>
+                            <input type="text" class="form-control" name="applicationVersion" aria-describedby="versionHelp" placeholder="Version 1.0.0">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="uploadLogo" style="padding-top: 20px">{{ __('Upload Logo') }}</label>
+                            <input type="file" name="image" class="form-control">
+                        </div>
                     </div>
 
                   <div class="form-group">
