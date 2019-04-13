@@ -70,7 +70,7 @@
                                <td>{{ $m->name }}</td>
                                <td>{{ $m->repository }}</td>
                                <td>{{ $m->description }}</td>
-                               <td><img src="{{asset($m->logo)}}"/ width="50" height="50"></td>
+                               <td><img src="{{asset($m->logo_url)}}"/ width="50" height="50"></td>
                              </tr>
                           </table>
                         @endif

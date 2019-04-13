@@ -73,8 +73,7 @@ class DevUsersSeeder extends Seeder
             'name' => 'module-test',
             'repository' => 'MrDarkSkil/module-test',
             'category' => 'Entertainment',
-            'logo' => 'images/1013753265.jpg',
-            'screenshots' => 'images/1013753265.jpg',
+            'logo_url' => 'images/test.jpg',
             'publisher_id' => $user->id,
             'description' => 'No description'
         ]);
@@ -89,6 +88,9 @@ class DevUsersSeeder extends Seeder
 
         $user->mirrors()->first()->link->modules()->attach($versionModule2_1->id);
 
-
+        $modulescreenshots = \App\ModuleScreenshots::create([
+            'module_id' => $module1->id,
+            'screen_url' => 'http://127.0.0.1:8000/images/test.jpg',
+        ]);
     }
 }
