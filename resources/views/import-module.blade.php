@@ -61,9 +61,14 @@
                             <input type="text" class="form-control" name="applicationVersion" aria-describedby="versionHelp" placeholder="Version 1.0.0">
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <label for="uploadLogo" style="padding-top: 20px">{{ __('Upload Logo') }}</label>
-                            <input type="file" name="image" class="form-control">
+                            <input type="file" name="logo" class="form-control">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="uploadScreenshots" style="padding-top: 20px">{{ __('Upload Screenshots') }}</label>
+                            <input type="file" name="screenshots" class="form-control" multiple="multiple">
                         </div>
                     </div>
 

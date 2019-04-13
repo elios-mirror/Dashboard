@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Module;
 use App\ModuleVersion;
+use App\ModuleScreenshots;
 
 class ModuleController extends Controller
 {
@@ -42,7 +43,8 @@ class ModuleController extends Controller
     public function store(Request $request)
     {
         request()->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'screenshots' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'applicationTitle' => 'required',
             'applicationName' => 'required',
             'repository' => 'required',
@@ -51,26 +53,44 @@ class ModuleController extends Controller
             'applicationVersion' => 'required',
         ]);
 
-      $new_name = time() . '.' . request()->image->getClientOriginalExtension();
-      request()->image->move(public_path('images'), $new_name);
-      $destination = 'images/';
+        $modules = new Module;
+        $module_versions = new ModuleVersion;
+        $module_screenshots = new ModuleScreenshots;
 
-      $modules = new Module;
+        if (! \File::isDirectory(public_path()."images/".\Auth::user()->id)) {
+            \File::makeDirectory(public_path()."images/".\Auth::user()->id, 0755, true);
+            if (! \File::isDirectory(public_path()."images/".\Auth::user()->id.'/'.$modules->id)) {
+                \File::makeDirectory(public_path()."images/".\Auth::user()->id.'/'.$modules->id, 0755, true);
+                \File::makeDirectory(public_path()."images/".\Auth::user()->id.'/'.$modules->id."/Logo", 0755, true);
+                \File::makeDirectory(public_path()."images/".\Auth::user()->id.'/'.$modules->id."/Screenshots", 0755, true);
+            }
+        }
+
+      $logo_name = rand() . '.' . request()->logo->getClientOriginalExtension();
+      $screen_name = rand() . '.' . request()->screenshots->getClientOriginalExtension();
+      request()->logo->move(public_path("images/".\Auth::user()->id. '/' . $modules->id . "/Logo"), $logo_name);
+      request()->screenshots->move(public_path("images/".\Auth::user()->id. '/' . $modules->id . "/Screenshots"), $screen_name);
+      $logo_destination = "images/".\Auth::user()->id. '/' . $modules->id . "/Logo/";
+      $screen_destination = "images/".\Auth::user()->id. '/' . $modules->id . "/Screenshots/";
+
       $modules->title = $request->input('applicationTitle');
       $modules->name = $request->input('applicationName');
       $modules->repository = $request->input('repository');
       $modules->category = $request->moduleCategory;
-      $modules->logo = $destination.$new_name;
+      $modules->logo_url = url(asset($logo_destination.$logo_name));
       $modules->description = $request->input('description');
       $modules->publisher_id = \Auth::user()->id;
       $modules->save();
 
-      $module_versions = new ModuleVersion;
       $module_versions->commit = $request->input('gitCommit');
       $module_versions->version = $request->input('applicationVersion');
       $module_versions->changelog = "First version";
       $module_versions->module_id = $modules->id;
       $module_versions->save();
+
+      $module_screenshots->screen_url = url(asset($screen_destination.$screen_name));
+      $module_screenshots->module_id = $modules->id;
+      $module_screenshots->save();
 
       return redirect('/home');
         //
