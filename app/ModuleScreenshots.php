@@ -39,7 +39,8 @@ class ModuleScreenshots extends Model
     ];
 
     protected $fillable = [
-        'settings'
+        'screen_url',
+        'module_id'
     ];
 
     public function module()

@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="js/uploadImage.js"></script>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -68,7 +67,7 @@
 
                         <div class="col-md-12">
                             <label for="uploadScreenshots" style="padding-top: 20px">{{ __('Upload Screenshots') }}</label>
-                            <input type="file" name="screenshots" class="form-control" multiple="multiple">
+                            <input type="file" name="screenshots[]" class="form-control" multiple="true">
                         </div>
                     </div>
 
