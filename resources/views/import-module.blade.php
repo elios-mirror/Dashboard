@@ -26,13 +26,13 @@
 
                     <div class="row">
                       <div class="col-md-4">
-                        <label for="moduleVersion">{{ __('Application Title') }}</label>
-                        <input type="text" class="form-control" name="applicationTitle" aria-describedby="versionHelp" placeholder="Test Module...">
+                        <label for="applicationTitle">{{ __('Application Title') }}</label>
+                        <input type="text" class="form-control" name="applicationTitle" placeholder="Traffic Application..." value="{{ old('applicationTitle') }}">
                       </div>
 
                       <div class="col-md-4">
-                        <label for="moduleVersion">{{ __('Application Name') }}</label>
-                        <input type="text" class="form-control" name="applicationName" aria-describedby="versionHelp" placeholder="Weather...">
+                        <label for="applicationName">{{ __('Application Name') }}</label>
+                        <input type="text" class="form-control" name="applicationName" placeholder="Traffic..." value="{{ old('applicationName') }}">
                       </div>
 
                       <div class="col-md-4">
@@ -46,18 +46,18 @@
                       </div>
 
                       <div class="col-md-4">
-                        <label for="moduleVersion" style="padding-top: 20px">{{ __('Github Repository') }}</label>
-                        <input type="text" class="form-control" name="repository" id="repository">
+                        <label for="gitRepository" style="padding-top: 20px">{{ __('Github Repository') }}</label>
+                        <input type="text" class="form-control" name="repository" id="repository" placeholder="MrDarkSkil/module-test" value="{{ old('repository') }}">
                       </div>
 
                       <div class="col-md-4">
-                        <label for="moduleCommit" style="padding-top: 20px">{{ __('Github Commit') }}</label>
-                        <input type="text" class="form-control" name="gitCommit"></textarea>
+                        <label for="gitCommit" style="padding-top: 20px">{{ __('Github Commit') }}</label>
+                        <input type="text" class="form-control" name="gitCommit" placeholder="2b3e7a4b44df26fdcd39785" value="{{ old('gitCommit') }}"></textarea>
                       </div>
 
                         <div class="col-md-4" style="padding-top: 20px">
-                            <label for="moduleVersion">{{ __('Application Version') }}</label>
-                            <input type="text" class="form-control" name="applicationVersion" aria-describedby="versionHelp" placeholder="Version 1.0.0">
+                            <label for="applicationVersion">{{ __('Application Version') }}</label>
+                            <input type="text" class="form-control" name="applicationVersion" placeholder="1.0.0" value="{{ old('applicationVersion') }}">
                         </div>
 
                         <div class="col-md-12">
@@ -72,8 +72,8 @@
                     </div>
 
                   <div class="form-group">
-                    <label for="Textarea1" style="padding-top: 20px">{{ __('Discribe your module') }}</label>
-                    <textarea class="form-control" name="description" rows="3"></textarea>
+                    <label for="applicationDescription" style="padding-top: 20px">{{ __('Describe your Application') }}</label>
+                    <textarea class="form-control" name="description" rows="3" value="{{ old('description') }}"></textarea>
                   </div>
 
                   <button type="submit" class="btn btn-primary">{{ __('Submit Module') }}

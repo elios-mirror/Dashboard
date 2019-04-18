@@ -60,32 +60,21 @@ class ModuleController extends Controller
     $modules->description = $request->input('description');
     $modules->publisher_id = \Auth::user()->id;
 
-    if (!\File::isDirectory(public_path() . "images/" . \Auth::user()->id)) {
-      \File::makeDirectory(public_path() . "images/" . \Auth::user()->id, 0755, true);
-      \File::makeDirectory(public_path() . "images/" . \Auth::user()->id . "/Logo", 0755, true);
-      \File::makeDirectory(public_path() . "images/" . \Auth::user()->id . "/Screenshots", 0755, true);
-    }
+    $logo = \Storage::putFile('public/images/' . \Auth::user()->id . '/logos', $request->file('logo'));
 
-    $logo = $request->file('logo');
-    $logo_name = rand() . '.' . $logo->getClientOriginalExtension();
-    $logo->move(public_path("images/" . \Auth::user()->id . "/Logo"), $logo_name);
-    $logo_destination = "images/" . \Auth::user()->id . "/Logo/";
-
-    $modules->logo_url = url(asset($logo_destination . $logo_name));
+    $modules->logo_url = url(asset(\Storage::url($logo)));
     $modules->save();
 
+    $screenshots = $request->file('screenshots');
+
     if ($request->hasFile('screenshots')) {
-      $screenshots = $request->file('screenshots');
-      foreach ($screenshots as $screenshot) {
+        foreach ($screenshots as $screenshot) {
+            $urlPath = \Storage::putFile('public/images/' . \Auth::user()->id . '/screenshots', $screenshot);
 
-        $screen_name = rand() . '.' . $screenshot->getClientOriginalExtension();
-        $screenshot->move(public_path("images/" . \Auth::user()->id . "/Screenshots"), $screen_name);
-        $screen_destination = "images/" . \Auth::user()->id . "/Screenshots/";
-
-        $module_screenshots = new ModuleScreenshots;
-        $module_screenshots->screen_url = url(asset($screen_destination . $screen_name));
-        $module_screenshots->module_id = $modules->id;
-        $module_screenshots->save();
+            $module_screenshots = new ModuleScreenshots;
+            $module_screenshots->screen_url = url(asset(\Storage::url($urlPath)));
+            $module_screenshots->module_id = $modules->id;
+            $module_screenshots->save();
       }
     }
 
@@ -95,7 +84,6 @@ class ModuleController extends Controller
     $module_versions->changelog = "First version";
     $module_versions->module_id = $modules->id;
     $module_versions->save();
-
 
     return redirect('/home');
     //
