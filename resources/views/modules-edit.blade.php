@@ -26,18 +26,34 @@
       <div class="row">
         <div class="col-md-4"></div>
           <div class="form-group col-md-4">
-            <label for="number">Description:</label>
-            <input type="text" class="form-control" name="description" value="{{$module->description}}">
-          </div>
-        </div>
-
-      <div class="row">
-        <div class="col-md-4"></div>
-          <div class="form-group col-md-4">
             <label for="number">Repository:</label>
             <input type="text" class="form-control" name="repository" value="{{$module->repository}}">
           </div>
         </div>
+
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+              <label for="number">Git Commit:</label>
+              <input type="text" class="form-control" name="commit" value="{{$module_version->commit}}">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+              <label for="number">Version:</label>
+              <input type="text" class="form-control" name="version" value="{{$module_version->version}}">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="form-group col-md-4">
+              <label for="description">Description</label>
+              <textarea class="form-control" name="description" rows="3" value="{{$module->description }}"></textarea>
+            </div>
+          </div>
 
         <div class="row">
           <div class="col-md-4"></div>

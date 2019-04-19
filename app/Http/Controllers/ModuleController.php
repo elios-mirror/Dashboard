@@ -111,9 +111,9 @@ class ModuleController extends Controller
   public function edit($id)
   {
     $module = Module::find($id);
-    $module_version = ModuleVersion::find($module->id);
+    $module_version = ModuleVersion::where('module_id', $id)->first();
 
-    return view('modules-edit', compact(['module', 'module_version'], 'id'));
+    return view('modules-edit', compact('module', 'module_version', 'id'));
     //
   }
 
@@ -127,13 +127,17 @@ class ModuleController extends Controller
   public function update(Request $request, $id)
   {
     $modules = Module::find($id);
-    $module_version = ModuleVersion::find($id);
+    $module_version = ModuleVersion::where('module_id', $id)->first();
 
     $modules->name = $request->get('name');
     $modules->title = $request->get('title');
     $modules->description = $request->get('description');
     $modules->repository = $request->get('repository');
-    $modules->save();
+      $modules->save();
+
+      $module_version->commit = $request->get('commit');
+    $module_version->version = $request->get('version');
+    $module_version->save();
 
     return redirect('/home');
     //
@@ -147,11 +151,12 @@ class ModuleController extends Controller
    */
   public function destroy($id)
   {
-    $module = Module::find($id);
-    $module_version = ModuleVersion::find($module->id);
-    $module_version . $module->delete();
+      $module = Module::find($id);
+      $module_version = ModuleVersion::where('module_id', $id)->firstOrFail();
+      $module_screenshots = ModuleScreenshots::where('module_id', $id)->firstOrFail();
 
-    return redirect('/home')->with('success', 'Information has been deleted');
+      $module->delete();
+      return redirect('/home')->with('success', 'Information has been deleted');
     //
   }
 }

@@ -45,7 +45,8 @@ class CreateModulesTable extends Migration
             $table->uuid('id');
             $table->primary('id');
             $table->string('screen_url');
-            $table->uuid('module_id')->references('id')->on('modules');
+            $table->uuid('module_id');
+            $table->foreign('module_id')->references('id')->on('modules');
             $table->timestamps();
         });
 

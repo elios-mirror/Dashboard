@@ -15,6 +15,7 @@
     <tbody>
 
       @foreach($modules as $module)
+        @if(auth()->user()->id === $module->publisher_id)
         <tr>
           <td>{{$module->id}}</td>
           <td>{{$module->name}}</td>
@@ -32,6 +33,7 @@
               </form>
             </td>
           </tr>
+        @endif
       @endforeach
     </tbody>
   </table>
