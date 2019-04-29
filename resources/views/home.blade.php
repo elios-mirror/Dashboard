@@ -14,7 +14,8 @@
                                     @if(auth()->user()->id === $m->publisher_id)
                                         <div class="col-md-3">
                                             <div class="application-logo text-center">
-                                                <img src="{{ $m->logo_url }}" alt="application logo">
+                                                <img src="{{ $m->logo_url ? $m->logo_url : '/images/notfound.png' }}"
+                                                     alt="application logo">
                                             </div>
                                             <div class="application-title text-center">
                                                 {{ $m->title }}

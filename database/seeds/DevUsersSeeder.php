@@ -73,7 +73,7 @@ class DevUsersSeeder extends Seeder
             'name' => 'module-test',
             'repository' => 'MrDarkSkil/module-test',
             'category' => 'Entertainment',
-            'logo_url' => 'images/test.jpg',
+            'logo_url' => '',
             'publisher_id' => $user->id,
             'description' => 'No description'
         ]);

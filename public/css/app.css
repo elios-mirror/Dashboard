@@ -10001,13 +10001,14 @@ a.text-dark:focus {
 }
 
 .application-logo img {
-  width: 125px;
-  height: 125px;
+  width: 140px;
+  height: 140px;
+  border-radius: 20px;
 }
 
 .application-title {
   margin-top: .75rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .application-repository-content {
@@ -10016,7 +10017,7 @@ a.text-dark:focus {
   border: 1px solid darkgrey;
   border-radius: 1000px;
   display: inline-block;
-  padding: .15rem .5rem;
+  padding: .1rem .5rem;
   margin-top: .25rem;
 }
 
