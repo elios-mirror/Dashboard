@@ -24,7 +24,8 @@ Route::get('/import-module', 'ImportModuleController@repository')->name('import-
 Route::post('/import-module', 'ModuleController@store');
 
 Route::get('/modules-index', 'ModuleController@index')->name('modules-index');
-Route::get('/modules-edit/{id}', 'ModuleController@edit');
+Route::get('/modules-edit/{id}', 'ModuleController@edit')->name('modules-edit');
+Route::get('/modules-display/{id}', 'ModuleController@display')->name('modules-display');
 Route::patch('/modules-edit/{id}', 'ModuleController@update');
 Route::delete('/modules-index/{id}', 'ModuleController@destroy');
 

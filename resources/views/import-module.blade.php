@@ -5,6 +5,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
+                <a href="{{ url()->previous()  }}" style="margin: 1rem;">
+                    <button type="button" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Back</button>
+                </a>
                 <div class="card">
                     <div class="card-header">Application Importer</div>
 
@@ -76,7 +79,8 @@
                                         <label for="uploadLogo"
                                                class="custom-file-label">{{ __('Upload Logo') }}</label>
                                     </div>
-                                    <small class="form-text text-muted">Should be an image .jpeg, .jpg, .png < 2048kb</small>
+                                    <small class="form-text text-muted">Should be an image .jpeg, .jpg, .png < 2048kb
+                                    </small>
                                 </div>
 
                                 <div class="col-md-12" style="padding-top: 20px">
@@ -94,7 +98,9 @@
                                        style="padding-top: 20px">{{ __('Description') }}</label>
                                 <textarea class="form-control" name="description" id="description"
                                           rows="3">{{ old('description') }}</textarea>
-                                <small class="form-text text-muted">Minimum 40 characters and maximum 1 000 characters.</small>
+                                <small class="form-text text-muted">Minimum 40 characters and maximum 1 000
+                                    characters.
+                                </small>
                             </div>
 
                             <button type="submit" class="btn btn-primary" style="float: right">{{ __('Submit') }}
