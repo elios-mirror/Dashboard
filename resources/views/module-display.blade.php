@@ -18,20 +18,26 @@
                                     </button>
                                 </a>
                             </div>
-                            <div class="module-display-header-logo">
-                                <img src="{{ $module->logo_url ? $module->logo_url : '/images/notfound.png' }}"
-                                     alt="application logo">
-                            </div>
-                            <div class="module-display-header-text">
-                                <div class="module-display-header-title">
-                                    {{$module->title}}
+                            <div class="row">
+                                <div class="col-md-3 text-center">
+                                    <div class="module-display-header-logo">
+                                        <img src="{{ $module->logo_url ? $module->logo_url : '/images/notfound.png' }}"
+                                             alt="application logo">
+                                    </div>
                                 </div>
-                                <div class="module-display-header-subtitle">
-                                    {{$module->repository}}
-                                </div>
-                                <hr/>
-                                <div class="module-display-header-description">
-                                    {{$module->description}}
+                                <div class="col-md-9">
+                                    <div class="module-display-header-text">
+                                        <div class="module-display-header-title">
+                                            {{$module->title}}
+                                        </div>
+                                        <div class="module-display-header-subtitle">
+                                            {{$module->repository}}
+                                        </div>
+                                        <hr/>
+                                        <div class="module-display-header-description">
+                                            {{$module->description}}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
