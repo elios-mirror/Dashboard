@@ -46,10 +46,10 @@ class ModuleController extends Controller
   {
     request()->validate([
         'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        'applicationTitle' => 'required',
-        'applicationName' => 'required',
+        'applicationTitle' => 'required|min:3|max:20',
+        'applicationName' => 'required|min:3|max:20',
         'repository' => 'required',
-        'description' => 'required',
+        'description' => 'required|min:40|max:1000',
         'gitCommit' => 'required',
         'applicationVersion' => 'required',
     ]);
