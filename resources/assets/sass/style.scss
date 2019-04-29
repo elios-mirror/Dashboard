@@ -1,0 +1,25 @@
+.application {
+  &-logo {
+    img {
+      width: 125px;
+      height: 125px;
+    }
+  }
+
+  &-title {
+    margin-top: .75rem;
+    font-size: 1rem;
+  }
+
+  &-repository {
+    &-content {
+      font-size: .85rem;
+      color: grey;
+      border: 1px solid darkgrey;
+      border-radius: 1000px;
+      display: inline-block;
+      padding: .15rem .5rem;
+      margin-top: .25rem;
+    }
+  }
+}

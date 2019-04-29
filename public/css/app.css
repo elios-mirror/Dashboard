@@ -10000,3 +10000,23 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.application-logo img {
+  width: 125px;
+  height: 125px;
+}
+
+.application-title {
+  margin-top: .75rem;
+  font-size: 1rem;
+}
+
+.application-repository-content {
+  font-size: .85rem;
+  color: grey;
+  border: 1px solid darkgrey;
+  border-radius: 1000px;
+  display: inline-block;
+  padding: .15rem .5rem;
+  margin-top: .25rem;
+}
+
