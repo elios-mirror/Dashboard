@@ -112,7 +112,7 @@ class ModuleController extends Controller
      */
     public function edit($id)
     {
-        $module = Module::find($id);
+        $module = Module::findOrFail($id);
         $module_version = ModuleVersion::where('module_id', $id)->first();
 
         return view('modules-edit', compact('module', 'module_version', 'id'));
@@ -121,7 +121,7 @@ class ModuleController extends Controller
 
     public function display($id)
     {
-        $module = Module::find($id);
+        $module = Module::findOrFail($id);
         $module_version = ModuleVersion::where('module_id', $id)->first();
 
         return view('module-display', compact('module', 'module_version', 'id'));
@@ -137,7 +137,7 @@ class ModuleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $modules = Module::find($id);
+        $modules = Module::findOrFail($id);
         $module_version = ModuleVersion::where('module_id', $id)->first();
 
         $modules->name = $request->get('name');
