@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Module;
 use App\ModuleVersion;
 use App\ModuleScreenshots;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ModuleController extends Controller
 {
@@ -58,21 +60,21 @@ class ModuleController extends Controller
     $modules->repository = $request->input('repository');
     $modules->category = $request->moduleCategory;
     $modules->description = $request->input('description');
-    $modules->publisher_id = \Auth::user()->id;
+    $modules->publisher_id = Auth::user()->id;
 
-    $logo = \Storage::putFile('public/images/' . \Auth::user()->id . '/logos', $request->file('logo'));
+    $logo = Storage::putFile('applications/images/' . Auth::user()->id . '/logos', $request->file('logo'));
 
-    $modules->logo_url = url(asset(\Storage::url($logo)));
+    $modules->logo_url = url(asset(Storage::url($logo)));
     $modules->save();
 
     $screenshots = $request->file('screenshots');
 
     if ($request->hasFile('screenshots')) {
         foreach ($screenshots as $screenshot) {
-            $urlPath = \Storage::putFile('public/images/' . \Auth::user()->id . '/screenshots', $screenshot);
+            $urlPath = Storage::putFile('applications/images/' . Auth::user()->id . '/screenshots', $screenshot);
 
             $module_screenshots = new ModuleScreenshots;
-            $module_screenshots->screen_url = url(asset(\Storage::url($urlPath)));
+            $module_screenshots->screen_url = url(asset(Storage::url($urlPath)));
             $module_screenshots->module_id = $modules->id;
             $module_screenshots->save();
       }
