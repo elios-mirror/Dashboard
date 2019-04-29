@@ -19,7 +19,8 @@
                                 </a>
                             </div>
                             <div class="module-display-header-logo">
-                                <img src="{{$module->logo_url}}" alt="logo">
+                                <img src="{{ $module->logo_url ? $module->logo_url : '/images/notfound.png' }}"
+                                     alt="application logo">
                             </div>
                             <div class="module-display-header-text">
                                 <div class="module-display-header-title">
