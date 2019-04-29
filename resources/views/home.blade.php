@@ -26,24 +26,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{--<table class="table">
-                                            <tr>
-                                                <th>Title</th>
-                                                <th>Name</th>
-                                                <th>Repository</th>
-                                                <th>Description</th>
-                                                <th>Logo</th>
-                                            </tr>
-                                            <tr>
-                                                <td>{{ $m->title }}</td>
-                                                <td>{{ $m->name }}</td>
-                                                <td>{{ $m->repository }}</td>
-                                                <td>{{ $m->description }}</td>
-                                                <td><img src="{{ $m->logo_url }}" width="50" height="50"></td>
-                                            </tr>
-                                        </table>--}}
                                     @endif
                                 @endforeach
+                                @if(!count($modules))
+                                    <p style="text-align: center; width: 100%; font-size: 1rem;">You have no
+                                        applications, start uploading one <a
+                                                href="{{ route('import-module') }}">here</a></p>
+                                @endif
                             </div>
                         </div>
                     </div>

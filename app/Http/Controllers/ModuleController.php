@@ -62,7 +62,7 @@ class ModuleController extends Controller
     $modules->description = $request->input('description');
     $modules->publisher_id = Auth::user()->id;
 
-    $logo = Storage::putFile('applications/images/' . Auth::user()->id . '/logos', $request->file('logo'));
+    $logo = Storage::putFile('public/applications/images/' . Auth::user()->id . '/logos', $request->file('logo'));
 
     $modules->logo_url = url(asset(Storage::url($logo)));
     $modules->save();
@@ -71,7 +71,7 @@ class ModuleController extends Controller
 
     if ($request->hasFile('screenshots')) {
         foreach ($screenshots as $screenshot) {
-            $urlPath = Storage::putFile('applications/images/' . Auth::user()->id . '/screenshots', $screenshot);
+            $urlPath = Storage::putFile('public/applications/images/' . Auth::user()->id . '/screenshots', $screenshot);
 
             $module_screenshots = new ModuleScreenshots;
             $module_screenshots->screen_url = url(asset(Storage::url($urlPath)));
