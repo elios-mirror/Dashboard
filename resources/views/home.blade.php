@@ -30,28 +30,6 @@
 
             <div class="col-md-8" style="padding-top: 20px">
                 <div class="card">
-                    <div class="card-header">GitHub Account</div>
-
-                      <div class="card-body">
-                          <div class="col-md-4">
-                            <label for="GitHubLogin">{{ __('Loggin') }}</label>
-                            <input type="text" class="form-control" name="gitLogin" aria-describedby="versionHelp" placeholder="vladislav.zobov@epitech.eu">
-                          </div>
-
-                          <div class="col-md-4" style="padding-top: 20px">
-                            <label for="GitHubPassword">{{ __('Password') }}</label>
-                            <input type="text" class="form-control" name="gitPassword" aria-describedby="versionHelp" placeholder="*******">
-                          </div>
-
-                          <div class="col-md-4" style="padding-top: 20px">
-                            <button type="submit" class="btn btn-primary">{{ __('Sign-In') }}
-                          </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-8" style="padding-top: 20px">
-                <div class="card">
                     <div class="card-header">Application Status</div>
 
                     <div class="card-body">
