@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <a href="{{ url()->previous()  }}" style="margin: 1rem;">
+                <a href="{{ url('home')  }}" style="margin: 1rem;">
                     <button type="button" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Back</button>
                 </a>
                 <div class="card">
@@ -81,9 +81,11 @@
 
                                 <div class="col-md-12" style="padding-top: 20px">
                                     <div class="custom-file">
-                                        <input type="file" name="logo" id="logo" class="custom-file-input">
+                                        <input type="file" name="logo" id="logo" class="custom-file-input"
+                                               onchange="getFileDataLogo(this);">
                                         <label for="uploadLogo"
-                                               class="custom-file-label">{{ __('Upload Logo') }}</label>
+                                               class="custom-file-label"
+                                               id="choose_logo">{{ __('Upload Logo') }}</label>
                                     </div>
                                     <small class="form-text text-muted">Should be an image .jpeg, .jpg, .png < 2048kb
                                     </small>
@@ -92,9 +94,13 @@
                                 <div class="col-md-12" style="padding-top: 20px">
                                     <div class="custom-file">
                                         <input type="file" name="screenshots[]" class="custom-file-input"
-                                               multiple="true">
+                                               multiple="true" onchange="getFileDataScreens(this);">
                                         <label for="uploadScreenshots"
-                                               class="custom-file-label">{{ __('Upload Screenshots') }}</label>
+                                               class="custom-file-label"
+                                               id="choose_screens">{{ __('Upload Screenshots') }}</label>
+                                        <small class="form-text text-muted">Should be an image .jpeg, .jpg, .png <
+                                            2048kb, max 6 files
+                                        </small>
                                     </div>
                                 </div>
                             </div>
@@ -104,9 +110,18 @@
                                        style="padding-top: 20px">{{ __('Description') }}</label>
                                 <textarea class="form-control" name="description" id="description"
                                           rows="3">{{ old('description') }}</textarea>
-                                <small class="form-text text-muted">Minimum 40 characters and maximum 1 000
-                                    characters.
-                                </small>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <small class="form-text text-muted">Minimum 40 characters
+                                            and maximum 1 000 characters.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <small style="text-align: right;" class="form-text text-muted"
+                                               id="count">0 characters
+                                        </small>
+                                    </div>
+                                </div>
                             </div>
 
                             <button type="submit" class="btn btn-primary" style="float: right">{{ __('Submit') }}
@@ -116,4 +131,23 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('description').onkeyup = function () {
+            document.getElementById('count').innerHTML = this.value.length + " characters.";
+        };
+
+        function getFileDataLogo(myFile) {
+            const file = myFile.files[0];
+            const filename = file.name;
+            document.getElementById('choose_logo').innerHTML = filename;
+        }
+
+        function getFileDataScreens(myFile) {
+            let count = 0;
+            Array.from(myFile.files).forEach(file => {
+                count++
+            });
+            document.getElementById('choose_screens').innerHTML = count + ' files uploaded';
+        }
+    </script>
 @endsection

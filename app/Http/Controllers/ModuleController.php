@@ -52,7 +52,7 @@ class ModuleController extends Controller
             'description' => 'required|min:40|max:1000',
             'gitCommit' => 'required',
             'applicationVersion' => 'required',
-            'screenshots' => 'required',
+            'screenshots' => 'required|max: 6',
             'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
