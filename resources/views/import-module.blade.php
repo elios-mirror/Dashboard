@@ -30,16 +30,22 @@
 
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="applicationTitle">{{ __('Application Title') }}</label>
+                                    <label for="applicationTitle">{{ __('Application Name') }}</label>
                                     <input type="text" class="form-control" name="applicationTitle"
                                            id="applicationTitle"
                                            placeholder="Traffic" value="{{ old('applicationTitle') }}">
+                                    <small class="form-text text-muted">This is the public name of your app. It will be
+                                        displayed on the Elios Store.
+                                    </small>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="applicationName">{{ __('Application Name') }}</label>
+                                    <label for="applicationName">{{ __('Application ID') }}</label>
                                     <input type="text" class="form-control" name="applicationName" id="applicationName"
                                            placeholder="Traffic" value="{{ old('applicationName') }}">
+                                    <small class="form-text text-muted">This is a unique ID to your app. It won't be
+                                        seen on the Elios Store.
+                                    </small>
                                 </div>
 
                                 <div class="col-md-4">

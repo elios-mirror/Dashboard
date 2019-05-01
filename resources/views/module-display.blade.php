@@ -28,14 +28,36 @@
                                 <div class="col-md-9">
                                     <div class="module-display-header-text">
                                         <div class="module-display-header-title">
-                                            {{$module->title}}
+                                            {{ $module->title }}
                                         </div>
                                         <div class="module-display-header-subtitle">
-                                            {{$module->repository}}
+                                            {{ $module->repository }}
                                         </div>
                                         <hr/>
                                         <div class="module-display-header-description">
-                                            {{$module->description}}
+                                            {{ $module->description }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="margin: 1.5rem 0"/>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="module-display-body">
+                                        <div class="module-display-body-screenshots">
+                                            <div class="module-display-body-screenshots-title">
+                                                Screenshots
+                                            </div>
+                                            <div class="row">
+                                                @foreach($module_screenshots as $screenshot)
+                                                    <div class="col-md-4">
+                                                        <img src="{{ $screenshot->screen_url }}" alt="screens">
+                                                    </div>
+                                                @endforeach
+                                                @if(!count($module_screenshots))
+                                                    <p class="text-center" style="width: 100%; color: grey;">No screenshots</p>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

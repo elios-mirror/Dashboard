@@ -52,6 +52,8 @@ class ModuleController extends Controller
             'description' => 'required|min:40|max:1000',
             'gitCommit' => 'required',
             'applicationVersion' => 'required',
+            'screenshots' => 'required',
+            'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         $modules = new Module;
@@ -123,8 +125,9 @@ class ModuleController extends Controller
     {
         $module = Module::findOrFail($id);
         $module_version = ModuleVersion::where('module_id', $id)->first();
+        $module_screenshots = ModuleScreenshots::where('module_id', $id)->get();
 
-        return view('module-display', compact('module', 'module_version', 'id'));
+        return view('module-display', compact('module', 'module_version', 'id', 'module_screenshots'));
         //
     }
 

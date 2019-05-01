@@ -18,7 +18,7 @@
                             <input name="_method" type="hidden" value="PATCH">
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="name">Name:</label>
+                                    <label for="name">Name</label>
                                     <input type="text" class="form-control" name="name" value="{{$module->name}}">
                                 </div>
                             </div>
@@ -32,7 +32,7 @@
 
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="number">Repository:</label>
+                                    <label for="number">Repository</label>
                                     <input type="text" class="form-control" name="repository"
                                            value="{{$module->repository}}">
                                 </div>
@@ -40,7 +40,7 @@
 
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="number">Git Commit:</label>
+                                    <label for="number">Git Commit</label>
                                     <input type="text" class="form-control" name="commit"
                                            value="{{$module_version->commit}}">
                                 </div>
@@ -48,7 +48,7 @@
 
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="number">Version:</label>
+                                    <label for="number">Version</label>
                                     <input type="text" class="form-control" name="version"
                                            value="{{$module_version->version}}">
                                 </div>

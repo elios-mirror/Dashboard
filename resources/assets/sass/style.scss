@@ -69,3 +69,16 @@
     float: right;
   }
 }
+
+.module-display-body {
+  &-screenshots {
+    img {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    &-title {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
