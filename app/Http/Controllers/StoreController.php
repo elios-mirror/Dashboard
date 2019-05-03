@@ -38,6 +38,20 @@ class StoreController extends Controller
             abort(400, "Missing 'q' query param ");
         }
         $modules = Module::where('name', 'LIKE', '%' . $search . '%')->orWhere('title', 'LIKE', '%' . $search . '%')->paginate();
+
+        $modules->getCollection()->transform(function ($value) {
+            $screens = ModuleScreenshots::get();
+            $screen_array = array();
+
+            foreach ($screens as $screen) {
+                if ($value->id == $screen->module_id) {
+                    array_push($screen_array, $screen->screen_url);
+                }
+            }
+            $value->screenshots = $screen_array;
+
+            return $value;
+        });
         return $modules;
     }
 }

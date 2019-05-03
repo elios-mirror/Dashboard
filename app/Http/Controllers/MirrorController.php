@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mirror;
 use App\Module;
+use App\ModuleScreenshots;
 use App\ModuleVersion;
 use App\Notifications\MirrorInstalledModule;
 use App\Notifications\MirrorUninstalledModule;
@@ -46,7 +47,7 @@ class MirrorController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -80,6 +81,19 @@ class MirrorController extends Controller
         }
 
         $mirror['modules'] = $mirror->link->modules()->with('module')->get();
+        $screens = ModuleScreenshots::get();
+
+        foreach ($mirror->modules as $module) {
+            $screen_array = array();
+
+            foreach ($screens as $screen) {
+                if ($module->module->id == $screen->module_id) {
+                    array_push($screen_array, $screen->screen_url);
+                }
+            }
+
+            $module->module->screenshots = $screen_array;
+        }
 
         return response()->json($mirror);
     }
@@ -87,7 +101,7 @@ class MirrorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Mirror $mirror
+     * @param \App\Mirror $mirror
      * @return \Illuminate\Http\Response
      */
     public function edit(Mirror $mirror)
@@ -98,8 +112,8 @@ class MirrorController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\Mirror $mirror
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Mirror $mirror
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Mirror $mirror)
@@ -119,7 +133,7 @@ class MirrorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Mirror $mirror
+     * @param \App\Mirror $mirror
      * @return \Illuminate\Http\Response
      */
     public function destroy(Mirror $mirror)
