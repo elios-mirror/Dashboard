@@ -32,12 +32,13 @@ class StoreController extends Controller
     public function search(Request $request)
     {
         $search = $request->get('q');
-        $search = strtolower($search);
 
         if (!$search) {
             abort(400, "Missing 'q' query param ");
         }
-        $modules = Module::where('name', 'LIKE', '%' . $search . '%')->orWhere('title', 'LIKE', '%' . $search . '%')->paginate();
+        $modules = Module::where('name', 'LIKE', '%' . $search . '%')
+            ->orWhere('title', 'LIKE', '%' . $search . '%')
+            ->paginate();
 
         $modules->getCollection()->transform(function ($value) {
             $screens = ModuleScreenshots::get();
