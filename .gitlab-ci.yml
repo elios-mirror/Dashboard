@@ -24,8 +24,6 @@ before_script:
   - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
   - chmod 644 ~/.ssh/known_hosts
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  #- git config --global user.email "user@example.com"
-  #- git config --global user.name "User name"
 
 test:
   stage: test

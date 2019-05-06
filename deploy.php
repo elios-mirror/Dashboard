@@ -45,7 +45,7 @@ host('dev')
     ->hostname('dev.elios-mirror.com')
     ->set('deploy_path', '/var/www/dev')
     ->set('env_path', 'environements/env.preproduction');
-        
+
 host('prod')
     ->stage('production')
     ->user('root')
@@ -75,8 +75,12 @@ task('run:sockets', function() {
 });
 
 // Dev tasks 
-task('db:migrate', function() {
-    run('cd {{deploy_path}}/release; php artisan migrate:fresh --seed --force');
+task('artisan:migrate', function() {
+    $stage = get('stage');
+    if ($stage == "production")
+        run('cd {{deploy_path}}/release; php artisan migrate');
+    else
+        run('cd {{deploy_path}}/release; php artisan migrate:fresh --seed --force');
 });
 
 // Tasks
