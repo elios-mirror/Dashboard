@@ -37,7 +37,7 @@ deploy_staging:
   image: chilio/laravel-dusk-ci:stable
   stage: deploy
   script:
-  # - chmod 400 ssh_key/id_rsa
-  # - chmod 400 ssh_key/id_rsa.pub
+  - chmod 400 ssh_key/id_rsa
+  - chmod 400 ssh_key/id_rsa.pub
   - if [ $CI_COMMIT_REF_NAME = "master" ]; then ./deployer.phar deploy prod; else ./deployer.phar deploy dev; fi
   # - ./deployer.phar deploy dev
