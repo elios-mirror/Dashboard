@@ -45,7 +45,7 @@ host('dev')
     ->hostname('dev.elios-mirror.com')
     ->set('deploy_path', '/var/www/dev')
     ->set('env_path', 'environements/env.preproduction');
-    
+        
 host('prod')
     ->stage('production')
     ->user('root')
