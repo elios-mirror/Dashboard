@@ -34,11 +34,14 @@ test:
     when: always
 
 deploy_staging:
+  image: chilio/laravel-dusk-ci:stable
   stage: deploy
   script:
   - ./deployer.phar deploy dev
 
+
 deploy_prod:
+  image: chilio/laravel-dusk-ci:stable
   stage: deploy
   script:
   - ./deployer.phar deploy prod
