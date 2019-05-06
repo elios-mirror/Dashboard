@@ -38,44 +38,14 @@ set('default_stage', 'dev');
 
 // Hosts
 
-host('gitlab-dev')
-    ->stage('dev')
-    ->user('root')
-    ->port(22)
-    ->hostname('dev.elios-mirror.com')
-    ->set('deploy_path', '/var/www/dev')
-    ->set('env_path', 'environements/env.preproduction')
-    ->identityFile('./ssh_key/id_rsa')
-    ->addSshOption('UserKnownHostsFile', '/dev/null')
-    ->forwardAgent(true)
-    ->multiplexing(true)
-    ->addSshOption('StrictHostKeyChecking', 'no')
-    ->set('branch', 'dev');
-
-
-host('gitlab-prod')
-    ->stage('production')
-    ->user('root')
-    ->port(22)
-    ->hostname('api.elios-mirror.com')
-    ->set('deploy_path', '/var/www/prod')
-    ->set('env_path', 'environements/env.production')
-    ->identityFile('./ssh_key/id_rsa')
-    ->addSshOption('UserKnownHostsFile', '/dev/null')
-    ->forwardAgent(true)
-    ->multiplexing(true)
-    ->addSshOption('StrictHostKeyChecking', 'no')
-    ->set('branch', 'master');
-
 host('dev')
     ->stage('dev')
     ->user('root')
     ->port(22)
     ->hostname('dev.elios-mirror.com')
     ->set('deploy_path', '/var/www/dev')
-    ->set('env_path', 'environements/env.preproduction')
-    ->set('branch', 'dev');
-
+    ->set('env_path', 'environements/env.preproduction');
+    
 host('prod')
     ->stage('production')
     ->user('root')
