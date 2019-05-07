@@ -68,12 +68,6 @@ task('upload:env', function () {
     run('cd {{deploy_path}}/release; php artisan config:clear; php artisan config:cache; php artisan cache:clear;');
 })->desc('Environment setup');
 
-
-// Sockets server
-task('run:sockets', function() {
-    run('screen -dm bash -c "cd /var/www/html/release/sockets; npm install; killall node; npm run dev"');
-});
-
 // Dev tasks 
 task('artisan:migrate', function() {
     $stage = get('stage');
@@ -85,20 +79,8 @@ task('artisan:migrate', function() {
 
 // Tasks
 
-task('build', function () {
-    run('cd {{release_path}} && build');
-});
-
-
-// Before deploy ask what_branch
-// before('deploy', 'what_branch');
-
 // Upload ENV before passport:install 
 after('artisan:optimize', 'upload:env');
-// after('upload:env', 'passport:install');
-
-// 
-after('deploy:update_code', 'run:sockets');
 
 // [Optional] if deploy fails automatically unlock.
 after('deploy:failed', 'deploy:unlock');
