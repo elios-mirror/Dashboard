@@ -38,13 +38,23 @@ set('default_stage', 'dev');
 
 // Hosts
 
+
+host('current')
+    ->stage('current')
+    ->user('root')
+    ->port(22)
+    ->hostname('dev.elios-mirror.com')
+    ->set('deploy_path', '/var/www/dev')
+    ->set('env_path', 'environements/env.preproduction');
+
 host('dev')
     ->stage('dev')
     ->user('root')
     ->port(22)
     ->hostname('dev.elios-mirror.com')
     ->set('deploy_path', '/var/www/dev')
-    ->set('env_path', 'environements/env.preproduction');
+    ->set('env_path', 'environements/env.preproduction')
+    ->set('branch', 'dev');
 
 host('prod')
     ->stage('production')
