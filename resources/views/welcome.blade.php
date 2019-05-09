@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name') }}</title>
+        <title>Elios development</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -47,6 +47,8 @@
 
             .title {
                 font-size: 84px;
+                display: inline-block;
+                vertical-align: middle;
             }
 
             .links > a {
@@ -62,6 +64,12 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .picture {
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 3rem;
+            }
         </style>
     </head>
     <body>
@@ -69,7 +77,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ route('register') }}">Register</a>
@@ -78,16 +86,11 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    {{ config('app.name') }}
+                <div class="title picture">
+                    <img src="/images/logo.png" alt="logo" width="185px">
                 </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://elios-mirror.com/">Elios Website</a>
-                    <a href="https://gitlab.elios-mirror.com/">GitLab</a>
+                <div class="title m-b-md">
+                    Elios Develoment
                 </div>
             </div>
         </div>
