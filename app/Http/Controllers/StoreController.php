@@ -55,4 +55,37 @@ class StoreController extends Controller
         });
         return $modules;
     }
+
+    public function checkGitRepo(Request $request) {
+
+        $repo = $request->get('repo');
+        $tag = $request->get('tag');
+
+        if (!$repo || !$tag) {
+            abort(400, "Missing a parameter, please check that you filled all the inputs.");
+        }
+
+        $repo_check = shell_exec('git ls-remote ' . $repo);
+
+        if ($repo_check == null) {
+            abort(404, "Seems like the repos is not public or doesn't exist.");
+        }
+
+        $output_array = array();
+        exec('git ls-remote --tags ' . $repo, $output_array);
+
+        if (!$output_array) {
+            abort(404, "Sorry we didn't found any tags on the repo.");
+        }
+
+        foreach ($output_array as $line) {
+            $result = explode('/tags/', $line);
+            if ($result[1] == $tag) {
+                $commit = explode("\t", $result[0]);
+                return($commit[0]);
+            }
+        }
+
+        abort(404, "It seems like your tag doesn't exist on this repo, please try again.");
+    }
 }

@@ -83,3 +83,5 @@ Route::get('/', function () {
   }
   return $routes;
 });
+
+Route::get('/checkGitRepo', 'StoreController@checkGitRepo');

@@ -57,29 +57,20 @@
                                         <option value="Productivity">Productivity</option>
                                     </select>
                                 </div>
+                            </div>
 
-                                <div class="col-md-4">
-                                    <label for="gitRepository"
-                                           style="padding-top: 20px">{{ __('Git Repository') }}</label>
-                                    <input type="text" class="form-control" name="repository" id="repository"
-                                           placeholder="MrDarkSkil/module-test" value="{{ old('repository') }}">
-                                </div>
+                                <git-checker></git-checker>
 
-                                <div class="col-md-4">
-                                    <label for="gitCommit" style="padding-top: 20px">{{ __('Github Commit') }}</label>
-                                    <input type="text" class="form-control" name="gitCommit" id="gitCommit"
-                                           placeholder="2b3e7a4b44df26fdcd39785"
-                                           value="{{ old('gitCommit') }}"></textarea>
-                                </div>
-
-                                <div class="col-md-4" style="padding-top: 20px">
+                            <div class="row">
+                                <div class="col-md-6" style="padding-top: 20px">
                                     <label for="applicationVersion">{{ __('Application Version') }}</label>
                                     <input type="text" class="form-control" name="applicationVersion"
                                            id="applicationVersion"
                                            placeholder="1.0.0" value="{{ old('applicationVersion') }}">
                                 </div>
 
-                                <div class="col-md-12" style="padding-top: 20px">
+                                <div class="col-md-6" style="padding-top: 20px">
+                                    <label for="logo">{{ __('Logo') }}</label>
                                     <div class="custom-file">
                                         <input type="file" name="logo" id="logo" class="custom-file-input"
                                                onchange="getFileDataLogo(this);">
@@ -92,6 +83,7 @@
                                 </div>
 
                                 <div class="col-md-12" style="padding-top: 20px">
+                                    <label for="logo">{{ __('Screenshots') }}</label>
                                     <div class="custom-file">
                                         <input type="file" name="screenshots[]" class="custom-file-input"
                                                multiple="true" onchange="getFileDataScreens(this);">
@@ -124,30 +116,13 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary" style="float: right">{{ __('Submit') }}
+                            <button type="submit" class="btn btn-primary"
+                                    style="float: right">{{ __('Submit') }}</button>
+                        </form>
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
-    <script>
-        document.getElementById('description').onkeyup = function () {
-            document.getElementById('count').innerHTML = this.value.length + " characters.";
-        };
-
-        function getFileDataLogo(myFile) {
-            const file = myFile.files[0];
-            const filename = file.name;
-            document.getElementById('choose_logo').innerHTML = filename;
-        }
-
-        function getFileDataScreens(myFile) {
-            let count = 0;
-            Array.from(myFile.files).forEach(file => {
-                count++
-            });
-            document.getElementById('choose_screens').innerHTML = count + ' files uploaded';
-        }
-    </script>
 @endsection

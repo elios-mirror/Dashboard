@@ -101,6 +101,21 @@
 <!-- Scripts -->
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="{{ asset('js/app.js') }}"></script>
+<script>
+    function getFileDataLogo(myFile) {
+        const file = myFile.files[0];
+        const filename = file.name;
+        document.getElementById('choose_logo').innerHTML = filename;
+    }
+
+    function getFileDataScreens(myFile) {
+        let count = 0;
+        Array.from(myFile.files).forEach(file => {
+            count++
+        });
+        document.getElementById('choose_screens').innerHTML = count + ' files uploaded';
+    }
+</script>
 
 </body>
 </html>

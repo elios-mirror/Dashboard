@@ -42,6 +42,7 @@
 .module-display-header {
   &-logo {
     display: inline-block;
+
     img {
       width: 145px;
       border-radius: 20px;
@@ -76,9 +77,25 @@
       width: 100%;
       margin-bottom: 1rem;
     }
+
     &-title {
       font-size: 1.4rem;
       margin-bottom: 2rem;
     }
+  }
+}
+
+.git-checker {
+  border: 2px solid $primary;
+  margin-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 0 .25rem .25rem .25rem;
+
+  &-title {
+    background-color: $primary;
+    color: white;
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    border-radius: 0 0 1rem 0;
   }
 }
