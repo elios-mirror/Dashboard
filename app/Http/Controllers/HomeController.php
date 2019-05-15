@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -24,7 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-      $modules = DB::table('modules')->get();
+      $modules = DB::table('modules')
+          ->where('publisher_id', Auth::user()->id)
+          ->get();
       return view('home', ['modules' => $modules]);
     }
 }

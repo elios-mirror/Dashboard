@@ -12,24 +12,22 @@
                         <div class="container">
                             <div class="row">
                                 @foreach($modules as $m)
-                                    @if(auth()->user()->id === $m->publisher_id)
-                                        <div class="col-md-4" style="margin-bottom: 2rem">
-                                            <a class="module-link" href="{{ route('modules-display', ['id' => $m->id]) }}">
-                                                <div class="application-logo text-center">
-                                                    <img src="{{ $m->logo_url ? $m->logo_url : '/images/notfound.png' }}"
-                                                         alt="application logo">
+                                    <div class="col-md-4" style="margin-bottom: 2rem">
+                                        <a class="module-link" href="{{ route('modules-display', ['id' => $m->id]) }}">
+                                            <div class="application-logo text-center">
+                                                <img src="{{ $m->logo_url ? $m->logo_url : '/images/notfound.png' }}"
+                                                     alt="application logo">
+                                            </div>
+                                            <div class="application-title text-center">
+                                                {{ $m->title }}
+                                            </div>
+                                            <div class="application-repository text-center">
+                                                <div class="text-center application-repository-content">
+                                                    {{ $m->repository }}
                                                 </div>
-                                                <div class="application-title text-center">
-                                                    {{ $m->title }}
-                                                </div>
-                                                <div class="application-repository text-center">
-                                                    <div class="text-center application-repository-content">
-                                                        {{ $m->repository }}
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    @endif
+                                            </div>
+                                        </a>
+                                    </div>
                                 @endforeach
                                 @if(count($modules) <= 0)
                                     <p style="text-align: center; width: 100%; font-size: 1rem;">You have no
