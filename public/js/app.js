@@ -14284,12 +14284,14 @@ window.Vue = __webpack_require__(39);
 Vue.component('git-checker', __webpack_require__(41));
 
 var app = new Vue({
-  el: '#app'
+    el: '#app'
 });
 
-document.getElementById('description').onkeyup = function () {
-  document.getElementById('count').innerHTML = this.value.length + " characters.";
-};
+if (document.getElementById('description')) {
+    document.getElementById('description').onkeyup = function () {
+        document.getElementById('count').innerHTML = this.value.length + " characters.";
+    };
+}
 
 /***/ }),
 /* 14 */

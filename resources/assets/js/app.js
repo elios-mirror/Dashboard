@@ -23,6 +23,8 @@ const app = new Vue({
     el: '#app'
 });
 
-document.getElementById('description').onkeyup = function () {
-    document.getElementById('count').innerHTML = this.value.length + " characters.";
-};
+if (document.getElementById('description')) {
+    document.getElementById('description').onkeyup = function () {
+        document.getElementById('count').innerHTML = this.value.length + " characters.";
+    };
+}

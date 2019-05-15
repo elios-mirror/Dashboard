@@ -17,6 +17,18 @@
                                         <i class="fas fa-pencil-alt fa-lg"></i>
                                     </button>
                                 </a>
+                                <a href="#" onclick="event.preventDefault();
+                                                   document.getElementById('delete-form').submit();">
+                                    <button type="button" class="btn btn-light">
+                                        <i class="fas fa-trash-alt fa-lg"></i>
+                                    </button>
+                                </a>
+
+                                <form id="delete-form" action="{{ route('modules-delete', ['id' => $module->id]) }}"
+                                      method="POST" style="display: none;">
+                                    <input type="hidden" name="_method" value="delete" />
+                                    @csrf
+                                </form>
                             </div>
                             <div class="row">
                                 <div class="col-md-3 text-center">

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\MirrorModule;
 use Illuminate\Http\Request;
 use App\Module;
 use App\ModuleVersion;
 use App\ModuleScreenshots;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ModuleController extends Controller
@@ -166,12 +168,16 @@ class ModuleController extends Controller
      */
     public function destroy($id)
     {
-        $module = Module::find($id);
-        $module_version = ModuleVersion::where('module_id', $id)->firstOrFail();
-        $module_screenshots = ModuleScreenshots::where('module_id', $id)->firstOrFail();
+        $module = Module::findOrFail($id);
+        $versions = ModuleVersion::where('module_id', $id)->get();
+        foreach ($versions as $version) {
+            DB::table('mirror_modules')->where('module_id', $version->id)->truncate();
+        }
+        ModuleScreenshots::where('module_id', $id)->get()->each->delete();
+        ModuleVersion::where('module_id', $id)->get()->each->delete();
 
         $module->delete();
-        return redirect('/home')->with('success', 'Information has been deleted');
+        return redirect('/home');
         //
     }
 }

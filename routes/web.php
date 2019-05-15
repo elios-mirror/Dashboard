@@ -27,7 +27,7 @@ Route::group(['prefix' => 'modules'], function() {
 
     Route::get('/edit/{id}', 'ModuleController@edit')->name('modules-edit');
     Route::patch('/{id}', 'ModuleController@update');
-    Route::delete('/{id}', 'ModuleController@destroy');
+    Route::delete('/{id}', 'ModuleController@destroy')->name('modules-delete');
 
     Route::get('/{id}', 'ModuleController@display')->name('modules-display');
 });
