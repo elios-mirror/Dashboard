@@ -54,7 +54,7 @@ class DevUsersSeeder extends Seeder
             ]
         ]);
 
-        $model = \App\MirrorModel::create([
+/*        $model = \App\MirrorModel::create([
             'id' => 'LKD28376382'
         ]);
 
@@ -91,6 +91,6 @@ class DevUsersSeeder extends Seeder
         $modulescreenshots = \App\ModuleScreenshots::create([
             'module_id' => $module1->id,
             'screen_url' => 'http://127.0.0.1:8000/images/test.jpg',
-        ]);
+        ]);*/
     }
 }
