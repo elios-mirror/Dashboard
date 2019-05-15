@@ -31,7 +31,7 @@
                                         </div>
                                     @endif
                                 @endforeach
-                                @if(!count($modules))
+                                @if(count($modules) <= 0)
                                     <p style="text-align: center; width: 100%; font-size: 1rem;">You have no
                                         applications, start uploading one <a
                                                 href="{{ route('import-module') }}">here</a></p>

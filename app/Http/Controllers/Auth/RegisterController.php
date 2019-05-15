@@ -46,7 +46,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -61,7 +61,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array $data
+     * @param array $data
      * @return \App\User
      */
     protected function create(array $data)
@@ -82,19 +82,37 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
+        if ($request->wantsJson()) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 401);
+            }
+
+            $inputs = $request->all();
+            $inputs['password'] = bcrypt($inputs['password']);
+            $user = User::create($inputs);
+            $success['access_token'] = $user->createToken('MyApp')->accessToken;
+            $success['name'] = $user->name;
+
+        } else {
+            request()->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+
+            $inputs = $request->all();
+            $inputs['password'] = bcrypt($inputs['password']);
+            $user = User::create($inputs);
+            $success['access_token'] = $user->createToken('MyApp')->accessToken;
+            $success['name'] = $user->name;
+
+            return redirect('/login');
         }
-        $inputs = $request->all();
-        $inputs['password'] = bcrypt($inputs['password']);
-        $user = User::create($inputs);
-        $success['access_token'] = $user->createToken('MyApp')->accessToken;
-        $success['name'] = $user->name;
-        return redirect('/login');
     }
 }
