@@ -140,18 +140,19 @@ class ModuleController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $modules = Module::findOrFail($id);
-        $module_version = ModuleVersion::where('module_id', $id)->first();
+
+        request()->validate([
+            'title' => 'required|min:3|max:20',
+            'name' => 'required|min:3|max:20',
+            'description' => 'required|min:40|max:1000',
+        ]);
 
         $modules->name = $request->get('name');
         $modules->title = $request->get('title');
         $modules->description = $request->get('description');
-        $modules->repository = $request->get('repository');
         $modules->save();
-
-        $module_version->commit = $request->get('commit');
-        $module_version->version = $request->get('version');
-        $module_version->save();
 
         return redirect('/home');
         //

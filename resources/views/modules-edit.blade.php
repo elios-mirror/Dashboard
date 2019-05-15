@@ -12,6 +12,17 @@
                         Update Module
                     </div>
                     <div class="card-body">
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger">
+                                <strong>Whoops!</strong> There were some problems with your input.
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <form method="post" action="{{ action('ModuleController@update', $id)}}">
                             @csrf
 
@@ -27,30 +38,6 @@
                                 <div class="form-group col-md-12">
                                     <label for="email">Title</label>
                                     <input type="text" class="form-control" name="title" value="{{$module->title}}">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="number">Repository</label>
-                                    <input type="text" class="form-control" name="repository"
-                                           value="{{$module->repository}}">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="number">Git Commit</label>
-                                    <input type="text" class="form-control" name="commit"
-                                           value="{{$module_version->commit}}">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="number">Version</label>
-                                    <input type="text" class="form-control" name="version"
-                                           value="{{$module_version->version}}">
                                 </div>
                             </div>
 
