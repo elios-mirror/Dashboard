@@ -1,4 +1,5 @@
 <?php
+
 namespace Deployer;
 
 require 'recipe/laravel.php';
@@ -10,7 +11,7 @@ set('application', 'Elios Mirror');
 set('repository', 'git@gitlab.elios-mirror.com:elios/Admin.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', false); 
+set('git_tty', false);
 
 // Shared files/dirs between deploys 
 set('shared_files', [
@@ -64,7 +65,7 @@ host('prod')
     ->set('deploy_path', '/var/www/prod')
     ->set('env_path', 'environements/env.production')
     ->set('branch', 'master');
-    
+
 
 task('what_branch', function () {
     $branch = ask('What branch to deploy?');
@@ -74,12 +75,12 @@ task('what_branch', function () {
 
 // Upload and reload .env
 task('upload:env', function () {
-    upload('{{env_path}}',  '{{deploy_path}}/shared/.env');
-    run('cd {{deploy_path}}/release; php artisan config:clear; php artisan config:cache; php artisan cache:clear;');
+    upload('{{env_path}}', '{{deploy_path}}/shared/.env');
+    run('cd {{deploy_path}}/release; php artisan config:clear; php artisan config:cache; php artisan cache:clear; php artisan route:clear;');
 })->desc('Environment setup');
 
 // Dev tasks 
-task('artisan:migrate', function() {
+task('artisan:migrate', function () {
     $stage = get('stage');
     if ($stage == "production")
         run('cd {{deploy_path}}/release; php artisan migrate');
