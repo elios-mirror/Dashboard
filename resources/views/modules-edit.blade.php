@@ -12,7 +12,7 @@
                         Update Module
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{action('ModuleController@update', $id)}}">
+                        <form method="post" action="{{ action('ModuleController@update', $id)}}">
                             @csrf
 
                             <input name="_method" type="hidden" value="PATCH">

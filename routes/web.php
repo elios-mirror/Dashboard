@@ -19,15 +19,19 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/import-module', 'ImportModuleController@index')->name('import-module');
-Route::get('/import-module', 'ImportModuleController@repository')->name('import-module');
-Route::post('/import-module', 'ModuleController@store');
+Route::group(['prefix' => 'modules'], function() {
+    Route::get('/', 'ModuleController@index')->name('modules-index');
 
-Route::get('/modules-index', 'ModuleController@index')->name('modules-index');
-Route::get('/modules-edit/{id}', 'ModuleController@edit')->name('modules-edit');
-Route::get('/modules-display/{id}', 'ModuleController@display')->name('modules-display');
-Route::patch('/modules-edit/{id}', 'ModuleController@update');
-Route::delete('/modules-index/{id}', 'ModuleController@destroy');
+    Route::get('/import', 'ImportModuleController@index')->name('import-module');
+    Route::post('/import', 'ModuleController@store')->name('import-module');
+
+    Route::get('/edit/{id}', 'ModuleController@edit')->name('modules-edit');
+    Route::patch('/{id}', 'ModuleController@update');
+    Route::delete('/{id}', 'ModuleController@destroy');
+
+    Route::get('/{id}', 'ModuleController@display')->name('modules-display');
+});
+
 
 Route::get('/registered', function () {
     return view('registered');

@@ -49227,7 +49227,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.loading = true;
 
-            var url = 'api/git/repo/tags?repo=' + this.repo;
+            var url = '/api/git/repo/tags?repo=' + this.repo;
             axios.get(url).then(function (response) {
                 _this.error = false;
                 _this.success = false;
@@ -49264,7 +49264,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.error_text = 'Seems like one of the input is empty please check again';
                 return;
             }
-            var url = 'api/git/repo/check?repo=' + this.repo + '&tag=' + this.tag;
+            var url = '/api/git/repo/check?repo=' + this.repo + '&tag=' + this.tag;
 
             axios.get(url).then(function (response) {
                 _this2.success = true;

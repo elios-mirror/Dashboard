@@ -77,7 +77,7 @@
             onChangeRepo() {
                 this.loading = true;
 
-                const url = 'api/git/repo/tags?repo=' + this.repo;
+                const url = '/api/git/repo/tags?repo=' + this.repo;
                 axios.get(url)
                     .then(response => {
                         this.error = false;
@@ -113,7 +113,7 @@
                     this.error_text = 'Seems like one of the input is empty please check again';
                     return;
                 }
-                const url = 'api/git/repo/check?repo=' + this.repo + '&tag=' + this.tag;
+                const url = '/api/git/repo/check?repo=' + this.repo + '&tag=' + this.tag;
 
                 axios.get(url)
                     .then(response => {

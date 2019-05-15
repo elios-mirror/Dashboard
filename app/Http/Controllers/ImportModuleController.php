@@ -12,10 +12,10 @@ class ImportModuleController extends Controller
   public function index() {
     return view('import-module');
   }
-
+/*
   public function repository(){
     $repos = GitHub::me()->repositories();
 
     return view('import-module', ['repos' => $repos]);
-  }
+  }*/
 }

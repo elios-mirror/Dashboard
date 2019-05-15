@@ -24,7 +24,7 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ action('ModuleController@store') }}"
+                        <form method="POST" action="{{ route('import-module') }}"
                               enctype="multipart/form-data">
                             @csrf
 
