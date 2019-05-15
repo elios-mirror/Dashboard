@@ -84,7 +84,7 @@ task('artisan:migrate', function() {
     if ($stage == "production")
         run('cd {{deploy_path}}/release; php artisan migrate');
     else
-        run('cd {{deploy_path}}/release; php artisan migrate:fresh --seed --force; php artisan cache:clear');
+        run('cd {{deploy_path}}/release; php artisan migrate:fresh --seed --force');
 });
 
 // Tasks
