@@ -49190,6 +49190,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -49201,7 +49211,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             success: false,
             loading: false,
             button_text: 'Check',
-            commit_value: null
+            button_check: false,
+            commit_value: null,
+            tags_list: null
         };
     },
     mounted: function mounted() {
@@ -49210,8 +49222,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
     methods: {
-        checkGitRepository: function checkGitRepository() {
+        onChangeRepo: function onChangeRepo() {
             var _this = this;
+
+            this.loading = true;
+
+            var url = 'api/git/repo/tags?repo=' + this.repo;
+            axios.get(url).then(function (response) {
+                _this.error = false;
+                _this.success = false;
+                _this.loading = false;
+                _this.button_text = 'Check';
+                _this.tags_list = response.data.tags;
+                _this.error_text = null;
+                _this.commit_value = null;
+                _this.button_check = true;
+            }).catch(function (error) {
+                _this.success = false;
+                _this.error = true;
+                _this.loading = false;
+                _this.button_text = 'Check';
+                _this.error_text = error.response.data.message;
+                _this.commit_value = null;
+                _this.tags_list = null;
+                _this.button_check = false;
+            });
+        },
+
+
+        checkGitRepository: function checkGitRepository() {
+            var _this2 = this;
 
             this.loading = true;
             this.button_text = 'Loading...';
@@ -49224,23 +49264,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 this.error_text = 'Seems like one of the input is empty please check again';
                 return;
             }
-            var url = 'api/checkGitRepo?repo=' + this.repo + '&tag=' + this.tag;
+            var url = 'api/git/repo/check?repo=' + this.repo + '&tag=' + this.tag;
 
             axios.get(url).then(function (response) {
-                _this.success = true;
-                _this.error = false;
-                _this.loading = false;
-                _this.button_text = 'Check';
-                _this.error_text = null;
-                console.log(response.data);
-                _this.commit_value = response.data;
+                _this2.success = true;
+                _this2.error = false;
+                _this2.loading = false;
+                _this2.button_text = 'Check';
+                _this2.error_text = null;
+                _this2.commit_value = response.data;
             }).catch(function (error) {
-                _this.success = false;
-                _this.error = true;
-                _this.loading = false;
-                _this.button_text = 'Check';
-                _this.error_text = error.response.data.message;
-                _this.commit_value = null;
+                _this2.success = false;
+                _this2.error = true;
+                _this2.loading = false;
+                _this2.button_text = 'Check';
+                _this2.error_text = error.response.data.message;
+                _this2.commit_value = null;
             });
         }
     }
@@ -49274,10 +49313,10 @@ var render = function() {
             staticClass: "git-checker-title",
             style: [
               _vm.success
-                ? { background: "green" }
-                : { background: "$primary" } && _vm.error
-                ? { background: "red" }
-                : { background: "$primary" }
+                ? { "background-color": "green" }
+                : { "background-color": "#007BFF" } && _vm.error
+                ? { "background-color": "red" }
+                : { "background-color": "#007BFF" }
             ]
           },
           [_vm._v("\n            Repository\n        ")]
@@ -49310,6 +49349,9 @@ var render = function() {
             },
             domProps: { value: _vm.repo },
             on: {
+              change: function($event) {
+                return _vm.onChangeRepo()
+              },
               input: function($event) {
                 if ($event.target.composing) {
                   return
@@ -49325,81 +49367,111 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-6" }, [
-          _c(
-            "label",
-            { staticStyle: { "padding-top": "20px" }, attrs: { for: "tag" } },
-            [_vm._v("Git Tag")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.tag,
-                expression: "tag"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              name: "tag",
-              id: "tag",
-              placeholder: "Version_1"
-            },
-            domProps: { value: _vm.tag },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.tag = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.commit_value,
-                expression: "commit_value"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "hidden", name: "gitCommit", id: "gitCommit" },
-            domProps: { value: _vm.commit_value },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.commit_value = $event.target.value
-              }
-            }
-          })
+          _vm.tags_list
+            ? _c("div", [
+                _c(
+                  "label",
+                  {
+                    staticStyle: { "padding-top": "20px" },
+                    attrs: { for: "tag" }
+                  },
+                  [_vm._v("Git Tag")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tag,
+                        expression: "tag"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "tag" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.tag = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  _vm._l(_vm.tags_list, function(tag) {
+                    return _c("option", [_vm._v(_vm._s(tag))])
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.commit_value,
+                      expression: "commit_value"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "hidden", name: "gitCommit", id: "gitCommit" },
+                  domProps: { value: _vm.commit_value },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.commit_value = $event.target.value
+                    }
+                  }
+                })
+              ])
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-md-12" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              class: { "btn-danger": _vm.error, "btn-success": _vm.success },
-              staticStyle: { float: "right", "margin-top": "1rem" },
-              attrs: { type: "button" },
-              on: {
-                click: function($event) {
-                  return _vm.checkGitRepository()
-                }
-              }
-            },
-            [_vm._v(_vm._s(_vm.button_text) + "\n            ")]
-          )
+          _vm.button_check && !_vm.loading
+            ? _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  class: {
+                    "btn-danger": _vm.error,
+                    "btn-success": _vm.success
+                  },
+                  staticStyle: { float: "right", "margin-top": "1rem" },
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.checkGitRepository()
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.button_text) +
+                      "\n            "
+                  )
+                ]
+              )
+            : _vm._e()
         ]),
+        _vm._v(" "),
+        _vm.loading
+          ? _c("div", { staticClass: "col-md-12" }, [_vm._m(0)])
+          : _vm._e(),
         _vm._v(" "),
         _vm.error_text
           ? _c("div", { staticClass: "col-md-12" }, [
@@ -49417,7 +49489,19 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-flex align-items-center" }, [
+      _c("div", {
+        staticClass: "spinner-border spinner-border-md ml-auto text-secondary",
+        attrs: { role: "status", "aria-hidden": "true" }
+      })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

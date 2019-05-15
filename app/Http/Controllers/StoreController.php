@@ -65,14 +65,14 @@ class StoreController extends Controller
             abort(400, "Missing a parameter, please check that you filled all the inputs.");
         }
 
-        $repo_check = shell_exec('git ls-remote ' . $repo);
+        $repo_check = shell_exec('timeout 5 git ls-remote ' . $repo);
 
         if ($repo_check == null) {
-            abort(404, "Seems like the repos is not public or doesn't exist.");
+            abort(404, "Seems like the repo is not public or doesn't exist.");
         }
 
         $output_array = array();
-        exec('git ls-remote --tags ' . $repo, $output_array);
+        exec('timeout 5 git ls-remote --tags ' . $repo, $output_array);
 
         if (!$output_array) {
             abort(404, "Sorry we didn't found any tags on the repo.");
@@ -87,5 +87,34 @@ class StoreController extends Controller
         }
 
         abort(404, "It seems like your tag doesn't exist on this repo, please try again.");
+    }
+
+    public function getGitTags(Request $request) {
+        $repo = $request->get('repo');
+
+        if (!$repo) {
+            abort(400, "Missing a parameter, please check that you filled all the inputs.");
+        }
+
+        $repo_check = shell_exec('timeout 5 git ls-remote ' . $repo);
+
+        if ($repo_check == null) {
+            abort(404, "Seems like the repo is not public or doesn't exist.");
+        }
+
+        $output_array = array();
+        exec('timeout 5 git ls-remote --tags ' . $repo, $output_array);
+
+        if (!$output_array) {
+            abort(404, "Sorry we didn't found any tags on the repo.");
+        }
+
+        $tags = array();
+        foreach ($output_array as $line) {
+            $result = explode('/tags/', $line);
+            array_push($tags, $result[1]);
+        }
+
+        return response()->json(['tags' => $tags]);
     }
 }

@@ -104,7 +104,13 @@
 <script>
     function getFileDataLogo(myFile) {
         const file = myFile.files[0];
-        const filename = file.name;
+        let filename = file.name;
+
+        console.log(filename.length);
+        if (filename.length > 40) {
+            filename = filename.slice(0, 40) + '...';
+        }
+
         document.getElementById('choose_logo').innerHTML = filename;
     }
 

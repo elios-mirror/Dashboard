@@ -55,7 +55,8 @@
                                                     </div>
                                                 @endforeach
                                                 @if(!count($module_screenshots))
-                                                    <p class="text-center" style="width: 100%; color: grey;">No screenshots</p>
+                                                    <p class="text-center" style="width: 100%; color: grey;">No
+                                                        screenshots</p>
                                                 @endif
                                             </div>
                                         </div>
