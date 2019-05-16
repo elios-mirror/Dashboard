@@ -54,10 +54,11 @@ class DevUsersSeeder extends Seeder
             ]
         ]);
 
-/*        $model = \App\MirrorModel::create([
+        $model = \App\MirrorModel::create([
             'id' => 'LKD28376382'
         ]);
-
+        
+        /*
         $mirror = Mirror::create([
             'name' => 'Mirroir de test',
             'ip' => "127.0.0.1",
