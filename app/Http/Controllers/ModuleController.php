@@ -18,10 +18,14 @@ class ModuleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $modules = Module::all();
         $module_versions = ModuleVersion::all();
+
+        if ($request->wantsJSON()) {
+            return response()->json($modules);
+        }
 
         return view('modules-index', compact(['modules', 'module_versions']));
     }

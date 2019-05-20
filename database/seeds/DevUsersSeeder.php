@@ -58,7 +58,6 @@ class DevUsersSeeder extends Seeder
             'id' => 'LKD28376382'
         ]);
         
-        /*
         $mirror = Mirror::create([
             'name' => 'Mirroir de test',
             'ip' => "127.0.0.1",
@@ -67,23 +66,20 @@ class DevUsersSeeder extends Seeder
 
         $user->mirrors()->attach($mirror->id);
 
-
-
         $module1 = \App\Module::create([
-            'title' => 'Module - Test',
-            'name' => 'module-test',
-            'repository' => 'MrDarkSkil/module-test',
+            'title' => 'ClockRemi - Test',
+            'name' => 'Elios_ClockTest',
+            'repository' => 'https://github.com/remigastaldi/Elios_ClockTest',
             'category' => 'Entertainment',
-            'logo_url' => '',
+            'logo_url' => 'https://image.flaticon.com/icons/svg/1740/1740456.svg',
             'publisher_id' => $user->id,
             'description' => 'No description'
         ]);
 
-
         $versionModule2_1 = \App\ModuleVersion::create([
             'module_id' => $module1->id,
-            'commit' => 'd0b4f899a5ca55e7151d902077e6e4a7a2c4eb65',
-            'version' => '1.0.0',
+            'commit' => 'a6c4661bc829cb0db9831a20f2cede92886cbfac',
+            'version' => '0.0.1',
             'changelog' => 'First version'
         ]);
 
@@ -92,6 +88,6 @@ class DevUsersSeeder extends Seeder
         $modulescreenshots = \App\ModuleScreenshots::create([
             'module_id' => $module1->id,
             'screen_url' => 'http://127.0.0.1:8000/images/test.jpg',
-        ]);*/
+        ]);
     }
 }
