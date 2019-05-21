@@ -90,7 +90,7 @@
                     <img src="/images/logo.png" alt="logo" width="185px">
                 </div>
                 <div class="title m-b-md">
-                    Elios Develoment
+                    Elios Development
                 </div>
             </div>
         </div>
