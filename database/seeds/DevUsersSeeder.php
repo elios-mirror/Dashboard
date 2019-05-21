@@ -78,7 +78,7 @@ class DevUsersSeeder extends Seeder
 
         $versionModule2_1 = \App\ModuleVersion::create([
             'module_id' => $module1->id,
-            'commit' => 'a6c4661bc829cb0db9831a20f2cede92886cbfac',
+            'commit' => '35e2b4c18b58b25932dce68bfe94b66260d09ad8',
             'version' => '0.0.1',
             'changelog' => 'First version'
         ]);
@@ -87,7 +87,7 @@ class DevUsersSeeder extends Seeder
 
         $modulescreenshots = \App\ModuleScreenshots::create([
             'module_id' => $module1->id,
-            'screen_url' => 'http://127.0.0.1:8000/images/test.jpg',
+            'screen_url' => 'https://sapling-inc.com/wp-content/gallery/analog/Sapling-Analog-Round-Front-View-Dial-S-Hands-Standard.jpg',
         ]);
     }
 }
