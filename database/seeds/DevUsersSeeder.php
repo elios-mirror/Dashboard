@@ -95,7 +95,7 @@ class DevUsersSeeder extends Seeder
 
     $versionModule2_2 = \App\ModuleVersion::create([
         'module_id' => $module2->id,
-        'commit' => 'dad1bdf3249e8b5fcf4fa3b0f4591cc3c26da6b1',
+        'commit' => 'fc09c13012624b53f1adf4abed46c30bfeaaaa59',
         'version' => '0.0.1',
         'changelog' => 'First version'
     ]);
