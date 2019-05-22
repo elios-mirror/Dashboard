@@ -17,8 +17,6 @@ use Webpatser\Uuid\Uuid;
  */
 class MirrorModule extends Pivot
 {
-    use Uuids;
-
     /**
      * Indicates if the IDs are auto-incrementing.
      * @var bool

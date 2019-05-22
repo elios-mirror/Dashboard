@@ -215,7 +215,7 @@ class MirrorController extends Controller
 
         $mirror->link->modules()->attach($module->id, ['id' => $installId]);
         $mirror['modules'] = $mirror->link->modules()->with('module')->get();
-        //$module = $mirror->link->modules()->where('mirror_modules.id', $installId)->first(); // TODO: See why i do that is past :-)
+        $module = $mirror->link->modules()->where('mirror_modules.id', $installId)->first();
         $module->module;
         Notification::send($mirror, new MirrorInstalledModule($mirror, $request->user(), $module));
         return response()->json($mirror);
