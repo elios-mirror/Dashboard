@@ -68,6 +68,7 @@ Route::middleware(['auth:api'])->group(function () {
 Route::resource('mirrors', 'MirrorController');
 
 Route::post('/register', 'Auth\RegisterController@register');
+Route::post('/password/email', 'Auth\ForgotPasswordController@getResetToken');
 
 
 Route::group(['prefix' => 'store'], function() {
