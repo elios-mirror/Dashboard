@@ -56,7 +56,8 @@ class StoreController extends Controller
         return $modules;
     }
 
-    public function checkGitRepo(Request $request) {
+    public function checkGitRepo(Request $request)
+    {
 
         $repo = $request->get('repo');
         $tag = $request->get('tag');
@@ -65,56 +66,56 @@ class StoreController extends Controller
             abort(400, "Missing a parameter, please check that you filled all the inputs.");
         }
 
-        $repo_check = shell_exec('timeout 5 git ls-remote ' . $repo);
+        $repo_check = shell_exec('wget -q https://registry.hub.docker.com/v1/repositories/eliosmirror/' . $repo .
+            '/tags -O -  | sed -e \'s/[][]//g\' -e \'s/"//g\' -e \'s/ //g\' | tr \'}\' \'\n\'  | awk -F: \'{print $3}\'');
 
         if ($repo_check == null) {
-            abort(404, "Seems like the repo is not public or doesn't exist.");
+            abort(404, "Seems like the docker is not public or doesn't exist.");
         }
 
         $output_array = array();
-        exec('timeout 5 git ls-remote --tags ' . $repo, $output_array);
+        exec('wget -q https://registry.hub.docker.com/v1/repositories/eliosmirror/' . $repo .
+            '/tags -O -  | sed -e \'s/[][]//g\' -e \'s/"//g\' -e \'s/ //g\' | tr \'}\' \'\n\'  | awk -F: \'{print $3}\'',
+            $output_array);
 
         if (!$output_array) {
-            abort(404, "Sorry we didn't found any tags on the repo.");
+            abort(404, "Sorry we didn't found any tags on the docker.");
         }
 
         foreach ($output_array as $line) {
-            $result = explode('/tags/', $line);
-            if ($result[1] == $tag) {
-                $commit = explode("\t", $result[0]);
-                return($commit[0]);
+            if ($line == $tag) {
+                return ($line);
             }
         }
 
         abort(404, "It seems like your tag doesn't exist on this repo, please try again.");
+        return null;
     }
 
-    public function getGitTags(Request $request) {
+    public function getGitTags(Request $request)
+    {
         $repo = $request->get('repo');
 
         if (!$repo) {
             abort(400, "Missing a parameter, please check that you filled all the inputs.");
         }
 
-        $repo_check = shell_exec('timeout 5 git ls-remote ' . $repo);
+        $repo_check = shell_exec('wget -q https://registry.hub.docker.com/v1/repositories/eliosmirror/' . $repo .
+            '/tags -O -  | sed -e \'s/[][]//g\' -e \'s/"//g\' -e \'s/ //g\' | tr \'}\' \'\n\'  | awk -F: \'{print $3}\'');
 
         if ($repo_check == null) {
-            abort(404, "Seems like the repo is not public or doesn't exist.");
+            abort(404, "Seems like the docker is not public or doesn't exist.");
         }
 
         $output_array = array();
-        exec('timeout 5 git ls-remote --tags ' . $repo, $output_array);
+        exec('wget -q https://registry.hub.docker.com/v1/repositories/eliosmirror/' . $repo .
+            '/tags -O -  | sed -e \'s/[][]//g\' -e \'s/"//g\' -e \'s/ //g\' | tr \'}\' \'\n\'  | awk -F: \'{print $3}\'',
+            $output_array);
 
         if (!$output_array) {
-            abort(404, "Sorry we didn't found any tags on the repo.");
+            abort(404, "Sorry we didn't found any tags on the docker.");
         }
 
-        $tags = array();
-        foreach ($output_array as $line) {
-            $result = explode('/tags/', $line);
-            array_push($tags, $result[1]);
-        }
-
-        return response()->json(['tags' => $tags]);
+        return response()->json(['tags' => $output_array]);
     }
 }

@@ -6,23 +6,23 @@
             <div class="git-checker-title"
                  v-bind:style="[success ? { 'background-color': 'green' } : { 'background-color': '#007BFF' } &&
                  error ? { 'background-color': 'red' } : { 'background-color': '#007BFF' }]">
-                Repository
+                Docker
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <label for="repo"
-                       style="padding-top: 20px">Git repository</label>
+                       style="padding-top: 20px">Docker name</label>
                 <input type="text" class="form-control" name="repository" id="repo"
                        placeholder="https://git.com/user/repository.git" v-model="repo" @change="onChangeRepo()">
                 <small class="form-text text-muted">
-                    Repository must be public
+                    Docker must be public
                 </small>
             </div>
 
             <div class="col-md-6">
                 <div v-if="tags_list">
-                    <label for="tag" style="padding-top: 20px">Git Tag</label>
+                    <label for="tag" style="padding-top: 20px">Tags</label>
                     <select class="form-control" id="tag" v-model="tag">
                         <option v-for="tag in tags_list">{{ tag }}</option>
                     </select>
