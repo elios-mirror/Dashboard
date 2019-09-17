@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\MirrorModule;
 use Illuminate\Http\Request;
 use App\Module;
 use App\ModuleVersion;
@@ -21,7 +20,7 @@ class ModuleController extends Controller
   public function index(Request $request)
   {
     $modules = Module::all();
-    $module_versions = ModuleVersion::all();
+    $module_versions = ModuleVersion::where('module_id', $id)->first();
 
     if ($request->wantsJSON()) {
       return response()->json($modules);
@@ -99,7 +98,7 @@ class ModuleController extends Controller
     //
   }
 
-  /**
+    /**
    * Display the specified resource.
    *
    * @param int $id
@@ -127,7 +126,7 @@ class ModuleController extends Controller
     //
   }
 
-  public function display($id)
+    public function display($id)
   {
     $module = Module::findOrFail($id);
     $module_version = ModuleVersion::where('module_id', $id)->first();
@@ -146,7 +145,6 @@ class ModuleController extends Controller
    */
   public function update(Request $request, $id)
   {
-
     $modules = Module::findOrFail($id);
 
     request()->validate([

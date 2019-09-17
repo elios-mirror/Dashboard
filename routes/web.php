@@ -26,7 +26,9 @@ Route::group(['prefix' => 'modules'], function() {
     Route::post('/import', 'ModuleController@store')->name('import-module');
 
     Route::get('/edit/{id}', 'ModuleController@edit')->name('modules-edit');
-    Route::patch('/{id}', 'ModuleController@update');
+    Route::get('/version/{id}', 'ModuleUpdateController@version')->name('modules-update');
+    Route::patch('/update/{id}', 'ModuleController@update');
+    Route::patch('/update-version/{id}', 'ModuleUpdateController@update');
     Route::delete('/{id}', 'ModuleController@destroy')->name('modules-delete');
 
     Route::get('/{id}', 'ModuleController@display')->name('modules-display');

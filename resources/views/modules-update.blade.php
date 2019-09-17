@@ -9,7 +9,7 @@
                 </a>
                 <div class="card">
                     <div class="card-header">
-                        Edit Module
+                        Update Module
                     </div>
                     <div class="card-body">
                         @if (count($errors) > 0)
@@ -23,31 +23,23 @@
                             </div>
                         @endif
 
-                        <form method="post" action="{{ action('ModuleController@update', $id)}}">
+                        <form method="post" action="{{ action('ModuleUpdateController@update', $id)}}">
                             @csrf
 
-
-
                             <input name="_method" type="hidden" value="PATCH">
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" name="name" value="{{$module->name}}">
-                                </div>
-                            </div>
+
+                            <git-checker></git-checker>
 
                             <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="email">Title</label>
-                                    <input type="text" class="form-control" name="title" value="{{$module->title}}">
+                                <div class="form-group col-md-12" style="padding-top: 20px">
+                                    <label for="changelog">Changelog</label>
+                                    <textarea class="form-control" name="changelog" rows="3">{{$module_version->changelog }}</textarea>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <label for="description">Description</label>
-                                    <textarea class="form-control" name="description"
-                                              rows="3">{{$module->description }}</textarea>
+                                    <label for="screen">Screenshots</label>
+                                    <img src="{{$module_screenshots->screen_url}}" alt="Responsive image" class="img-thumbnail">
                                 </div>
                             </div>
 

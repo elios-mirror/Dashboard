@@ -49270,6 +49270,11 @@ var render = function() {
           _c("input", {
             directives: [
               {
+
+
+
+
+
                 name: "model",
                 rawName: "v-model",
                 value: _vm.repo,
@@ -49281,7 +49286,7 @@ var render = function() {
               type: "text",
               name: "repository",
               id: "repo",
-              placeholder: "https://git.com/user/repository.git"
+              placeholder: "Application Name"
             },
             domProps: { value: _vm.repo },
             on: {
