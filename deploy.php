@@ -68,24 +68,24 @@ host('prod')
 
 
 task('what_branch', function () {
-    $branch = ask('What branch to deploy?');
+  $branch = ask('What branch to deploy?');
 
-    set('branch', $branch);
+  set('branch', $branch);
 })->local();
 
 // Upload and reload .env
 task('upload:env', function () {
-    upload('{{env_path}}', '{{deploy_path}}/shared/.env');
-    run('cd {{deploy_path}}/release; php artisan config:clear; php artisan config:cache; php artisan cache:clear; php artisan route:clear;');
+  upload('{{env_path}}', '{{deploy_path}}/shared/.env');
+  run('cd {{deploy_path}}/release; php artisan clear-compiled; php artisan config:clear; php artisan config:cache; php artisan cache:clear; php artisan route:clear; php artisan optimize:clear; systemctl restart php7.2-fpm;');
 })->desc('Environment setup');
 
 // Dev tasks 
 task('artisan:migrate', function () {
-    $stage = get('stage');
-    if ($stage == "production")
-        run('cd {{deploy_path}}/release; php artisan migrate');
-    else
-        run('cd {{deploy_path}}/release; php artisan migrate:fresh --seed --force');
+  $stage = get('stage');
+  if ($stage == "production")
+    run('cd {{deploy_path}}/release; php artisan migrate');
+  else
+    run('cd {{deploy_path}}/release; php artisan migrate:fresh --seed --force');
 });
 
 // Tasks
