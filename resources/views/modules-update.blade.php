@@ -33,14 +33,14 @@
                             <div class="row">
                                 <div class="form-group col-md-12" style="padding-top: 20px">
                                     <label for="changelog">New Version</label>
-                                    <input type="text" class="form-control" name="version" value="{{ $module_version->version}}">
+                                    <input type="text" class="form-control" name="version" placeholder="0.0.1   ">
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-md-12" style="padding-top: 20px">
                                     <label for="changelog">Changelog</label>
-                                    <textarea class="form-control" name="changelog" rows="3">{{$module_version->changelog }}</textarea>
+                                    <textarea class="form-control" name="changelog" rows="3" placeholder="First Version"></textarea>
                                 </div>
                             </div>
 

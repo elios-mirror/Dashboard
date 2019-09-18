@@ -60,10 +60,13 @@ class ModuleUpdateController extends Controller
             'version' => 'required|min:3|max:20',
         ]);
 
-        $module_version = ModuleVersion::where('module_id', $id)->first();
-        $module_version->changelog = $request->get('changelog');
-        $module_version->version = $request->get('version');
-        $module_version->save();
+        $module = Module::where('id', $id)->first();
+
+        $module_versions = new ModuleVersion;
+        $module_versions->version = $request->input('version');
+        $module_versions->changelog = $request->input('changelog');
+        $module_versions->module_id = $module->id;
+        $module_versions->save();
 
         return redirect('/home');
         //
