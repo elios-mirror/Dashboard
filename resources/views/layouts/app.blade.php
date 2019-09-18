@@ -42,7 +42,7 @@
                     @else
                         <li>
                             <span class="badge badge-light badge-menu-buttons">
-                                <a class="nav-link" href="{{ route('import-module') }}">
+                                <a class="nav-link" href="{{ route('import') }}">
                                     <i class="fas fa-upload"></i> &nbsp;Upload
                                 </a>
                             </span>

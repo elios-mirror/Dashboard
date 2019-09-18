@@ -12,21 +12,21 @@ use Illuminate\Support\Facades\Storage;
 
 class ModuleController extends Controller
 {
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
   public function index(Request $request)
   {
     $modules = Module::all();
-    $module_versions = ModuleVersion::where('module_id', $id)->first();
 
     if ($request->wantsJSON()) {
       return response()->json($modules);
     }
 
-    return view('modules-index', compact(['modules', 'module_versions']));
+    return view('modules-index');
   }
 
   /**
@@ -53,9 +53,7 @@ class ModuleController extends Controller
         'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         'applicationTitle' => 'required|min:3|max:20',
         'applicationName' => 'required|min:3|max:20',
-        'repository' => 'required',
         'description' => 'required|min:40|max:1000',
-        'gitCommit' => 'required',
         'applicationVersion' => 'required',
         'screenshots' => 'required|max: 6',
         'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
@@ -64,7 +62,6 @@ class ModuleController extends Controller
     $modules = new Module;
     $modules->title = $request->input('applicationTitle');
     $modules->name = $request->input('applicationName');
-    $modules->repository = $request->input('repository');
     $modules->category = $request->moduleCategory;
     $modules->description = $request->input('description');
     $modules->publisher_id = Auth::user()->id;
@@ -88,7 +85,6 @@ class ModuleController extends Controller
     }
 
     $module_versions = new ModuleVersion;
-    $module_versions->commit = $request->input('gitCommit');
     $module_versions->version = $request->input('applicationVersion');
     $module_versions->changelog = "First version";
     $module_versions->module_id = $modules->id;
@@ -126,7 +122,7 @@ class ModuleController extends Controller
     //
   }
 
-    public function display($id)
+  public function display($id)
   {
     $module = Module::findOrFail($id);
     $module_version = ModuleVersion::where('module_id', $id)->first();

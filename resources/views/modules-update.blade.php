@@ -32,14 +32,15 @@
 
                             <div class="row">
                                 <div class="form-group col-md-12" style="padding-top: 20px">
-                                    <label for="changelog">Changelog</label>
-                                    <textarea class="form-control" name="changelog" rows="3">{{$module_version->changelog }}</textarea>
+                                    <label for="changelog">New Version</label>
+                                    <input type="text" class="form-control" name="version" value="{{ $module_version->version}}">
                                 </div>
                             </div>
+
                             <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="screen">Screenshots</label>
-                                    <img src="{{$module_screenshots->screen_url}}" alt="Responsive image" class="img-thumbnail">
+                                <div class="form-group col-md-12" style="padding-top: 20px">
+                                    <label for="changelog">Changelog</label>
+                                    <textarea class="form-control" name="changelog" rows="3">{{$module_version->changelog }}</textarea>
                                 </div>
                             </div>
 

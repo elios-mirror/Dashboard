@@ -69,7 +69,6 @@ class DevUsersSeeder extends Seeder
     $module1 = \App\Module::create([
         'title' => 'Clock - Test',
         'name' => 'Elios_ClockTest',
-        'repository' => 'https://github.com/remigastaldi/Elios_ClockTest',
         'category' => 'Entertainment',
         'logo_url' => 'https://image.flaticon.com/icons/svg/1740/1740456.svg',
         'publisher_id' => $user->id,
@@ -78,7 +77,6 @@ class DevUsersSeeder extends Seeder
 
     $versionModule2_1 = \App\ModuleVersion::create([
         'module_id' => $module1->id,
-        'commit' => '986d2ec4b3ab804c3aa5b210d5ce9d4ea2ed9c3',
         'version' => '0.0.1',
         'changelog' => 'First version'
     ]);
@@ -86,7 +84,6 @@ class DevUsersSeeder extends Seeder
     $module2 = \App\Module::create([
         'title' => 'Weather',
         'name' => 'Weather',
-        'repository' => 'https://gitlab.elios-mirror.com/elios/Elios-Weather.git',
         'category' => 'Entertainment',
         'logo_url' => 'https://image.flaticon.com/icons/svg/1740/1740456.svg',
         'publisher_id' => $user->id,
@@ -95,7 +92,6 @@ class DevUsersSeeder extends Seeder
 
     $versionModule2_2 = \App\ModuleVersion::create([
         'module_id' => $module2->id,
-        'commit' => 'fc09c13012624b53f1adf4abed46c30bfeaaaa59',
         'version' => '0.0.1',
         'changelog' => 'First version'
     ]);

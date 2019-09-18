@@ -23,7 +23,6 @@ class CreateModulesTable extends Migration
             $table->string('name');
             $table->string('category');
             $table->string('logo_url');
-            $table->string('repository');
             $table->text('description');
             $table->uuid('publisher_id');
             $table->foreign('publisher_id')->references('id')->on('users');
@@ -33,7 +32,6 @@ class CreateModulesTable extends Migration
         Schema::create('module_versions', function (Blueprint $table) {
             $table->uuid('id');
             $table->primary('id');
-            $table->string('commit');
             $table->string('version');
             $table->text('changelog');
             $table->uuid('module_id');

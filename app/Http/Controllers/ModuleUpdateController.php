@@ -12,18 +12,18 @@ class ModuleUpdateController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
         $modules = Module::all();
-        $module_versions = ModuleVersion::where('module_id', $id)->first();
 
         if ($request->wantsJSON()) {
             return response()->json($modules);
         }
 
-        return view('module-update', compact(['modules', 'module_versions']));
+        return view('module-update');
         //
     }
     public function version($id)
@@ -57,10 +57,12 @@ class ModuleUpdateController extends Controller
     {
         request()->validate([
             'changelog' => 'required|min:3|max:20',
+            'version' => 'required|min:3|max:20',
         ]);
 
         $module_version = ModuleVersion::where('module_id', $id)->first();
         $module_version->changelog = $request->get('changelog');
+        $module_version->version = $request->get('version');
         $module_version->save();
 
         return redirect('/home');
