@@ -7,11 +7,11 @@ use App\Module;
 use App\ModuleScreenshots;
 use App\ModuleVersion;
 use App\Notifications\MirrorInstalledModule;
+use App\Notifications\MirrorLinked;
 use App\Notifications\MirrorUninstalledModule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Notification;
-use App\Notifications\MirrorLinked;
 use Ramsey\Uuid\Uuid;
 
 class MirrorController extends Controller
@@ -56,12 +56,13 @@ class MirrorController extends Controller
       $mirror = Mirror::create([
           'name' => $request->get('name'),
           'model' => $request->has('model') ? $request->get('model') : 'LKD28376382',
-          'ip' => $request->getClientIp()
+          'ip' => $request->getClientIp(),
+          'short_id' => uniqid()
       ]);
 
       $token = $mirror->createToken('My Token')->accessToken;
 
-      return response()->json(['message' => 'Mirror created with success', 'id' => $mirror->id, 'model' => $mirror->model, 'access_token' => $token]);
+      return response()->json(['message' => 'Mirror created with success', 'id' => $mirror->id, 'short_id' => $mirror->short_id, 'model' => $mirror->model, 'access_token' => $token]);
     }
   }
 
@@ -144,14 +145,21 @@ class MirrorController extends Controller
   public function link($mirrorID, Request $request)
   {
     $validator = Validator::make(['mirrorID' => $mirrorID], [
-        'mirrorID' => 'uuid',
+        'mirrorID' => 'required|string',
     ]);
 
     if ($validator->fails()) {
       return response()->json($validator->errors(), 422);
     }
 
-    $mirror = Mirror::find($mirrorID);
+    $mirror = Mirror::whereShortId($mirrorID)->first();
+    if (!$mirror) {
+      if (!Validator::make(['id' => $mirrorID], ['id' => 'uuid'])->fails()) {
+        $mirror = Mirror::findOrFail($mirrorID);
+      } else {
+        abort(404, 'Cannot find mirror with id ' . $mirrorID);
+      }
+    }
 
     if (!$mirror) {
       return response()->json(['message' => 'Mirror not found'], 404);
