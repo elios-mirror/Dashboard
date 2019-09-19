@@ -67,11 +67,11 @@ class DevUsersSeeder extends Seeder
     $user->mirrors()->attach($mirror->id);
 
     $module1 = \App\Module::create([
-        'title' => 'Clock - Test',
-        'name' => 'Elios_ClockTest',
-        'repository' => 'https://github.com/remigastaldi/Elios_ClockTest',
+        'title' => 'Clock',
+        'name' => 'eliosmirror/clock',
+        'repository' => '',
         'category' => 'Entertainment',
-        'logo_url' => 'https://image.flaticon.com/icons/svg/1740/1740456.svg',
+        'logo_url' => 'https://gitlab.elios-mirror.com/uploads/-/system/project/avatar/16/clock.png?width=64',
         'publisher_id' => $user->id,
         'description' => 'No description'
     ]);
@@ -91,11 +91,11 @@ class DevUsersSeeder extends Seeder
     ]);
 
     $module2 = \App\Module::create([
-        'title' => 'Weather',
-        'name' => 'Weather',
-        'repository' => 'https://gitlab.elios-mirror.com/elios/Elios-Weather.git',
+        'title' => 'Calendar',
+        'name' => 'eliosmirror/calendar',
+        'repository' => '',
         'category' => 'Entertainment',
-        'logo_url' => 'https://image.flaticon.com/icons/svg/1740/1740456.svg',
+        'logo_url' => 'https://gitlab.elios-mirror.com/uploads/-/system/project/avatar/15/calendar.png?width=64',
         'publisher_id' => $user->id,
         'description' => 'No description'
     ]);
@@ -106,6 +106,24 @@ class DevUsersSeeder extends Seeder
         'version' => '0.0.1',
         'changelog' => 'First version'
     ]);
+
+    $module3 = \App\Module::create([
+        'title' => 'Weather',
+        'name' => 'eliosmirror/weather',
+        'repository' => '',
+        'category' => 'Entertainment',
+        'logo_url' => 'https://gitlab.elios-mirror.com/uploads/-/system/project/avatar/13/rain.png?width=64',
+        'publisher_id' => $user->id,
+        'description' => 'No description'
+    ]);
+
+    $versionModule2_2 = \App\ModuleVersion::create([
+        'module_id' => $module3->id,
+        'commit' => 'fc09c13012624b53f1adf4abed46c30bfeaaaa59',
+        'version' => '0.0.1',
+        'changelog' => 'First version'
+    ]);
+
 
     $user->mirrors()->first()->link->modules()->attach($versionModule2_1->id, ['id' => 'f0cb5950-7c56-11e9-ba53-9d65019b8045']);
 
