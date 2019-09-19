@@ -56,7 +56,6 @@ class Module extends Model
         'title',
         'name'
     ];
-    private $category;
 
     public function lastVersion()
     {
