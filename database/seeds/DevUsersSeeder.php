@@ -68,8 +68,8 @@ class DevUsersSeeder extends Seeder
 
     $module1 = \App\Module::create([
         'title' => 'Clock',
-        'name' => 'eliosmirror/clock',
-        'repository' => '',
+        'name' => 'clock',
+        'repository' => 'clock',
         'category' => 'Entertainment',
         'logo_url' => 'https://gitlab.elios-mirror.com/uploads/-/system/project/avatar/16/clock.png?width=64',
         'publisher_id' => $user->id,
@@ -92,8 +92,8 @@ class DevUsersSeeder extends Seeder
 
     $module2 = \App\Module::create([
         'title' => 'Calendar',
-        'name' => 'eliosmirror/calendar',
-        'repository' => '',
+        'name' => 'calendar',
+        'repository' => 'calendar',
         'category' => 'Entertainment',
         'logo_url' => 'https://gitlab.elios-mirror.com/uploads/-/system/project/avatar/15/calendar.png?width=64',
         'publisher_id' => $user->id,
@@ -109,8 +109,8 @@ class DevUsersSeeder extends Seeder
 
     $module3 = \App\Module::create([
         'title' => 'Weather',
-        'name' => 'eliosmirror/weather',
-        'repository' => '',
+        'name' => 'weather',
+        'repository' => 'weather',
         'category' => 'Entertainment',
         'logo_url' => 'https://gitlab.elios-mirror.com/uploads/-/system/project/avatar/13/rain.png?width=64',
         'publisher_id' => $user->id,
