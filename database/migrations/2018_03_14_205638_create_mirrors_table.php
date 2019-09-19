@@ -19,6 +19,7 @@ class CreateMirrorsTable extends Migration
         Schema::create('mirrors', function (Blueprint $table) {
             $table->uuid('id');
             $table->primary('id');
+            $table->string('short_id')->unique();
             $table->string('name')->nullable();
             $table->ipAddress('ip')->nullable();
             $table->string('model');

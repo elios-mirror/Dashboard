@@ -81,6 +81,13 @@ class DevUsersSeeder extends Seeder
         'changelog' => 'First version'
     ]);
 
+    $versionModule2_2 = \App\ModuleVersion::create([
+        'module_id' => $module1->id,
+        'commit' => '986d2ec4b3ab804c3aa5b210d5ce9d4ea2ed9c5',
+        'version' => '0.0.2',
+        'changelog' => 'Last version'
+    ]);
+
     $module2 = \App\Module::create([
         'title' => 'Weather',
         'name' => 'Weather',

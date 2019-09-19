@@ -30,6 +30,10 @@ use Ramsey\Uuid\Uuid;
  * @property string $description
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\ModuleVersion[] $versions
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Module whereDescription($value)
+ * @property string $category
+ * @property string $logo_url
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Module whereCategory($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Module whereLogoUrl($value)
  */
 class Module extends Model
 {

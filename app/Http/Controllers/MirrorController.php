@@ -7,11 +7,12 @@ use App\Module;
 use App\ModuleScreenshots;
 use App\ModuleVersion;
 use App\Notifications\MirrorInstalledModule;
+use App\Notifications\MirrorLinked;
 use App\Notifications\MirrorUninstalledModule;
+use App\Notifications\MirrorUpdatedModule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Notification;
-use App\Notifications\MirrorLinked;
 use Ramsey\Uuid\Uuid;
 
 class MirrorController extends Controller
@@ -56,12 +57,13 @@ class MirrorController extends Controller
       $mirror = Mirror::create([
           'name' => $request->get('name'),
           'model' => $request->has('model') ? $request->get('model') : 'LKD28376382',
-          'ip' => $request->getClientIp()
+          'ip' => $request->getClientIp(),
+          'short_id' => uniqid()
       ]);
 
       $token = $mirror->createToken('My Token')->accessToken;
 
-      return response()->json(['message' => 'Mirror created with success', 'id' => $mirror->id, 'model' => $mirror->model, 'access_token' => $token]);
+      return response()->json(['message' => 'Mirror created with success', 'id' => $mirror->id, 'short_id' => $mirror->short_id, 'model' => $mirror->model, 'access_token' => $token]);
     }
   }
 
@@ -144,14 +146,21 @@ class MirrorController extends Controller
   public function link($mirrorID, Request $request)
   {
     $validator = Validator::make(['mirrorID' => $mirrorID], [
-        'mirrorID' => 'uuid',
+        'mirrorID' => 'required|string',
     ]);
 
     if ($validator->fails()) {
       return response()->json($validator->errors(), 422);
     }
 
-    $mirror = Mirror::find($mirrorID);
+    $mirror = Mirror::whereShortId($mirrorID)->first();
+    if (!$mirror) {
+      if (!Validator::make(['id' => $mirrorID], ['id' => 'uuid'])->fails()) {
+        $mirror = Mirror::findOrFail($mirrorID);
+      } else {
+        abort(404, 'Cannot find mirror with id ' . $mirrorID);
+      }
+    }
 
     if (!$mirror) {
       return response()->json(['message' => 'Mirror not found'], 404);
@@ -198,6 +207,13 @@ class MirrorController extends Controller
     }
   }
 
+  /**
+   * @param $mirrorId
+   * @param $moduleId
+   * @param Request $request
+   * @return \Illuminate\Http\JsonResponse
+   * @throws \Exception
+   */
   public function installModule($mirrorId, $moduleId, Request $request)
   {
     $mirror = $request->user()->mirrors()->find($mirrorId);
@@ -221,6 +237,12 @@ class MirrorController extends Controller
     return response()->json($mirror);
   }
 
+  /**
+   * @param $mirrorId
+   * @param $moduleId
+   * @param Request $request
+   * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+   */
   public function uninstallModule($mirrorId, $moduleId, Request $request)
   {
     $mirror = $request->user()->mirrors()->find($mirrorId);
@@ -249,6 +271,49 @@ class MirrorController extends Controller
     $mirror['modules'] = $mirror->link->modules()->with('module')->get();
     $module->module;
     Notification::send($mirror, new MirrorUninstalledModule($mirror, $request->user(), $module));
+    return response()->json($mirror);
+  }
+
+  /**
+   * @param $mirrorId
+   * @param $moduleId
+   * @param Request $request
+   * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+   */
+  public function updateModule($mirrorId, $moduleId, Request $request)
+  {
+    $mirror = $request->user()->mirrors()->find($mirrorId);
+
+    if (!$mirror) {
+      return response()->json(['message' => 'Mirror not found for this user'], 404);
+    }
+
+    $module = ModuleVersion::find($moduleId);
+    if (!$module) {
+      $module = Module::find($moduleId);
+      $newModuleVersion = $module->versions->last();
+      if (!$module) {
+        return response(402);
+      }
+      foreach ($module->versions as $version) {
+        $module = $mirror->link->modules()->where('mirror_modules.module_id', $version->id)->first();
+        $mirror->link->modules()->detach($version->id);
+      }
+    } else {
+      $newModuleVersion = $module->module->versions->last();
+      $module = $mirror->link->modules()->where('mirror_modules.module_id', $module->id)->first();
+    }
+
+    if (!$module) {
+      return response()->json(['message' => 'Module not yet installed on this mirror'], 404);
+    }
+
+
+    $mirror->link->modules()->detach($module->id);
+    $mirror->link->modules()->attach($newModuleVersion->id, ['id' => $module->link->id, 'settings' => $module->link->settings]);
+    $mirror['modules'] = $mirror->link->modules()->with('module')->get();
+    $newModuleVersion->module;
+    Notification::send($mirror, new MirrorUpdatedModule($mirror, $request->user(), $newModuleVersion));
     return response()->json($mirror);
   }
 }
