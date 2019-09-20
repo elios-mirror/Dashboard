@@ -6,6 +6,8 @@ use App\Module;
 use App\ModuleScreenshots;
 use App\ModuleVersion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class ModuleUpdateController extends Controller
 {
@@ -61,9 +63,14 @@ class ModuleUpdateController extends Controller
         ]);
 
         $module = Module::where('id', $id)->first();
+        $update_logo = Storage::putFile('public/applications/images/' . Auth::user()->id . '/logos', $request->file('logo'));
+
+        $module->logo_url = url(asset(Storage::url($update_logo)));
+        $module->save();
 
         $module_versions = new ModuleVersion;
         $module_versions->version = $request->input('version');
+        $module_versions->commit = $request->input('gitCommit');
         $module_versions->changelog = $request->input('changelog');
         $module_versions->module_id = $module->id;
         $module_versions->save();

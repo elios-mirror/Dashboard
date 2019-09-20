@@ -23,7 +23,7 @@
                                             </div>
                                             <div class="application-repository text-center">
                                                 <div class="text-center application-repository-content">
-                                                    {{ $m->description }}
+                                                    {{ $m->repository }}
                                                 </div>
                                             </div>
                                         </a>

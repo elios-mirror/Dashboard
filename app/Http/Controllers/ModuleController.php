@@ -64,6 +64,7 @@ class ModuleController extends Controller
     $modules->title = $request->input('applicationTitle');
     $modules->name = $request->input('applicationName');
     $modules->category = $request->moduleCategory;
+    $modules->repository = $request->input('repository');
     $modules->description = $request->input('description');
     $modules->publisher_id = Auth::user()->id;
 
@@ -87,6 +88,7 @@ class ModuleController extends Controller
 
     $module_versions = new ModuleVersion;
     $module_versions->version = $request->input('applicationVersion');
+    $module_versions->commit = $request->input('gitCommit');
     $module_versions->changelog = "First version";
     $module_versions->module_id = $modules->id;
     $module_versions->save();

@@ -23,7 +23,8 @@
                             </div>
                         @endif
 
-                        <form method="post" action="{{ action('ModuleUpdateController@update', $id)}}">
+                        <form method="post" action="{{ action('ModuleUpdateController@update', $id)}}"
+                                enctype="multipart/form-data">
                             @csrf
 
                             <input name="_method" type="hidden" value="PATCH">
@@ -41,6 +42,20 @@
                                 <div class="form-group col-md-12" style="padding-top: 20px">
                                     <label for="changelog">Changelog</label>
                                     <textarea class="form-control" name="changelog" rows="3" placeholder="First Version"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" style="padding-top: 20px">
+                                    <label for="logo">{{ __('Update Logo') }}</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="logo" id="logo" class="custom-file-input"
+                                               onchange="getFileDataLogo(this);">
+                                        <label for="uploadLogo"
+                                               class="custom-file-label"
+                                               id="choose_logo">{{ __('Upload Logo') }}</label>
+                                    </div>
+                                    <small class="form-text text-muted">Should be an image .jpeg, .jpg, .png < 2048kb
+                                    </small>
                                 </div>
                             </div>
 
