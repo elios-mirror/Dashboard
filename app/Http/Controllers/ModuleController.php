@@ -54,9 +54,11 @@ class ModuleController extends Controller
         'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         'applicationTitle' => 'required|min:3|max:20',
         'applicationName' => 'required|min:3|max:20',
+        'repository' => 'required',
         'description' => 'required|min:40|max:1000',
+        'gitCommit' => 'required',
         'applicationVersion' => 'required',
-        'screenshots' => 'required|max: 6',
+        'screenshots' => 'required|max:6',
         'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
     ]);
 
@@ -97,7 +99,7 @@ class ModuleController extends Controller
     //
   }
 
-    /**
+  /**
    * Display the specified resource.
    *
    * @param int $id
@@ -166,6 +168,7 @@ class ModuleController extends Controller
    *
    * @param int $id
    * @return \Illuminate\Http\Response
+   * @throws \Exception
    */
   public function destroy($id)
   {

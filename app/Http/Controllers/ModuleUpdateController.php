@@ -26,8 +26,8 @@ class ModuleUpdateController extends Controller
         }
 
         return view('module-update');
-        //
     }
+
     public function version($id)
     {
         $module = Module::findOrFail($id);
@@ -45,7 +45,6 @@ class ModuleUpdateController extends Controller
     public function create()
     {
         return view('modules-update');
-        //
     }
 
     /**
@@ -58,8 +57,10 @@ class ModuleUpdateController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate([
+            'logo' => 'required|image',
             'changelog' => 'required|min:3|max:20',
             'version' => 'required|min:3|max:20',
+            'gitCommit' => 'required|string'
         ]);
 
         $module = Module::where('id', $id)->first();
@@ -76,6 +77,5 @@ class ModuleUpdateController extends Controller
         $module_versions->save();
 
         return redirect('/home');
-        //
     }
 }

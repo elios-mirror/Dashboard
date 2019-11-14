@@ -26,8 +26,6 @@
                         <form method="post" action="{{ action('ModuleController@update', $id)}}">
                             @csrf
 
-
-
                             <input name="_method" type="hidden" value="PATCH">
                             <div class="row">
                                 <div class="form-group col-md-12">
