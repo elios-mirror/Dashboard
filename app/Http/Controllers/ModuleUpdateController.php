@@ -60,7 +60,9 @@ class ModuleUpdateController extends Controller
             'logo' => 'required|image',
             'changelog' => 'required|min:3|max:20',
             'version' => 'required|min:3|max:20',
-            'gitCommit' => 'required|string'
+            'gitCommit' => 'required|string',
+            'new_screenshots' => 'required|max:6',
+            'new_screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         $module = Module::where('id', $id)->first();
@@ -68,6 +70,19 @@ class ModuleUpdateController extends Controller
 
         $module->logo_url = url(asset(Storage::url($update_logo)));
         $module->save();
+
+        $update_screenshots = $request->file('new_screenshots');
+
+        if ($request->hasFile('new_screenshots')) {
+            foreach ($update_screenshots as $update_screenshot) {
+                $urlPath = Storage::putFile('public/applications/images/' . Auth::user()->id . '/screenshots', $update_screenshot);
+
+                $new_screenshots = ModuleScreenshots::where('module_id', $id)->first();
+                $new_screenshots->screen_url = url(asset(Storage::url($urlPath)));
+                $new_screenshots->module_id = $module->id;
+                $new_screenshots->save();
+            }
+        }
 
         $module_versions = new ModuleVersion;
         $module_versions->version = $request->input('version');

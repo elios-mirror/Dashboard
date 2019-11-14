@@ -60,6 +60,22 @@
                             </div>
 
                             <div class="row">
+                                <div class="col-md-12" style="padding-top: 20px">
+                                    <label for="new_screenshots">{{ __('Update Screenshots') }}</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="new_screenshots[]" id="new_screenshots" class="custom-file-input"
+                                               multiple="true" onchange="getFileDataScreens(this);">
+                                        <label for="uploadScreenshots"
+                                               class="custom-file-label"
+                                               id="choose_screens">{{ __('Upload Screenshots') }}</label>
+                                    </div>
+                                    <small class="form-text text-muted">Should be an image .jpeg, .jpg, .png <
+                                        2048kb, max 6 files
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="form-group col-md-12">
                                     <button type="submit" class="btn btn-primary" style="float: right">Update
                                     </button>
