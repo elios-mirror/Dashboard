@@ -79,6 +79,11 @@ task('upload:env', function () {
   run('cd {{deploy_path}}/release; php artisan clear-compiled; php artisan config:clear; php artisan config:cache; php artisan cache:clear; php artisan route:clear; php artisan optimize:clear; systemctl restart php7.2-fpm;');
 })->desc('Environment setup');
 
+task('upload:mix', function () {
+  //upload(__DIR__ . 'public/js/app.js', '{{deploy_path}}/public/js/app.js');
+  //upload(__DIR__ . 'public/css/app.css', '{{deploy_path}}/public/css/app.css');
+})->desc('Upload laravel mix js & css');
+
 // Dev tasks 
 task('artisan:migrate', function () {
   $stage = get('stage');
@@ -89,6 +94,7 @@ task('artisan:migrate', function () {
 });
 
 // Tasks
+before('upload:env', 'upload:mix');
 
 // Upload ENV before passport:install 
 after('artisan:optimize', 'upload:env');
