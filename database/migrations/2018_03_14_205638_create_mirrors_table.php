@@ -32,8 +32,8 @@ class CreateMirrorsTable extends Migration
             $table->primary('id');
             $table->uuid('mirror_id');
             $table->uuid('user_id');
-            $table->foreign('mirror_id')->references('id')->on('mirrors');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('mirror_id')->references('id')->on('mirrors')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
 

@@ -26,7 +26,7 @@ class CreateModulesTable extends Migration
             $table->string('logo_url');
             $table->text('description');
             $table->uuid('publisher_id');
-            $table->foreign('publisher_id')->references('id')->on('users');
+            $table->foreign('publisher_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -37,7 +37,7 @@ class CreateModulesTable extends Migration
             $table->string('commit');
             $table->text('changelog');
             $table->uuid('module_id');
-            $table->foreign('module_id')->references('id')->on('modules');
+            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -46,7 +46,7 @@ class CreateModulesTable extends Migration
             $table->primary('id');
             $table->string('screen_url');
             $table->uuid('module_id');
-            $table->foreign('module_id')->references('id')->on('modules');
+            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -56,8 +56,8 @@ class CreateModulesTable extends Migration
             $table->uuid('module_id');
             $table->uuid('link_id');
             $table->json('settings')->nullable();
-            $table->foreign('module_id')->references('id')->on('module_versions');
-            $table->foreign('link_id')->references('id')->on('user_mirrors');
+            $table->foreign('module_id')->references('id')->on('module_versions')->onDelete('cascade');
+            $table->foreign('link_id')->references('id')->on('user_mirrors')->onDelete('cascade');
             $table->timestamps();
         });
 
