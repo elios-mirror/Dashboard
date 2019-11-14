@@ -14,7 +14,7 @@
                 <label for="repo"
                        style="padding-top: 20px">Docker name</label>
                 <input type="text" class="form-control" name="repository" id="repo"
-                       placeholder="https://git.com/user/repository.git" v-model="repo" @change="onChangeRepo()">
+                       placeholder="Application Name" v-model="repo" @change="onChangeRepo()">
                 <small class="form-text text-muted">
                     Docker must be public
                 </small>

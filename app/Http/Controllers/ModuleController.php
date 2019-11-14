@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\MirrorModule;
 use Illuminate\Http\Request;
 use App\Module;
 use App\ModuleVersion;
@@ -13,11 +12,12 @@ use Illuminate\Support\Facades\Storage;
 
 class ModuleController extends Controller
 {
-  /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
-   */
+    /**
+     * Display a listing of the resource.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
   public function index(Request $request)
   {
     $modules = Module::all();
@@ -58,15 +58,15 @@ class ModuleController extends Controller
         'description' => 'required|min:40|max:1000',
         'gitCommit' => 'required',
         'applicationVersion' => 'required',
-        'screenshots' => 'required|max: 6',
+        'screenshots' => 'required|max:6',
         'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
     ]);
 
     $modules = new Module;
     $modules->title = $request->input('applicationTitle');
     $modules->name = $request->input('applicationName');
-    $modules->repository = $request->input('repository');
     $modules->category = $request->moduleCategory;
+    $modules->repository = $request->input('repository');
     $modules->description = $request->input('description');
     $modules->publisher_id = Auth::user()->id;
 
@@ -89,8 +89,8 @@ class ModuleController extends Controller
     }
 
     $module_versions = new ModuleVersion;
-    $module_versions->commit = $request->input('gitCommit');
     $module_versions->version = $request->input('applicationVersion');
+    $module_versions->commit = $request->input('gitCommit');
     $module_versions->changelog = "First version";
     $module_versions->module_id = $modules->id;
     $module_versions->save();
@@ -146,7 +146,6 @@ class ModuleController extends Controller
    */
   public function update(Request $request, $id)
   {
-
     $modules = Module::findOrFail($id);
 
     request()->validate([
@@ -169,6 +168,7 @@ class ModuleController extends Controller
    *
    * @param int $id
    * @return \Illuminate\Http\Response
+   * @throws \Exception
    */
   public function destroy($id)
   {

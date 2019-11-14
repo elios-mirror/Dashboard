@@ -9,7 +9,7 @@
                 </a>
                 <div class="card">
                     <div class="card-header">
-                        Edit Module
+                        Update Module
                     </div>
                     <div class="card-body">
                         @if (count($errors) > 0)
@@ -23,29 +23,39 @@
                             </div>
                         @endif
 
-                        <form method="post" action="{{ action('ModuleController@update', $id)}}">
+                        <form method="post" action="{{ action('ModuleUpdateController@update', $id)}}"
+                                enctype="multipart/form-data">
                             @csrf
 
                             <input name="_method" type="hidden" value="PATCH">
+
+                            <git-checker></git-checker>
+
                             <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" name="name" value="{{$module->name}}">
+                                <div class="form-group col-md-12" style="padding-top: 20px">
+                                    <label for="changelog">New Version</label>
+                                    <input type="text" class="form-control" name="version" placeholder="0.0.1   ">
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="email">Title</label>
-                                    <input type="text" class="form-control" name="title" value="{{$module->title}}">
+                                <div class="form-group col-md-12" style="padding-top: 20px">
+                                    <label for="changelog">Changelog</label>
+                                    <textarea class="form-control" name="changelog" rows="3" placeholder="First Version"></textarea>
                                 </div>
                             </div>
-
                             <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="description">Description</label>
-                                    <textarea class="form-control" name="description"
-                                              rows="3">{{$module->description }}</textarea>
+                                <div class="col-md-6" style="padding-top: 20px">
+                                    <label for="logo">{{ __('Update Logo') }}</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="logo" id="logo" class="custom-file-input"
+                                               onchange="getFileDataLogo(this);">
+                                        <label for="uploadLogo"
+                                               class="custom-file-label"
+                                               id="choose_logo">{{ __('Upload Logo') }}</label>
+                                    </div>
+                                    <small class="form-text text-muted">Should be an image .jpeg, .jpg, .png < 2048kb
+                                    </small>
                                 </div>
                             </div>
 

@@ -19,19 +19,26 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'modules'], function() {
-    Route::get('/', 'ModuleController@index')->name('modules-index');
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['prefix' => 'modules'], function () {
+        Route::get('/', 'ModuleController@index')->name('index');
 
-    Route::get('/import', 'ImportModuleController@index')->name('import-module');
-    Route::post('/import', 'ModuleController@store')->name('import-module');
+        Route::get('/import', 'ImportModuleController@index')->name('import');
+        Route::post('/store', 'ModuleController@store')->name('store');
 
-    Route::get('/edit/{id}', 'ModuleController@edit')->name('modules-edit');
-    Route::patch('/{id}', 'ModuleController@update');
-    Route::delete('/{id}', 'ModuleController@destroy')->name('modules-delete');
+        Route::get('{id}/edit', 'ModuleController@edit')->name('edit');
+        Route::patch('{id}/update', 'ModuleController@update');
 
-    Route::get('/{id}', 'ModuleController@display')->name('modules-display');
+        Route::delete('/{id}', 'ModuleController@destroy')->name('delete');
+
+        Route::get('/{id}', 'ModuleController@display')->name('display');
+
+        Route::group(['prefix' => 'updates'], function () {
+            Route::get('{id}', 'ModuleUpdateController@version')->name('update');
+            Route::patch('{id}/', 'ModuleUpdateController@update');
+        });
+    });
 });
-
 
 Route::get('/registered', function () {
     return view('registered');
