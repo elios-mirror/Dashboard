@@ -63,7 +63,8 @@ deploy staging:
   script:
   - ./deployer.phar deploy dev
   only:
-  - dev
+    refs:
+      - dev
 
 deploy prod:
   image: chilio/laravel-dusk-ci:stable
@@ -72,4 +73,5 @@ deploy prod:
   - ./deployer.phar deploy prod
   when: manual
   only:
-  - master
+    refs:
+      - master
