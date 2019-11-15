@@ -10,31 +10,40 @@ class UserTest extends TestCase
 {
   use RefreshDatabase;
 
-  public function testUserCreation()
+  /**
+   * @test
+   */
+  public function a_user_can_be_created()
   {
     $this->seed();
+    $user = factory(User::class, 1)->create()->first();
     $total_users = User::count();
     factory(User::class, 1)->create();
     $this->assertEquals($total_users + 1, User::count());
+    $this->assertEquals($user->name, User::find($user->id)->name);
   }
 
-  public function testDeleteUser() {
-    factory(User::class, 12)->create();
+  /**
+   * @test
+   */
+  public function a_user_can_be_deleted()
+  {
+    $user = factory(User::class, 3)->create()->first();
     $total_users = User::count();
-    User::first()->delete();
+    $user->delete();
     $this->assertEquals($total_users - 1, User::count());
+    $this->assertNull(User::find($user->id));
   }
 
-  public function testUpdateUser() {
+  /**
+   * @test
+   */
+  public function a_user_can_be_updated()
+  {
     $user = factory(User::class, 1)->create()->first();
     $new_name = "Super User 30000";
     $user->update(['name' => $new_name]);
     $user->save();
     $this->assertEquals($new_name, User::find($user->id)->name);
-  }
-
-  public function testUserExist() {
-    $user = factory(User::class, 1)->create()->first();
-    $this->assertEquals($user->name, User::find($user->id)->name);
   }
 }

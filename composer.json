@@ -15,7 +15,8 @@
         "php-http/guzzle6-adapter": "^1.1",
         "smartins/passport-multiauth": "^4.0",
         "webpatser/laravel-uuid": "^3.0",
-        "wisembly/elephant.io": "^3.3"
+        "wisembly/elephant.io": "^3.3",
+        "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.5",
