@@ -66,6 +66,7 @@ Route::middleware(['auth:api'])->group(function () {
 
 
   Route::resource('modules', 'ModuleController');
+  Route::get('modules/{module}/form', 'ModuleController@getForm');
 });
 
 

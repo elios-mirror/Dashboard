@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Module;
-use App\ModuleVersion;
 use App\ModuleScreenshots;
+use App\ModuleVersion;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ModuleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
+  /**
+   * Display a listing of the resource.
+   *
+   * @param Request $request
+   * @return \Illuminate\Http\Response
+   */
   public function index(Request $request)
   {
     $modules = Module::all();
@@ -96,7 +96,6 @@ class ModuleController extends Controller
     $module_versions->save();
 
     return redirect('/home');
-    //
   }
 
   /**
@@ -160,7 +159,6 @@ class ModuleController extends Controller
     $modules->save();
 
     return redirect('/home');
-    //
   }
 
   /**
@@ -175,12 +173,27 @@ class ModuleController extends Controller
     $module = Module::findOrFail($id);
     $versions = ModuleVersion::where('module_id', $id)->get();
     foreach ($versions as $version) {
-      DB::table('mirror_modules')->where('module_id', $version->id) ->delete();
+      DB::table('mirror_modules')->where('module_id', $version->id)->delete();
     }
     ModuleScreenshots::where('module_id', $id)->get()->each->delete();
     ModuleVersion::where('module_id', $id)->get()->each->delete();
 
     $module->delete();
     return redirect('/home');
+  }
+
+  /**
+   * @param $moduleId
+   * @return mixed
+   *
+   * @throws \Illuminate\Validation\ValidationException
+   */
+  public function getForm($moduleId)
+  {
+    if (\Validator::make(['id' => $moduleId], ['id' => 'uuid'])->fails()) {
+      abort(400, 'Module ID is not a valid UUID');
+    }
+    $module = Module::findOrFail($moduleId);
+    return $module->form_configuration;
   }
 }

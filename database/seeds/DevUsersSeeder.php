@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
-use App\User;
 use App\Mirror;
-use App\Module;
+use App\User;
+use Illuminate\Database\Seeder;
 
 class DevUsersSeeder extends Seeder
 {
@@ -97,6 +96,12 @@ class DevUsersSeeder extends Seeder
         'category' => 'Entertainment',
         'logo_url' => 'https://gitlab.elios-mirror.com/uploads/-/system/project/avatar/15/calendar.png?width=64',
         'publisher_id' => $user->id,
+        'form_configuration' => json_encode([
+            [
+                "type" => "input",
+                "name" => "firstname"
+            ]
+        ]),
         'description' => 'No description'
     ]);
 
