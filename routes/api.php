@@ -62,11 +62,13 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/{module}', 'MirrorController@installModule');
     Route::delete('/{module}', 'MirrorController@uninstallModule');
     Route::put('/{module}', 'MirrorController@updateModule');
+    Route::put('/{module}/form', 'MirrorController@updateForm');
+    Route::get('/{module}/form', 'MirrorController@getForm');
+
   });
 
 
   Route::resource('modules', 'ModuleController');
-  Route::get('modules/{module}/form', 'ModuleController@getForm');
 });
 
 

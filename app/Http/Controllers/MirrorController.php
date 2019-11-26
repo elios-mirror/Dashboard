@@ -255,7 +255,7 @@ class MirrorController extends Controller
     if (!$module) {
       $module = Module::find($moduleId);
       if (!$module) {
-        return response(402);
+        return response()->json(['message' => 'Module not found.'], 404);
       }
       foreach ($module->versions as $version) {
         $module = $mirror->link->modules()->where('mirror_modules.module_id', $version->id)->first();
@@ -293,7 +293,7 @@ class MirrorController extends Controller
       $module = Module::find($moduleId);
       $newModuleVersion = $module->versions->last();
       if (!$module) {
-        return response(402);
+        return response()->json(['message' => 'Module not found.'], 404);
       }
       foreach ($module->versions as $version) {
         $module = $mirror->link->modules()->where('mirror_modules.module_id', $version->id)->first();
@@ -315,5 +315,94 @@ class MirrorController extends Controller
     $newModuleVersion->module;
     Notification::send($mirror, new MirrorUpdatedModule($mirror, $request->user(), $newModuleVersion));
     return response()->json($mirror);
+  }
+
+  /**
+   * @param $moduleId
+   * @return mixed
+   *
+   * @throws \Illuminate\Validation\ValidationException
+   */
+  public function getForm(Request $request, $mirrorId, $moduleId)
+  {
+    if (\Validator::make([
+        'mirror_id' => $mirrorId,
+        'module_id' => $moduleId
+    ], [
+        'mirror_id' => 'uuid',
+        'module_id' => 'uuid'
+    ])->fails()) {
+      abort(400, 'Module ID or Mirror ID is not a valid UUID');
+    }
+
+    $mirror = $request->user()->mirrors()->find($mirrorId);
+
+    if (!$mirror) {
+      return response()->json(['message' => 'Mirror not found for this user'], 404);
+    }
+
+    $module = ModuleVersion::find($moduleId);
+    if (!$module) {
+      $module = Module::find($moduleId)->lastVersion();
+    }
+
+    $module = $mirror->link->modules()->where('mirror_modules.module_id', $module->id)->first();
+
+    if (!$module) {
+      return response()->json(['message' => 'Module not yet installed on this mirror'], 404);
+    }
+
+    $form = json_decode($module->module->form_configuration);
+    $data = (array)json_decode($module->link->form);
+
+
+    foreach ($form as $input) {
+      if (isset($data[$input->name]))
+        $input->value = $data[$input->name];
+    }
+
+
+    return $form;
+  }
+
+  /**
+   * @param $moduleId
+   * @return mixed
+   *
+   * @throws \Illuminate\Validation\ValidationException
+   */
+  public function updateForm(Request $request, $mirrorId, $moduleId)
+  {
+    if (\Validator::make([
+        'mirror_id' => $mirrorId,
+        'module_id' => $moduleId
+    ], [
+        'mirror_id' => 'uuid',
+        'module_id' => 'uuid'
+    ])->fails()) {
+      abort(400, 'Module ID or Mirror ID is not a valid UUID');
+    }
+
+    $mirror = $request->user()->mirrors()->find($mirrorId);
+
+    if (!$mirror) {
+      return response()->json(['message' => 'Mirror not found for this user'], 404);
+    }
+
+    $module = ModuleVersion::find($moduleId);
+    if (!$module) {
+      $module = Module::find($moduleId)->lastVersion();
+    }
+
+    $module = $mirror->link->modules()->where('mirror_modules.module_id', $module->id)->first();
+
+    if (!$module) {
+      return response()->json(['message' => 'Module not yet installed on this mirror'], 404);
+    }
+
+    $module->link->form = json_encode($request->all());
+    $module->link->save();
+
+    return $module;
   }
 }

@@ -181,19 +181,4 @@ class ModuleController extends Controller
     $module->delete();
     return redirect('/home');
   }
-
-  /**
-   * @param $moduleId
-   * @return mixed
-   *
-   * @throws \Illuminate\Validation\ValidationException
-   */
-  public function getForm($moduleId)
-  {
-    if (\Validator::make(['id' => $moduleId], ['id' => 'uuid'])->fails()) {
-      abort(400, 'Module ID is not a valid UUID');
-    }
-    $module = Module::findOrFail($moduleId);
-    return $module->form_configuration;
-  }
 }

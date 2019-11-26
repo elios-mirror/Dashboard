@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Webpatser\Uuid\Uuid;
 
 /**
  * App\MirrorModule
@@ -17,20 +15,27 @@ use Webpatser\Uuid\Uuid;
  */
 class MirrorModule extends Pivot
 {
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     * @var bool
-     */
-    public $incrementing = false;
+  /**
+   * Indicates if the IDs are auto-incrementing.
+   * @var bool
+   */
+  public $incrementing = false;
 
-    /**
-     * The "type" of the auto-incrementing ID.
-     * @var string
-     */
-    public $keyType = 'string';
+  /**
+   * The "type" of the auto-incrementing ID.
+   * @var string
+   */
+  public $keyType = 'string';
 
-    public function module()
-    {
-        return $this->hasOne(ModuleVersion::class, 'id', 'module_id');
-    }
+
+  protected $fillable = [
+      'form',
+      'settings'
+  ];
+
+
+  public function module()
+  {
+    return $this->hasOne(ModuleVersion::class, 'id', 'module_id');
+  }
 }
