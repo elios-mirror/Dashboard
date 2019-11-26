@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
-use Webpatser\Uuid\Uuid;
 
 /**
  * App\UserMirror
@@ -53,7 +51,7 @@ class UserMirror extends Pivot
             'module_id')
             ->using(MirrorModule::class)
             ->as('link')
-            ->withPivot(['id', 'settings']);
+            ->withPivot(['id', 'settings', 'form']);
     }
 
     public function user()

@@ -70,6 +70,20 @@ class DevUsersSeeder extends Seeder
         'name' => 'clock',
         'repository' => 'clock',
         'category' => 'Entertainment',
+        'form_configuration' => json_encode([
+            [
+                "type" => "input",
+                "name" => "firstname"
+            ],
+            [
+                'type' => 'checkbox',
+                'name' => 'show_media'
+            ],
+            [
+                'type' => 'dropdown',
+                'name' => 'sayhello'
+            ]
+        ]),
         'logo_url' => 'https://gitlab.elios-mirror.com/uploads/-/system/project/avatar/16/clock.png?width=64',
         'publisher_id' => $user->id,
         'description' => 'No description'
