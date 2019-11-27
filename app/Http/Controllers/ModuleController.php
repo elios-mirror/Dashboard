@@ -181,4 +181,21 @@ class ModuleController extends Controller
     $module->delete();
     return redirect('/home');
   }
+
+  /**
+   * @param $moduleName
+   * @param $moduleVersion
+   * @return string
+   */
+  public function checkModule($moduleName, $moduleVersion)
+  {
+    $module = Module::whereName($moduleName)->first();
+    $version = $module->versions()->whereVersion($moduleVersion)->first();
+
+    if ($version) {
+      return response('true', 200);
+    } else {
+      return response('false', 404);
+    }
+  }
 }
