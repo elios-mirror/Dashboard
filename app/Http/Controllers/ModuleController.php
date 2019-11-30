@@ -190,6 +190,10 @@ class ModuleController extends Controller
   public function checkModule($moduleName, $moduleVersion)
   {
     $module = Module::whereName($moduleName)->first();
+    if (!$module) {
+      return response('false', 404);
+    }
+
     $version = $module->versions()->whereVersion($moduleVersion)->first();
 
     if ($version) {
