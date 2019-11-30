@@ -6,46 +6,14 @@
             <div class="git-checker-title"
                  v-bind:style="[success ? { 'background-color': 'green' } : { 'background-color': '#007BFF' } &&
                  error ? { 'background-color': 'red' } : { 'background-color': '#007BFF' }]">
-                Docker
+                Application Config
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="repo"
-                       style="padding-top: 20px">Docker name</label>
-                <input type="text" class="form-control" name="repository" id="repo"
-                       placeholder="Application Name" v-model="repo" @change="onChangeRepo()">
-                <small class="form-text text-muted">
-                    Docker must be public
-                </small>
-            </div>
 
-            <div class="col-md-6">
-                <div v-if="tags_list">
-                    <label for="tag" style="padding-top: 20px">Tags</label>
-                    <select class="form-control" id="tag" v-model="tag">
-                        <option v-for="tag in tags_list">{{ tag }}</option>
-                    </select>
-                    <input type="hidden" class="form-control" name="gitCommit" id="gitCommit" v-model="commit_value">
-                </div>
-            </div>
-        </div>
         <div class="row">
-            <div class="col-md-12">
-                <button type="button" class="btn btn-primary"
-                        style="float: right; margin-top: 1rem" v-on:click="checkGitRepository()"
-                        v-bind:class="{ 'btn-danger': error, 'btn-success': success }" v-if="button_check && !loading">
-                    {{ button_text }}
-                </button>
-            </div>
-            <div class="col-md-12" v-if="loading">
-                <div class="d-flex align-items-center">
-                    <div class="spinner-border spinner-border-md ml-auto text-secondary" role="status"
-                         aria-hidden="true"></div>
-                </div>
-            </div>
-            <div class="col-md-12" v-if="error_text">
-                <span class="text-danger" style="float: right; margin-top: 1rem">{{ error_text }}</span>
+            <div class="form-group col-md-12" style="padding-top: 20px">
+                <label for="form_configuration">JSON Config</label>
+                <textarea readonly style="overflow:auto;resize:none;" class="form-control" id="form_configuration" rows="1" v-model="form_configuration"></textarea>
             </div>
         </div>
     </div>
@@ -56,13 +24,14 @@
         data() {
             return {
                 tag: null,
-                repo: null,
+                repo: 'clock',
                 error: false,
                 error_text: null,
                 success: false,
+                form_configuration : new URL(location.href).searchParams.get('json'),
                 loading: false,
                 button_text: 'Check',
-                button_check: false,
+                button_check: true,
                 commit_value: null,
                 tags_list: null,
             }

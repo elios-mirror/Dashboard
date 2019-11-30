@@ -23,7 +23,18 @@
                                             </div>
                                             <div class="application-repository text-center">
                                                 <div class="text-center application-repository-content">
-                                                    {{ $m->repository }}
+                                                    @if (count($m->versions) > 1)
+                                                        {{ $m->versions[1]}}
+                                                    @else
+                                                        {{ $m->versions[0]}}
+                                                    @endif
+                                                </div>
+                                                <div class="text-center application-repository-content">
+                                                    @if (count($m->changes) > 1)
+                                                        {{ $m->changes[1] }}
+                                                    @else
+                                                        {{ $m->changes[0] }}
+                                                    @endif
                                                 </div>
                                             </div>
                                         </a>

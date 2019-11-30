@@ -8,6 +8,7 @@ use App\ModuleVersion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 
 class ModuleController extends Controller
@@ -54,19 +55,23 @@ class ModuleController extends Controller
         'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         'applicationTitle' => 'required|min:3|max:20',
         'applicationName' => 'required|min:3|max:20',
-        'repository' => 'required',
-        'description' => 'required|min:40|max:1000',
-        'gitCommit' => 'required',
+        'description' => 'required|min:20|max:1000',
         'applicationVersion' => 'required',
         'screenshots' => 'required|max:6',
         'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
     ]);
 
+    $rUrl = url()->previous();
+    $url = parse_url($rUrl);
+    parse_str($url['query'], $json);
+
     $modules = new Module;
     $modules->title = $request->input('applicationTitle');
     $modules->name = $request->input('applicationName');
     $modules->category = $request->moduleCategory;
-    $modules->repository = $request->input('repository');
+    $modules->repository = "test";
+    $modules->form_configuration = trim(preg_replace('/\s\s+/', ' ', $json['json']));
+
     $modules->description = $request->input('description');
     $modules->publisher_id = Auth::user()->id;
 
@@ -90,7 +95,7 @@ class ModuleController extends Controller
 
     $module_versions = new ModuleVersion;
     $module_versions->version = $request->input('applicationVersion');
-    $module_versions->commit = $request->input('gitCommit');
+    $module_versions->commit = "test";
     $module_versions->changelog = "First version";
     $module_versions->module_id = $modules->id;
     $module_versions->save();
