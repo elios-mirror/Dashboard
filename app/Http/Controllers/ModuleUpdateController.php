@@ -60,7 +60,6 @@ class ModuleUpdateController extends Controller
             'logo' => 'required|image',
             'changelog' => 'required|min:3|max:20',
             'version' => 'required|min:3|max:20',
-            'gitCommit' => 'required|string',
             'new_screenshots' => 'required|max:6',
             'new_screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
@@ -86,7 +85,7 @@ class ModuleUpdateController extends Controller
 
         $module_versions = new ModuleVersion;
         $module_versions->version = $request->input('version');
-        $module_versions->commit = $request->input('gitCommit');
+        $module_versions->commit = "latest";
         $module_versions->changelog = $request->input('changelog');
         $module_versions->module_id = $module->id;
         $module_versions->save();

@@ -103,7 +103,7 @@
                                 <label for="applicationDescription"
                                        style="padding-top: 20px">{{ __('Description') }}</label>
                                 <textarea class="form-control" name="description" id="description"
-                                          rows="3">{{ old('description') }}</textarea>
+                                          rows="3">{{ "This a standard text for testing your application." }}</textarea>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <small class="form-text text-muted">Minimum 40 characters
