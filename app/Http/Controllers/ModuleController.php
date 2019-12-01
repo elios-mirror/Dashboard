@@ -8,7 +8,6 @@ use App\ModuleVersion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 
 class ModuleController extends Controller
@@ -186,7 +185,21 @@ class ModuleController extends Controller
    * @param $moduleVersion
    * @return string
    */
-  public function checkModule($moduleName, $moduleVersion)
+  public function checkModule($moduleName)
+  {
+    $module = Module::whereName($moduleName)->first();
+    if (!$module) {
+      return response('false', 404);
+    }
+    return response('true', 200);
+  }
+
+  /**
+   * @param $moduleName
+   * @param $moduleVersion
+   * @return string
+   */
+  public function checkModuleVersion($moduleName, $moduleVersion)
   {
     $module = Module::whereName($moduleName)->first();
     if (!$module) {
