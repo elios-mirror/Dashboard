@@ -3,9 +3,8 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use SMartins\PassportMultiauth\HasMultiAuthApiTokens;
 
 /**
@@ -74,11 +73,16 @@ class User extends Authenticatable implements MustVerifyEmail
             ->withPivot(['id']);
     }
 
-    public function modules()
-    {
-        return $this->belongsToMany(Module::class, 'module_versions', 'id', 'module_id')
-            ->using(ModuleVersion::class)
-            ->as('link')
-            ->withPivot(['id']);
-    }
+  public function modules()
+  {
+    return $this->belongsToMany(Module::class, 'module_versions', 'id', 'module_id')
+        ->using(ModuleVersion::class)
+        ->as('link')
+        ->withPivot(['id']);
+  }
+
+  public function publishedModules()
+  {
+    return $this->hasMany(Module::class, 'publisher_id', 'id');
+  }
 }
