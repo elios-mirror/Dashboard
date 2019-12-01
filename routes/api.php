@@ -66,8 +66,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/{module}/form', 'MirrorController@getForm');
 
   });
-
-
   Route::resource('modules', 'ModuleController');
 });
 
@@ -94,3 +92,5 @@ Route::get('/', function () {
 
 Route::get('/git/repo/check', 'StoreController@checkGitRepo');
 Route::get('/git/repo/tags', 'StoreController@getGitTags');
+
+Route::get('/checker/modules/{moduleName}/{moduleVersion}', 'ModuleController@checkModule');

@@ -27,13 +27,6 @@ class MirrorModule extends Pivot
    */
   public $keyType = 'string';
 
-
-  protected $fillable = [
-      'form',
-      'settings'
-  ];
-
-
   public function module()
   {
     return $this->hasOne(ModuleVersion::class, 'id', 'module_id');
