@@ -53,24 +53,18 @@ class ModuleController extends Controller
   {
     request()->validate([
         'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        'applicationTitle' => 'required|min:3|max:20',
         'applicationName' => 'required|min:3|max:20',
         'description' => 'required|min:20|max:1000',
-        'applicationVersion' => 'required',
         'screenshots' => 'required|max:6',
         'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
     ]);
 
-    $rUrl = url()->previous();
-    $url = parse_url($rUrl);
-    parse_str($url['query'], $json);
-
     $modules = new Module;
     $modules->title = $request->input('applicationTitle');
-    $modules->name = $request->input('applicationName');
+    $modules->name =  $request->input('applicationName');
     $modules->category = $request->moduleCategory;
-    $modules->repository = "test";
-    $modules->form_configuration = trim(preg_replace('/\s\s+/', ' ', $json['json']));
+    $modules->repository = $request->input('applicationName');
+    $modules->form_configuration = $request->input('formConf');
 
     $modules->description = $request->input('description');
     $modules->publisher_id = Auth::user()->id;
@@ -95,7 +89,7 @@ class ModuleController extends Controller
 
     $module_versions = new ModuleVersion;
     $module_versions->version = $request->input('applicationVersion');
-    $module_versions->commit = "test";
+    $module_versions->commit = "latest";
     $module_versions->changelog = "First version";
     $module_versions->module_id = $modules->id;
     $module_versions->save();

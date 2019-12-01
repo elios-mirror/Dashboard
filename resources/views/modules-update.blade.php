@@ -29,7 +29,11 @@
 
                             <input name="_method" type="hidden" value="PATCH">
 
-                            <git-checker></git-checker>
+                            <div class="form-group">
+                                <label for="form_configuration"
+                                       style="padding-top: 20px">{{ __('JSON Config') }}</label>
+                                <textarea class="form-control" name="form_configuration" id="form_configuration" rows="3">{{ Request::get('json') }}</textarea>
+                            </div>
 
                             <div class="row">
                                 <div class="form-group col-md-12" style="padding-top: 20px">

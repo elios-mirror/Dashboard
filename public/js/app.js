@@ -49195,23 +49195,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             tag: null,
-            repo: 'clock',
+            repo: 'null',
             error: false,
             error_text: null,
             success: false,
-            form_configuration: new URL(location.href).searchParams.get('json'),
             loading: false,
             button_text: 'Check',
             button_check: true,
@@ -49323,44 +49315,6 @@ var render = function() {
             ]
           },
           [_vm._v("\n            Application Config\n        ")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c(
-          "div",
-          {
-            staticClass: "form-group col-md-12",
-            staticStyle: { "padding-top": "20px" }
-          },
-          [
-            _c("label", { attrs: { for: "form_configuration" } }, [
-              _vm._v("JSON Config")
-            ]),
-            _vm._v(" "),
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.form_configuration,
-                  expression: "form_configuration"
-                }
-              ],
-              staticClass: "form-control",
-              staticStyle: { overflow: "auto", resize: "none" },
-              attrs: { readonly: "", id: "form_configuration", rows: "1" },
-              domProps: { value: _vm.form_configuration },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.form_configuration = $event.target.value
-                }
-              }
-            })
-          ]
         )
       ])
     ]

@@ -9,13 +9,6 @@
                 Application Config
             </div>
         </div>
-
-        <div class="row">
-            <div class="form-group col-md-12" style="padding-top: 20px">
-                <label for="form_configuration">JSON Config</label>
-                <textarea readonly style="overflow:auto;resize:none;" class="form-control" id="form_configuration" rows="1" v-model="form_configuration"></textarea>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -24,11 +17,10 @@
         data() {
             return {
                 tag: null,
-                repo: 'clock',
+                repo: 'null',
                 error: false,
                 error_text: null,
                 success: false,
-                form_configuration : new URL(location.href).searchParams.get('json'),
                 loading: false,
                 button_text: 'Check',
                 button_check: true,

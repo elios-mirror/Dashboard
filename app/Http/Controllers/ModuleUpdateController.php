@@ -67,7 +67,7 @@ class ModuleUpdateController extends Controller
 
         $module = Module::where('id', $id)->first();
         $update_logo = Storage::putFile('public/applications/images/' . Auth::user()->id . '/logos', $request->file('logo'));
-
+        $module->form_configuration = $request->input("form_configuration");
         $module->logo_url = url(asset(Storage::url($update_logo)));
         $module->save();
 
