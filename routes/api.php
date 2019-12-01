@@ -93,4 +93,5 @@ Route::get('/', function () {
 Route::get('/git/repo/check', 'StoreController@checkGitRepo');
 Route::get('/git/repo/tags', 'StoreController@getGitTags');
 
-Route::get('/checker/modules/{moduleName}/{moduleVersion}', 'ModuleController@checkModule');
+Route::get('/checker/modules/{moduleName}', 'ModuleController@checkModule');
+Route::get('/checker/modules/{moduleName}/{moduleVersion}', 'ModuleController@checkModuleVersion');

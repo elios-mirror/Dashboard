@@ -352,15 +352,18 @@ class MirrorController extends Controller
       return response()->json(['message' => 'Module not yet installed on this mirror'], 404);
     }
 
+
     $form = json_decode($module->module->form_configuration);
     $data = (array)json_decode($module->link->form);
 
+    if ($request->get('just_form') === "true") {
+      return response()->json($data);
+    }
 
     foreach ($form as $input) {
       if (isset($data[$input->name]))
         $input->value = $data[$input->name];
     }
-
 
     return $form;
   }
