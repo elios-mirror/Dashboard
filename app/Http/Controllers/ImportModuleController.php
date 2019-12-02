@@ -15,7 +15,9 @@ class ImportModuleController extends Controller
       $user = $request->user();
       $module = $user->publishedModules()->whereName($request->get('name'))->first();
       if ($module) {
-        return redirect('/modules/updates/' . $module->id);
+        return redirect('/modules/updates/' . $module->id . '?json=' . $request->get('json') .
+            '&name=' . $request->get('name') .
+            '&version=' . $request->get('version'));
       }
     }
     return view('import-module');

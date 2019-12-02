@@ -7,6 +7,7 @@ use App\Module;
 use App\ModuleScreenshots;
 use App\ModuleVersion;
 use App\Notifications\MirrorInstalledModule;
+use App\Notifications\MirrorInstalledModuleConfigUpdated;
 use App\Notifications\MirrorLinked;
 use App\Notifications\MirrorUninstalledModule;
 use App\Notifications\MirrorUpdatedModule;
@@ -405,6 +406,9 @@ class MirrorController extends Controller
 
     $module->link->form = json_encode($request->all());
     $module->link->save();
+
+    Notification::send($mirror, new MirrorInstalledModuleConfigUpdated($mirror, $module, $request->user(), $module->link->form));
+
 
     return $module;
   }
