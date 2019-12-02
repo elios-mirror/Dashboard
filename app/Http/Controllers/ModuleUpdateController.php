@@ -59,6 +59,7 @@ class ModuleUpdateController extends Controller
         request()->validate([
             'logo' => 'required|image',
             'changelog' => 'required|min:3|max:20',
+            'form_configuration' => 'required',
             'version' => 'required|min:3|max:20',
             'new_screenshots' => 'required|max:6',
             'new_screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
