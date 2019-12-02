@@ -32,13 +32,13 @@
                             <div class="form-group">
                                 <label for="form_configuration"
                                        style="padding-top: 20px">{{ __('JSON Config') }}</label>
-                                <textarea class="form-control" name="form_configuration" id="form_configuration" rows="3">{{ Request::get('json') }}</textarea>
+                                <textarea readonly class="form-control" name="form_configuration" id="form_configuration" rows="3">{{ Request::get('json') }}</textarea>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-md-12" style="padding-top: 20px">
                                     <label for="changelog">New Version</label>
-                                    <input type="text" class="form-control" name="version" value="{{ "0.0.2" }}">
+                                    <input readonly type="text" class="form-control" name="version" value="{{ Request::get('version') }}">
                                 </div>
                             </div>
 
