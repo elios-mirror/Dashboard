@@ -87,7 +87,7 @@ class ModuleController extends Controller
 
     $module_versions = new ModuleVersion;
     $module_versions->version = $request->input('applicationVersion');
-    $module_versions->commit = "latest";
+    $module_versions->commit = $request->input('applicationVersion');
     $module_versions->changelog = "First version";
     $module_versions->module_id = $modules->id;
     $module_versions->save();
