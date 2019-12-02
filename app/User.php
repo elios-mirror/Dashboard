@@ -65,13 +65,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'password', 'remember_token',
     ];
 
-    public function mirrors()
-    {
-        return $this->belongsToMany(Mirror::class, 'user_mirrors', 'user_id', 'mirror_id')
-            ->using(UserMirror::class)
-            ->as('link')
-            ->withPivot(['id']);
-    }
+  public function mirrors()
+  {
+    return $this->belongsToMany(Mirror::class, 'user_mirrors', 'user_id', 'mirror_id')
+        ->using(UserMirror::class)
+        ->as('link')
+        ->withPivot(['id']);
+  }
 
   public function modules()
   {

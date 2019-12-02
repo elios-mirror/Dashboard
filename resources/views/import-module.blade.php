@@ -31,9 +31,8 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="applicationTitle">{{ __('Application Name') }}</label>
-                                    <input type="text" class="form-control" name="applicationTitle"
-                                           id="applicationTitle"
-                                           placeholder="Traffic" value="{{ old('applicationTitle') }}">
+                                    <input readonly type="text" class="form-control" name="applicationTitle"
+                                           id="applicationTitle" value="{{Request::get('name')}}">
                                     <small class="form-text text-muted">This is the public name of your app. It will be
                                         displayed on the Elios Store.
                                     </small>
@@ -41,8 +40,8 @@
 
                                 <div class="col-md-4">
                                     <label for="applicationName">{{ __('Application ID') }}</label>
-                                    <input type="text" class="form-control" name="applicationName" id="applicationName"
-                                           placeholder="Traffic" value="{{ old('applicationName') }}">
+                                    <input readonly type="text" class="form-control" name="applicationName" id="applicationName"
+                                           value="{{Request::get('name')}}">
                                     <small class="form-text text-muted">This is a unique ID to your app. It won't be
                                         seen on the Elios Store.
                                     </small>
@@ -59,14 +58,17 @@
                                 </div>
                             </div>
 
-                                <git-checker></git-checker>
+                            <div class="form-group">
+                                <label for="form_configuration"
+                                       style="padding-top: 20px">{{ __('JSON Config') }}</label>
+                                <textarea readonly class="form-control" name="formConf" id="formConf" rows="3">{{ Request::get('json') }}</textarea>
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-6" style="padding-top: 20px">
                                     <label for="applicationVersion">{{ __('Application Version') }}</label>
-                                    <input type="text" class="form-control" name="applicationVersion"
-                                           id="applicationVersion"
-                                           placeholder="1.0.0" value="{{ old('applicationVersion') }}">
+                                    <input readonly type="text" class="form-control" name="applicationVersion"
+                                           id="applicationVersion" value="{{ Request::get('version') }}">
                                 </div>
 
                                 <div class="col-md-6" style="padding-top: 20px">
@@ -101,7 +103,7 @@
                                 <label for="applicationDescription"
                                        style="padding-top: 20px">{{ __('Description') }}</label>
                                 <textarea class="form-control" name="description" id="description"
-                                          rows="3">{{ old('description') }}</textarea>
+                                          rows="3">{{ "This a standard text for testing your application." }}</textarea>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <small class="form-text text-muted">Minimum 40 characters

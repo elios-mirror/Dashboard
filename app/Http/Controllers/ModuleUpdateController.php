@@ -59,15 +59,15 @@ class ModuleUpdateController extends Controller
         request()->validate([
             'logo' => 'required|image',
             'changelog' => 'required|min:3|max:20',
+            'form_configuration' => 'required',
             'version' => 'required|min:3|max:20',
-            'gitCommit' => 'required|string',
             'new_screenshots' => 'required|max:6',
             'new_screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         $module = Module::where('id', $id)->first();
         $update_logo = Storage::putFile('public/applications/images/' . Auth::user()->id . '/logos', $request->file('logo'));
-
+        $module->form_configuration = $request->input("form_configuration");
         $module->logo_url = url(asset(Storage::url($update_logo)));
         $module->save();
 
@@ -86,7 +86,7 @@ class ModuleUpdateController extends Controller
 
         $module_versions = new ModuleVersion;
         $module_versions->version = $request->input('version');
-        $module_versions->commit = $request->input('gitCommit');
+        $module_versions->commit = $request->input('version');
         $module_versions->changelog = $request->input('changelog');
         $module_versions->module_id = $module->id;
         $module_versions->save();

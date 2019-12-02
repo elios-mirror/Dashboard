@@ -29,19 +29,23 @@
 
                             <input name="_method" type="hidden" value="PATCH">
 
-                            <git-checker></git-checker>
+                            <div class="form-group">
+                                <label for="form_configuration"
+                                       style="padding-top: 20px">{{ __('JSON Config') }}</label>
+                                <textarea readonly class="form-control" name="form_configuration" id="form_configuration" rows="3">{{ Request::get('json') }}</textarea>
+                            </div>
 
                             <div class="row">
                                 <div class="form-group col-md-12" style="padding-top: 20px">
                                     <label for="changelog">New Version</label>
-                                    <input type="text" class="form-control" name="version" placeholder="0.0.1   ">
+                                    <input readonly type="text" class="form-control" name="version" value="{{ Request::get('version') }}">
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-md-12" style="padding-top: 20px">
                                     <label for="changelog">Changelog</label>
-                                    <textarea class="form-control" name="changelog" rows="3" placeholder="First Version"></textarea>
+                                    <textarea class="form-control" name="changelog" rows="3">{{"Second Version"}}</textarea>
                                 </div>
                             </div>
                             <div class="row">
