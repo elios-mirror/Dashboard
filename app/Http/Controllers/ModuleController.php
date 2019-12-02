@@ -53,7 +53,7 @@ class ModuleController extends Controller
     request()->validate([
         'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         'applicationTitle' => 'required|min:3|max:20',
-        'applicationName' => 'required|min:3|max:20',
+        'applicationName' => 'required|min:3|max:20|unique:modules,name',
         'formConf' => 'required',
         'applicationVersion' => 'required|min:3|max:20',
         'description' => 'required|min:20|max:1000',
