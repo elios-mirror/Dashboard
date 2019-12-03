@@ -54,12 +54,12 @@ class ModuleController extends Controller
         'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         'applicationTitle' => 'required|min:3|max:20',
         'applicationName' => 'required|min:3|max:20|unique:modules,name',
-        'formConf' => 'required',
+        'formConf' => 'required|json',
         'applicationVersion' => 'required|min:3|max:20',
         'description' => 'required|min:20|max:1000',
         'screenshots' => 'required|max:6',
         'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-      ],
+    ],
       ['screenshots.max' => 'The screenshots number may not be greater than 6 files.']
     );
 
