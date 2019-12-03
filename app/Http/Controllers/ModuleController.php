@@ -59,7 +59,9 @@ class ModuleController extends Controller
         'description' => 'required|min:20|max:1000',
         'screenshots' => 'required|max:6',
         'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-    ]);
+      ],
+      ['screenshots.max' => 'The screenshots number may not be greater than 6 files.']
+    );
 
     $modules = new Module;
     $modules->title = $request->input('applicationTitle');
@@ -118,7 +120,7 @@ class ModuleController extends Controller
    * @param int $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit(Request $request, $id)
   {
     $module = Module::findOrFail($id);
     $module_version = ModuleVersion::where('module_id', $id)->first();
@@ -149,14 +151,14 @@ class ModuleController extends Controller
     $modules = Module::findOrFail($id);
 
     request()->validate([
-        'title' => 'required|min:3|max:20',
-        'name' => 'required|min:3|max:20',
+        'title' => 'required|min:3|max:40',
+        'name' => 'required|min:3|max:20|unique:modules,name',
         'description' => 'required|min:40|max:1000',
     ]);
 
-    $modules->name = $request->get('name');
-    $modules->title = $request->get('title');
-    $modules->description = $request->get('description');
+    $modules->title = $request->input('title');
+    $modules->name = $request->input('name');
+    $modules->description = $request->input('description');
     $modules->save();
 
     return redirect('/home');

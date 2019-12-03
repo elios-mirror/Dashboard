@@ -48,7 +48,7 @@
                                             {{ $module->title }}
                                         </div>
                                         <div class="module-display-header-subtitle">
-                                            {{ $module->repository }}
+                                            {{ $module->name }}
                                         </div>
                                         <hr/>
                                         <div class="module-display-header-description">

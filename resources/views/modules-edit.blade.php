@@ -27,17 +27,18 @@
                             @csrf
 
                             <input name="_method" type="hidden" value="PATCH">
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label for="name">Name</label>
-                                    <input type="text" class="form-control" name="name" value="{{$module->name}}">
-                                </div>
-                            </div>
 
                             <div class="row">
                                 <div class="form-group col-md-12">
                                     <label for="email">Title</label>
                                     <input type="text" class="form-control" name="title" value="{{$module->title}}">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" name="name" value="{{$module->name}}">
                                 </div>
                             </div>
 
@@ -51,7 +52,7 @@
 
                             <div class="row">
                                 <div class="form-group col-md-12">
-                                    <button type="submit" class="btn btn-primary" style="float: right">Update
+                                    <button type="submit" class="btn btn-primary" style="float: right">Edit
                                     </button>
                                 </div>
                             </div>
