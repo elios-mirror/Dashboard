@@ -38,16 +38,21 @@
                             <div class="row">
                                 <div class="form-group col-md-12" style="padding-top: 20px">
                                     <label for="changelog">New Version</label>
-                                    <input readonly type="text" class="form-control" name="version" value="{{ Request::get('version') }}">
+                                    <input readonly type="text" class="form-control" name="version"
+                                           value="{{ Request::get('version') }}">
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="form-group col-md-12" style="padding-top: 20px">
                                     <label for="changelog">Changelog</label>
-                                    <textarea class="form-control" name="changelog" rows="3">{{"Second Version"}}</textarea>
+                                    <textarea class="form-control" name="changelog"
+                                              rows="3">{{"Second Version"}}</textarea>
                                 </div>
                             </div>
+
+                            <img src="{{$module->logo}}">
+
                             <div class="row">
                                 <div class="col-md-6" style="padding-top: 20px">
                                     <label for="logo">{{ __('Update Logo') }}</label>

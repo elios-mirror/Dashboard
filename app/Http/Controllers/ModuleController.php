@@ -54,18 +54,23 @@ class ModuleController extends Controller
         'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         'applicationTitle' => 'required|min:3|max:20',
         'applicationName' => 'required|min:3|max:20|unique:modules,name',
-        'formConf' => 'required|json',
         'applicationVersion' => 'required|min:3|max:20',
-        'description' => 'required|min:20|max:1000',
+        'description' => 'min:20|max:1000',
         'screenshots' => 'required|max:6',
-        'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+        'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:10000',
+        'formConf' => 'required|json',
+        'formConf.*' => 'required|json',
+        'formConf.*.type' => 'required|in:input,checkbox,dropdown',
+        'formConf.*.name' => 'required|string',
+        'formConf.*.placeholder' => 'required|string',
+        'formConf.*.required' => 'boolean',
     ],
-      ['screenshots.max' => 'The screenshots number may not be greater than 6 files.']
+        ['screenshots.max' => 'The screenshots number may not be greater than 6 files.']
     );
 
     $modules = new Module;
     $modules->title = $request->input('applicationTitle');
-    $modules->name =  $request->input('applicationName');
+    $modules->name = $request->input('applicationName');
     $modules->category = $request->moduleCategory;
     $modules->repository = $request->input('applicationName');
     $modules->form_configuration = $request->input('formConf');
