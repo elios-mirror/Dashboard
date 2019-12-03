@@ -42,13 +42,6 @@
                     @else
                         <li>
                             <span class="badge badge-light badge-menu-buttons">
-                                <a class="nav-link" href="{{ route('import') }}">
-                                    <i class="fas fa-upload"></i> &nbsp;Upload
-                                </a>
-                            </span>
-                        </li>
-                        <li>
-                            <span class="badge badge-light badge-menu-buttons">
                                 <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                    document.getElementById('logout-form').submit();">
                                     <i class="fas fa-power-off"></i>

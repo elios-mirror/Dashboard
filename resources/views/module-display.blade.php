@@ -12,11 +12,6 @@
                     <div class="card-body">
                         <div class="module-display-header">
                             <div class="module-display-header-edit-button">
-                                <a href="{{ route('update', ['id' => $module->id]) }}">
-                                    <button type="button" class="btn btn-light">
-                                        <i class="fas fa-code-branch fa-lg"></i>
-                                    </button>
-                                </a>
                                 <a href="{{ route('edit', ['id' => $module->id]) }}">
                                     <button type="button" class="btn btn-light">
                                         <i class="fas fa-pencil-alt fa-lg"></i>
