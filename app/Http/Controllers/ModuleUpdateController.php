@@ -58,12 +58,14 @@ class ModuleUpdateController extends Controller
     {
         request()->validate([
             'logo' => 'required|image',
-            'changelog' => 'required|min:3|max:20',
+            'changelog' => 'required|min:3|max:1000',
             'form_configuration' => 'required',
             'version' => 'required|min:3|max:20',
             'new_screenshots' => 'required|max:6',
             'new_screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-        ]);
+            ],
+            ['new_screenshots.max' => 'The screenshots number may not be greater than 6 files.']
+        );
 
         $module = Module::where('id', $id)->first();
         $update_logo = Storage::putFile('public/applications/images/' . Auth::user()->id . '/logos', $request->file('logo'));
@@ -74,10 +76,12 @@ class ModuleUpdateController extends Controller
         $update_screenshots = $request->file('new_screenshots');
 
         if ($request->hasFile('new_screenshots')) {
+            ModuleScreenshots::where('module_id', $id)->get()->each->delete();
+
             foreach ($update_screenshots as $update_screenshot) {
                 $urlPath = Storage::putFile('public/applications/images/' . Auth::user()->id . '/screenshots', $update_screenshot);
 
-                $new_screenshots = ModuleScreenshots::where('module_id', $id)->first();
+                $new_screenshots = new ModuleScreenshots;
                 $new_screenshots->screen_url = url(asset(Storage::url($urlPath)));
                 $new_screenshots->module_id = $module->id;
                 $new_screenshots->save();
