@@ -4,9 +4,6 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-md-8">
-                <a href="{{ url()->previous() }}" style="margin: 1rem;">
-                    <button type="button" class="btn btn-secondary"><i class="fas fa-chevron-left"></i> Back</button>
-                </a>
                 <div class="card">
                     <div class="card-header">
                         Update Module
