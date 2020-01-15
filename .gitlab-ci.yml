@@ -1,5 +1,6 @@
 stages:
   - test
+  - build
   - deploy
 
 variables:
@@ -12,10 +13,11 @@ cache:
   paths:
     - vendor
     - node_modules
-    - public
     - .yarn
 
 before_script:
+  - npm install
+  - npm rebuild
   - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
   - eval $(ssh-agent -s)
   - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
@@ -25,7 +27,7 @@ before_script:
   - chmod 644 ~/.ssh/known_hosts
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
-test:
+test :
   stage: test
   services:
     - postgres:latest
@@ -43,20 +45,33 @@ test:
     expire_in: 1 days
     when: always
 
-deploy_staging:
+test laravel mix:
+  image: node:12
+  stage: test
+  script:
+  - npm test
+
+build vues:
+  image: node:12
+  stage: build
+  script:
+  - npm run production
+
+deploy staging:
   image: chilio/laravel-dusk-ci:stable
   stage: deploy
   script:
   - ./deployer.phar deploy dev
   only:
-  - dev
+    refs:
+      - dev
 
-
-deploy_prod:
+deploy prod:
   image: chilio/laravel-dusk-ci:stable
   stage: deploy
   script:
   - ./deployer.phar deploy prod
   when: manual
   only:
-  - master
+    refs:
+      - master

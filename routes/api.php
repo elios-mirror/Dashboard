@@ -55,12 +55,17 @@ Route::middleware(['auth:api'])->group(function () {
     return $result;
   });
 
-  Route::post('/mirrors/{mirror_id}/link', 'MirrorController@link');
-  Route::post('/mirrors/{mirror_id}/unlink', 'MirrorController@unlink');
+  Route::group(['prefix' => '/mirrors/{mirror_id}'], function () {
+    Route::post('/link', 'MirrorController@link');
+    Route::post('/unlink', 'MirrorController@unlink');
 
-  Route::post('/mirrors/{mirror_id}/{module}', 'MirrorController@installModule');
-  Route::delete('/mirrors/{mirror_id}/{module}', 'MirrorController@uninstallModule');
+    Route::post('/{module}', 'MirrorController@installModule');
+    Route::delete('/{module}', 'MirrorController@uninstallModule');
+    Route::put('/{module}', 'MirrorController@updateModule');
+    Route::put('/{module}/form', 'MirrorController@updateForm');
+    Route::get('/{module}/form', 'MirrorController@getForm');
 
+  });
   Route::resource('modules', 'ModuleController');
 });
 
@@ -71,7 +76,7 @@ Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/password/email', 'Auth\ForgotPasswordController@getResetToken');
 
 
-Route::group(['prefix' => 'store'], function() {
+Route::group(['prefix' => 'store'], function () {
   Route::get('/', 'StoreController@index');
   Route::get('/search', 'StoreController@search');
 });
@@ -87,3 +92,6 @@ Route::get('/', function () {
 
 Route::get('/git/repo/check', 'StoreController@checkGitRepo');
 Route::get('/git/repo/tags', 'StoreController@getGitTags');
+
+Route::get('/checker/modules/{moduleName}', 'ModuleController@checkModule');
+Route::get('/checker/modules/{moduleName}/{moduleVersion}', 'ModuleController@checkModuleVersion');

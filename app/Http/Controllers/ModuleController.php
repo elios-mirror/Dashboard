@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\MirrorModule;
-use Illuminate\Http\Request;
 use App\Module;
-use App\ModuleVersion;
 use App\ModuleScreenshots;
+use App\ModuleVersion;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -16,6 +15,7 @@ class ModuleController extends Controller
   /**
    * Display a listing of the resource.
    *
+   * @param Request $request
    * @return \Illuminate\Http\Response
    */
   public function index(Request $request)
@@ -53,20 +53,28 @@ class ModuleController extends Controller
     request()->validate([
         'logo' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         'applicationTitle' => 'required|min:3|max:20',
-        'applicationName' => 'required|min:3|max:20',
-        'repository' => 'required',
-        'description' => 'required|min:40|max:1000',
-        'gitCommit' => 'required',
-        'applicationVersion' => 'required',
-        'screenshots' => 'required|max: 6',
-        'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-    ]);
+        'applicationName' => 'required|min:3|max:20|unique:modules,name',
+        'applicationVersion' => 'required|min:3|max:20',
+        'description' => 'min:20|max:1000',
+        'screenshots' => 'required|max:6',
+        'screenshots.*' => 'required|image|mimes:jpeg,png,jpg|max:10000',
+        'formConf' => 'required|json',
+        'formConf.*' => 'required|json',
+        'formConf.*.type' => 'required|in:input,checkbox,dropdown',
+        'formConf.*.name' => 'required|string',
+        'formConf.*.placeholder' => 'required|string',
+        'formConf.*.required' => 'boolean',
+    ],
+        ['screenshots.max' => 'The screenshots number may not be greater than 6 files.']
+    );
 
     $modules = new Module;
     $modules->title = $request->input('applicationTitle');
     $modules->name = $request->input('applicationName');
-    $modules->repository = $request->input('repository');
     $modules->category = $request->moduleCategory;
+    $modules->repository = $request->input('applicationName');
+    $modules->form_configuration = $request->input('formConf');
+
     $modules->description = $request->input('description');
     $modules->publisher_id = Auth::user()->id;
 
@@ -89,14 +97,13 @@ class ModuleController extends Controller
     }
 
     $module_versions = new ModuleVersion;
-    $module_versions->commit = $request->input('gitCommit');
     $module_versions->version = $request->input('applicationVersion');
+    $module_versions->commit = $request->input('applicationVersion');
     $module_versions->changelog = "First version";
     $module_versions->module_id = $modules->id;
     $module_versions->save();
 
     return redirect('/home');
-    //
   }
 
   /**
@@ -118,7 +125,7 @@ class ModuleController extends Controller
    * @param int $id
    * @return \Illuminate\Http\Response
    */
-  public function edit($id)
+  public function edit(Request $request, $id)
   {
     $module = Module::findOrFail($id);
     $module_version = ModuleVersion::where('module_id', $id)->first();
@@ -146,22 +153,20 @@ class ModuleController extends Controller
    */
   public function update(Request $request, $id)
   {
-
     $modules = Module::findOrFail($id);
 
     request()->validate([
-        'title' => 'required|min:3|max:20',
-        'name' => 'required|min:3|max:20',
+        'title' => 'required|min:3|max:40',
+        'name' => 'required|min:3|max:20|unique:modules,name',
         'description' => 'required|min:40|max:1000',
     ]);
 
-    $modules->name = $request->get('name');
-    $modules->title = $request->get('title');
-    $modules->description = $request->get('description');
+    $modules->title = $request->input('title');
+    $modules->name = $request->input('name');
+    $modules->description = $request->input('description');
     $modules->save();
 
     return redirect('/home');
-    //
   }
 
   /**
@@ -169,18 +174,54 @@ class ModuleController extends Controller
    *
    * @param int $id
    * @return \Illuminate\Http\Response
+   * @throws \Exception
    */
   public function destroy($id)
   {
     $module = Module::findOrFail($id);
     $versions = ModuleVersion::where('module_id', $id)->get();
     foreach ($versions as $version) {
-      DB::table('mirror_modules')->where('module_id', $version->id) ->delete();
+      DB::table('mirror_modules')->where('module_id', $version->id)->delete();
     }
     ModuleScreenshots::where('module_id', $id)->get()->each->delete();
     ModuleVersion::where('module_id', $id)->get()->each->delete();
 
     $module->delete();
     return redirect('/home');
+  }
+
+  /**
+   * @param $moduleName
+   * @param $moduleVersion
+   * @return string
+   */
+  public function checkModule($moduleName)
+  {
+    $module = Module::whereName($moduleName)->first();
+    if (!$module) {
+      return response('false', 404);
+    }
+    return response('true', 200);
+  }
+
+  /**
+   * @param $moduleName
+   * @param $moduleVersion
+   * @return string
+   */
+  public function checkModuleVersion($moduleName, $moduleVersion)
+  {
+    $module = Module::whereName($moduleName)->first();
+    if (!$module) {
+      return response('false', 404);
+    }
+
+    $version = $module->versions()->whereVersion($moduleVersion)->first();
+
+    if ($version) {
+      return response('true', 200);
+    } else {
+      return response('false', 404);
+    }
   }
 }

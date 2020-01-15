@@ -27,6 +27,8 @@ use Ramsey\Uuid\Uuid;
  * @mixin \Eloquent
  * @property string $changelog
  * @method static \Illuminate\Database\Eloquent\Builder|\App\ModuleVersion whereChangelog($value)
+ * @property string $screen_url
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\ModuleScreenshots whereScreenUrl($value)
  */
 class ModuleScreenshots extends Model
 {

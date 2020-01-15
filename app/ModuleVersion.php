@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Uuid\Uuid;
 
 /**
  * App\ModuleVersion
@@ -30,20 +29,21 @@ use Ramsey\Uuid\Uuid;
  */
 class ModuleVersion extends Model
 {
-    use Uuids;
+  use Uuids;
 
-    protected $primaryKey = "id";
+  protected $primaryKey = "id";
 
-    protected $casts = [
-        'id' => 'string'
-    ];
+  protected $casts = [
+      'id' => 'string'
+  ];
 
-    protected $fillable = [
-        'settings'
-    ];
+  protected $fillable = [
+      'settings',
+      'form'
+  ];
 
-    public function module()
-    {
-        return $this->hasOne(Module::class, 'id', 'module_id');
-    }
+  public function module()
+  {
+    return $this->hasOne(Module::class, 'id', 'module_id');
+  }
 }

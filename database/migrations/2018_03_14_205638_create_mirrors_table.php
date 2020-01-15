@@ -19,6 +19,7 @@ class CreateMirrorsTable extends Migration
         Schema::create('mirrors', function (Blueprint $table) {
             $table->uuid('id');
             $table->primary('id');
+            $table->string('short_id')->unique();
             $table->string('name')->nullable();
             $table->ipAddress('ip')->nullable();
             $table->string('model');
@@ -31,8 +32,8 @@ class CreateMirrorsTable extends Migration
             $table->primary('id');
             $table->uuid('mirror_id');
             $table->uuid('user_id');
-            $table->foreign('mirror_id')->references('id')->on('mirrors');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('mirror_id')->references('id')->on('mirrors')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
 

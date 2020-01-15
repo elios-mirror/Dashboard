@@ -12,7 +12,7 @@
                     <div class="card-body">
                         <div class="module-display-header">
                             <div class="module-display-header-edit-button">
-                                <a href="{{ route('modules-edit', ['id' => $module->id]) }}" style="margin: 1rem;">
+                                <a href="{{ route('edit', ['id' => $module->id]) }}">
                                     <button type="button" class="btn btn-light">
                                         <i class="fas fa-pencil-alt fa-lg"></i>
                                     </button>
@@ -24,7 +24,7 @@
                                     </button>
                                 </a>
 
-                                <form id="delete-form" action="{{ route('modules-delete', ['id' => $module->id]) }}"
+                                <form id="delete-form" action="{{ route('delete', ['id' => $module->id]) }}"
                                       method="POST" style="display: none;">
                                     <input type="hidden" name="_method" value="delete" />
                                     @csrf
@@ -43,7 +43,7 @@
                                             {{ $module->title }}
                                         </div>
                                         <div class="module-display-header-subtitle">
-                                            {{ $module->repository }}
+                                            {{ $module->name }}
                                         </div>
                                         <hr/>
                                         <div class="module-display-header-description">
